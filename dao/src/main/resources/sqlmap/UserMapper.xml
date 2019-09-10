@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+	<insert id="insert" parameterType="hxy.inspec.customer.po.User"
+		useGeneratedKeys="true">
+		insert into cususer(custel, cusname ,
+		cuspasswd
+		,cusaddress,cusdate,cusvip,custrade,cusgrade,email,cusOrders
+		,cusMoney,cusTempMoney)
+		values(#{custel}
+		,#{cusname}, #{cuspasswd} ,
+		#{cusaddress},#{cusdate},#{cusvip},#{custrade},#{cusgrade},#{email},#{cusOrders},#{cusMoney},#{cusTempMoney})
+	</insert>
+	<select id="selectAll" resultType="hxy.inspec.customer.po.User">
+		select * from cususer
+	</select>
+	<select id="findUserByNumber" parameterType="String"
+		resultType="hxy.inspec.customer.po.User">
+		SELECT * FROM cususer WHERE custel=#{custel}
+	</select>
+
+	<select id="findUserById" parameterType="String"
+		resultType="hxy.inspec.customer.po.User">
+		SELECT * FROM cususer WHERE cusid=#{cusid}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="hxy.inspec.customer.po.User">
+		delete from cususer where
+		custel=#{custel}
+	</delete>
+	<!-- 修改用户 -->
+	<update id="update" parameterType="hxy.inspec.customer.po.User">
+		update cususer set
+		<if test="cusMoney!=null">
+			cusMoney=#{cusMoney} ,
+		</if>
+		<if test="cusTempMoney!=null">
+			cusTempMoney=#{cusTempMoney},
+		</if>
+		<if test="cuspasswd!=null">
+			cuspasswd=#{cuspasswd},
+		</if>
+		<if test="email!=null">
+			email=#{email},
+		</if>
+		<if test="cusOrders!=null">
+			cusOrders=#{cusOrders},
+		</if>
+		cusid=#{cusid} where cusid=#{cusid}
+	</update>
+
+	<!-- 修改用户 -->
+	<update id="updateOrders"
+		parameterType="hxy.inspec.customer.po.User">
+		update cususer set
+		cusOrders=#{cusOrders},cusMoney=#{cusMoney} where custel=#{custel}
+	</update>
+</mapper>
