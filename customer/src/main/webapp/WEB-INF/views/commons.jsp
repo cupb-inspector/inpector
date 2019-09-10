@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="hxy.inspec.customer.po.User"%>
+<%@page import="cn.hxy.inspect.customer.User"%>
 <%
 request.setCharacterEncoding("utf-8");
 User user = (User) request.getSession().getAttribute("user");

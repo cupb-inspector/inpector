@@ -7,7 +7,7 @@
 
 
 	<insert id="insert"
-		parameterType="hxy.inspec.customer.po.Account" useGeneratedKeys="true">
+		parameterType="cn.hxy.inspect.Account" useGeneratedKeys="true">
 		insert
 		into account
 		(userId,operate,value,surplus,time,type,file,fileUuid,adminId,notes,status)
@@ -18,11 +18,11 @@
 
 
 	<select id="selectAll"
-		resultType="hxy.inspec.customer.po.Account">
+		resultType="cn.hxy.inspect.Account">
 		select * from account
 	</select>
 	<select id="findOrdersByUserId" parameterType="String"
-		resultType="hxy.inspec.customer.po.Account">
+		resultType="cn.hxy.inspect.Account">
 		SELECT * FROM account WHERE userId=#{userId}
 	</select>
 
@@ -30,13 +30,13 @@
 
 
 	<select id="findAllByTelAndStatus" parameterType="String"
-		resultType="hxy.inspec.customer.po.Account">
+		resultType="cn.hxy.inspect.Account">
 		SELECT * FROM account WHERE userTel=#{userTel} and
 		status=#{status}
 	</select>
 	
 	<select id="findOrdersByTelAndStatus" parameterType="String"
-		resultType="hxy.inspec.customer.po.Account">
+		resultType="cn.hxy.inspect.Account">
 		SELECT * FROM account WHERE userTel=#{userTel} and
 		status=#{status}
 	</select>
@@ -45,7 +45,7 @@
 		excedate, goods, factoryname, reportfile, reportfileuuid
 	</sql>
 	<!-- 根据分页数据start 和size查询数据 -->
-	<select id="findByPage" parameterType="Map" resultType="hxy.inspec.customer.po.Account">
+	<select id="findByPage" parameterType="Map" resultType="cn.hxy.inspect.Account">
 		select * from account WHERE userTel=#{userTel} and status=#{status}
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
@@ -53,26 +53,26 @@
 	</select>
 	
 	<select id="findUserByOrdersId" parameterType="String"
-		resultType="hxy.inspec.customer.po.Account">
+		resultType="cn.hxy.inspect.Account">
 		SELECT * FROM orders WHERE ordesrid=#{ordesrid}
 	</select>
 	<select id="findOrdersById" parameterType="String"
-		resultType="hxy.inspec.customer.po.Account">
+		resultType="cn.hxy.inspect.Account">
 		SELECT * FROM orders WHERE orderid=#{orderid}
 	</select>
 	<delete id="delete"
-		parameterType="hxy.inspec.customer.po.Account">
+		parameterType="cn.hxy.inspect.Account">
 		delete from orders where
 		userTel=#{userTel}
 	</delete>
 	<update id="update"
-		parameterType="hxy.inspec.customer.po.Account">
+		parameterType="cn.hxy.inspect.Account">
 		update orders set
 		cusname=#{cusname},cususerid=#{cususerid},ttkdpasswd1=#{ttkdpasswd1},ttkdpasswd=#{ttkdpasswd},passwd=#{passwd},date=#{date},address=#{address}
 		where userTel=#{userTel}
 	</update>
 	<update id="updateStatus"
-		parameterType="hxy.inspec.customer.po.Account">
+		parameterType="cn.hxy.inspect.Account">
 		update orders set status=#{status} where
 		orderid=#{orderid}
 	</update>

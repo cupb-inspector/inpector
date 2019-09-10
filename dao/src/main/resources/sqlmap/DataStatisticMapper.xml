@@ -7,7 +7,7 @@
 
 
 	<insert id="insert"
-		parameterType="hxy.inspec.customer.po.DataStatistic"
+		parameterType="cn.hxy.inspect.admin.DataStatistic"
 		useGeneratedKeys="true">
 		insert into data_statistic
 		(total,qualtel,excedate,date,factoryname,factoryaddress,factoryman,factorytel,profile,file,reportfile,status,fee,cost,othercost,profit,goods)
@@ -16,27 +16,27 @@
 	</insert>
 	<!-- 统计数据,可能只有一条 -->
 	<select id="select"
-		resultType="hxy.inspec.customer.po.DataStatistic">
+		resultType="cn.hxy.inspect.admin.DataStatistic">
 		select * from data_statistic where dataId = 1
 	</select>
 	<select id="findOrdersByTel" parameterType="String"
-		resultType="hxy.inspec.customer.po.DataStatistic">
+		resultType="cn.hxy.inspect.admin.DataStatistic">
 		SELECT * FROM data_statistic WHERE custel=#{custel}
 	</select>
 	<select id="findOrdersById" parameterType="String"
-		resultType="hxy.inspec.customer.po.DataStatistic">
+		resultType="cn.hxy.inspect.admin.DataStatistic">
 		SELECT * FROM data_statistic WHERE orderid=#{orderid}
 	</select>
 
 
 	<select id="findOrdersByStatus" parameterType="String"
-		resultType="hxy.inspec.customer.po.DataStatistic">
+		resultType="cn.hxy.inspect.admin.DataStatistic">
 		SELECT * FROM data_statistic WHERE status=#{status}
 	</select>
 
 	<!-- 查询未完成的最近的订单，根据分页数据start 和size查询数据 -->
 	<select id="findOrdersByStatusJudge" parameterType="Map"
-		resultType="hxy.inspec.customer.po.DataStatistic">
+		resultType="cn.hxy.inspect.admin.DataStatistic">
 		select * from orders WHERE status &lt; #{status}
 		<if test="start!=null and size!=null">
 			limit #{start},#{size}
@@ -46,7 +46,7 @@
 	<!-- 查询某个日期未完成的订单，根据分页数据start 和size查询数据 -->
 
 	<select id="selectOrdersByDateAndStatus" parameterType="Map"
-		resultType="hxy.inspec.customer.po.DataStatistic">
+		resultType="cn.hxy.inspect.admin.DataStatistic">
 		select * from data_statistic WHERE status &lt; #{status} and excedate
 		= #{excedate}
 		<if test="start!=null and size!=null">
@@ -55,12 +55,12 @@
 	</select>
 
 	<delete id="delete"
-		parameterType="hxy.inspec.customer.po.DataStatistic">
+		parameterType="cn.hxy.inspect.admin.DataStatistic">
 		delete from data_statistic where
 		custel=#{custel}
 	</delete>
 	<update id="update"
-		parameterType="hxy.inspec.customer.po.DataStatistic">
+		parameterType="cn.hxy.inspect.admin.DataStatistic">
 		update data_statistic set
 		<if test="total!=null">
 			total=#{total},
@@ -88,7 +88,7 @@
 	</update>
 
 	<update id="updateInspect"
-		parameterType="hxy.inspec.customer.po.DataStatistic">
+		parameterType="cn.hxy.inspect.admin.DataStatistic">
 		update orders set
 		qualtel=#{qualtel},fee=#{fee}
 		where
@@ -96,7 +96,7 @@
 	</update>
 
 	<update id="updateInspector"
-		parameterType="hxy.inspec.customer.po.DataStatistic">
+		parameterType="cn.hxy.inspect.admin.DataStatistic">
 		update orders set
 		qualtel=#{qualtel},status=#{status}
 		where orderid=#{orderid}

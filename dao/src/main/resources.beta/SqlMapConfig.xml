@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration  
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+	</settings>
+	<!-- 和spring整合后 environments配置将废除 -->
+	<!-- 下面是本地的开发环境 -->
+	<environments default="development">
+		<environment id="local">
+			<!-- 使用jdbc事务管理 -->
+			<transactionManager type="JDBC" />
+			<!-- 数据库连接池 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<!-- jdbc:mysql://129.28.19.203:3306/anqing?characterEncoding=utf-8 authentication_string -->
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/inspect?characterEncoding=utf-8" />
+				<property name="username" value="root" />
+				<!-- 018299%zxw -->
+				<property name="password" value="newpass" />
+			</dataSource>
+		</environment>
+		<!-- 下面是测试的线上环境 -->
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<!-- jdbc:mysql://129.28.19.203:3306/anqing?characterEncoding=utf-8 authentication_string -->
+				<property name="url"
+					value="jdbc:mysql://129.28.19.203:3306/inspect?characterEncoding=utf-8" />
+				<property name="username" value="root" />
+				<property name="password" value="authentication_string" />
+			</dataSource>
+		</environment>
+		<!-- 下面是生产的线上环境 -->
+		<environment id="product">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<!-- jdbc:mysql://129.28.19.203:3306/anqing?characterEncoding=utf-8 authentication_string -->
+				<property name="url"
+					value="jdbc:mysql://localhost:3306/inspect?characterEncoding=utf-8" />
+				<property name="username" value="root" />
+				<property name="password" value="018299%zxw" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="sqlmap/UserMapper.xml" />
+		<mapper resource="sqlmap/OrderMapper.xml" />
+		<mapper resource="sqlmap/AccountMapper.xml" />
+		<mapper resource="sqlmap/DataStatisticMapper.xml" />
+		<!-- <mapper resource="sqlmap/GoodsMapper.xml" /> <mapper resource="sqlmap/RawFileMapper.xml" 
+			/> <mapper resource="sqlmap/NetTypeMapper.xml" /> <mapper resource="sqlmap/PriceofNetTypeAndProvince.xml" 
+			/> <mapper resource="sqlmap/TransferBillMapper.xml" /> <mapper resource="sqlmap/NetBeanMapper.xml" 
+			/> -->
+	</mappers>
+</configuration>  

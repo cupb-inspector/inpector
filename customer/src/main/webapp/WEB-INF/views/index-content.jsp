@@ -1,13 +1,13 @@
-<%@page import="hxy.inspec.customer.util.Configuration"%>
-<%@page import="hxy.inspec.customer.po.Orders"%>
+<%@page import="cn.hxy.inspect.util.Configuration"%>
+<%@page import="cn.hxy.inspect.Orders"%>
 <%@page import="java.util.List"%>
-<%@page import="hxy.inspec.customer.service.OrderService"%>
+<%@page import="cn.hxy.inspect.customer.service.OrderService"%>
 <%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/commons.jsp" />
-<%@page import="hxy.inspec.customer.service.UserService"%>
-<%@page import="hxy.inspec.customer.po.User"%>
+<%@page import="cn.hxy.inspect.customer.service.UserService"%>
+<%@page import="cn.hxy.inspect.customer.User"%>
 <!DOCTYPE html>
 <html class="no-js" lang="">
 <%
