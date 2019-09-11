@@ -131,7 +131,7 @@ public class UserController {
 				origin = request.getParameter("origin").trim();// 这个应该是电话号码
 				new2 = request.getParameter("new2").trim();
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 			if (origin != null && new2 != null) {
 				// 先比对原密码是否一致

@@ -185,7 +185,6 @@ public class AccountController {
 		try {
 			response.getWriter().append(jsonStr2);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -296,7 +295,6 @@ public class AccountController {
 					try {
 						accountService.insert(account);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
