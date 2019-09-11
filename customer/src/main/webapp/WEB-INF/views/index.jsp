@@ -146,7 +146,7 @@
                                   <!-- <li><a href="orders-draft" target="myiframe">草稿</a></li>  -->  
                                     <li><a href="orders-finished" target="myiframe">已完成</a></li>
                                     <li><a href="orders-unfinished" target="myiframe">未完成</a></li>
-                                    <li><a href="orders-cancel" target="myiframe">已取消</a></li>
+<%--                                    <li><a href="orders-cancel" target="myiframe">已取消</a></li>--%>
                                     <li><a href="orders-draft" target="myiframe">草稿</a></li>
                             </ul>
                         </div>

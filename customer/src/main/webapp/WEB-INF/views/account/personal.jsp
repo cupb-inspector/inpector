@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="hxy.inspec.customer.po.User"%>
 <jsp:include page="/WEB-INF/views/commons.jsp"/>
-<%
-request.setCharacterEncoding("utf-8");
-User user = (User) request.getSession().getAttribute("user");
-%>
 <!doctype html>
 <html class="no-js" lang="">
 <head>
@@ -22,7 +17,6 @@ User user = (User) request.getSession().getAttribute("user");
     <link rel="stylesheet" href="assets/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="assets/weather/css/weather-icons.css" rel="stylesheet" />
     <link href="assets/calendar/fullcalendar.css" rel="stylesheet" />
     <link href="assets/css/charts/chartist.min.css" rel="stylesheet">
@@ -182,14 +176,14 @@ User user = (User) request.getSession().getAttribute("user");
                                                 <tr>
                                                     <td><i class='fa fa-check-circle'
                                                             style='color:forestgreen'></i> 用户名</td>
-                                                    <td ><%=user.getCusname() %></td>
+                                                    <td >${user.cusname}</td>
                                                     <td><a class='connect' href='#' style='color:mediumblue'></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class='fa fa-check-circle' style='color:forestgreen'></i> 手机号码
                                                     </td>
-                                                    <td><%=user.getCustel() %></td>
+                                                    <td>${user.custel}</td>
                                                     <td><a class='connect' href='#' style='color:mediumblue'></a>
                                                     </td>
                                                 </tr>
@@ -217,7 +211,7 @@ User user = (User) request.getSession().getAttribute("user");
                                                 <tr>
                                                     <td><i class='fa fa-check-circle' style='color:forestgreen'></i> 绑定邮箱
                                                     </td>
-                                                    <td><div id ="displayEmail"><%=user.getEmail() %></div></td>
+                                                    <td><div id ="displayEmail">${user.email}</div></td>
                                                     <td><a class='connect' href = "JavaScript:void(0)" onclick = "openEmail()" style='color:mediumblue'>修改邮箱</a>
                                                    
                                                     </td>

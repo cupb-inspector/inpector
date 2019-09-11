@@ -1,7 +1,7 @@
-package cn.hxy.inspect.entity.dao.customer;
+package cn.hxy.inspect.dao.customer;
 
-import cn.hxy.inspect.customer.User;
-import cn.hxy.inspect.entity.dao.util.DataConnection;
+import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.dao.util.DataConnection;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

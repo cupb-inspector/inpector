@@ -1,5 +1,5 @@
 <%@page import="cn.hxy.inspect.util.Configuration"%>
-<%@page import="cn.hxy.inspect.Orders"%>
+<%@page import="cn.hxy.inspect.entity.Orders"%>
 <%@page import="java.util.List"%>
 <%@page import="cn.hxy.inspect.customer.service.OrderService"%>
 <%@page import="java.util.HashMap"%>
@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/commons.jsp" />
 <%@page import="cn.hxy.inspect.customer.service.UserService"%>
-<%@page import="cn.hxy.inspect.customer.User"%>
+<%@page import="cn.hxy.inspect.entity.customer.User"%>
 <!DOCTYPE html>
 <html class="no-js" lang="">
 <%

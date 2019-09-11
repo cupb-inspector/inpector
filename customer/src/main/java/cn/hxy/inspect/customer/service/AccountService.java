@@ -1,7 +1,7 @@
-package cn.hxy.inspect.entity.customer.service;
+package cn.hxy.inspect.customer.service;
 
 import cn.hxy.inspect.entity.Account;
-import cn.hxy.inspect.entity.dao.AccountDao;
+import cn.hxy.inspect.dao.AccountDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -1,13 +1,13 @@
-package cn.hxy.inspect.entity.customer.controller;
+package cn.hxy.inspect.customer.controller;
 
+import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.customer.service.DataStatisticService;
+import cn.hxy.inspect.customer.service.OrderService;
+import cn.hxy.inspect.customer.service.UserService;
 import cn.hxy.inspect.entity.Account;
 import cn.hxy.inspect.entity.Orders;
 import cn.hxy.inspect.entity.admin.DataStatistic;
-import cn.hxy.inspect.entity.customer.User;
-import cn.hxy.inspect.entity.customer.service.DataStatisticService;
-import cn.hxy.inspect.entity.customer.service.OrderService;
-import cn.hxy.inspect.entity.customer.service.UserService;
-import cn.hxy.inspect.entity.dao.GetOrderStatusWithList;
+import cn.hxy.inspect.dao.GetOrderStatusWithList;
 import cn.hxy.inspect.util.Configuration;
 import cn.hxy.inspect.util.DateUtil;
 import org.apache.tomcat.util.http.fileupload.FileItem;
@@ -485,6 +485,7 @@ public class OrderController {
 	public String customer_getUnfinishOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response)
 			throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
+
 		User user = (User) request.getSession().getAttribute("user");
 		List<Orders> ls = null;
 		// 将status放入list中
@@ -511,5 +512,29 @@ public class OrderController {
 		logger.info("unfinish order model: " + model);
 		return "order/orders-unfinished";
 	}
+
+	@RequestMapping(value = "/orders-finished", method = RequestMethod.GET)
+	public String customer_getFinishOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response)
+			throws UnsupportedEncodingException {
+		request.setCharacterEncoding("utf-8");
+
+		User user = (User) request.getSession().getAttribute("user");
+		List<Orders> ls = null;
+		// 将status放入list中
+		OrderService o = new OrderService();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cusId", user.getCusid());
+		//用户确认报告通过
+		map.put("status", Configuration.BILL_REPORT_PASSED);
+		try {
+			ls = o.selectAllByIdAndStatus(map);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("list", ls);
+		logger.info("unfinish order model: " + model);
+		return "order/orders-finished";
+	}
+
 
 }

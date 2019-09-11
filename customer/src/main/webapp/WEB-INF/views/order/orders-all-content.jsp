@@ -1,9 +1,9 @@
-<%@page import="hxy.inspec.customer.po.Orders"%>
+<%@page import="cn.hxy.inspect.entity.Orders"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="hxy.inspec.customer.service.OrderService"%>
-	<%@page import="hxy.inspec.customer.po.User"%>
+	<%@page import="cn.hxy.inspect.customer.service.OrderService"%>
+	<%@page import="cn.hxy.inspect.entity.customer.User"%>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->

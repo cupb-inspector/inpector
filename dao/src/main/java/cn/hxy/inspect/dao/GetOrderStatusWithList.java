@@ -1,4 +1,4 @@
-package cn.hxy.inspect.entity.dao;
+package cn.hxy.inspect.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

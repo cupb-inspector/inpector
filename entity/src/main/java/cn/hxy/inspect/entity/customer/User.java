@@ -1,4 +1,4 @@
-package cn.hxy.inspect.customer;
+package cn.hxy.inspect.entity.customer;
 
 import lombok.Data;
 

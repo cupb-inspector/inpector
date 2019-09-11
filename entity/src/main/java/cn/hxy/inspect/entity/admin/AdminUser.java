@@ -1,4 +1,4 @@
-package cn.hxy.inspect.admin;
+package cn.hxy.inspect.entity.admin;
 
 import lombok.Data;
 

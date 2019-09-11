@@ -8,16 +8,12 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="">
 <!--<![endif]-->
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>我的信息</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
     <link rel="stylesheet" href="assets/css/normalize.css">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -26,13 +22,10 @@
     <link rel="stylesheet" href="assets/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="assets/weather/css/weather-icons.css" rel="stylesheet" />
     <link href="assets/calendar/fullcalendar.css" rel="stylesheet" />
-
     <link href="assets/css/charts/chartist.min.css" rel="stylesheet">
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
-
     <style>
         #weatherWidget .currentDesc {
             color: #ffffff !important;
@@ -73,8 +66,6 @@
 
         #cellPaiChart {
             height: 160px;
-
-
         }
 
         #connect {
@@ -84,13 +75,11 @@
 </head>
 
 <body>
-
         <!-- Content -->
         <div class="content"  style="background:#f1f2f7">
             <!-- Animated -->
             <div class="animated fadeIn">
                 <!-- Widgets  -->
-
                 <!-- /Widgets -->
                 <!--  moneytable  -->
                 <div class="row">
@@ -112,10 +101,7 @@
                                                 href="#nav-profile" role="tab" aria-controls="nav-profile"
                                                 aria-selected="false">
                                                 <h4>修改密码</h4>
-
                                             </a>
-                                            
-
                                         </div>
                                     </nav>
                                     <div class="tab-content pl-3 pt-2" id="nav-tabContent">
@@ -151,7 +137,7 @@
                                                                         class=" form-control-label">姓名</label>
                                                                 </div>
                                                                 <div class="col-12 col-md-9"><input type="password"
-                                                                        id="password-input" name="password-input"
+                                                                        id="password4-input" name="password-input"
                                                                         placeholder="请填写真实姓名"
                                                                         class="form-control"></div>
                                                             </div>
@@ -172,7 +158,6 @@
                                                                                 name="inline-radios" value="option2"
                                                                                 class="form-check-input">女
                                                                         </label>
-                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -181,7 +166,7 @@
                                                                         class=" form-control-label">联系电话</label>
                                                                 </div>
                                                                 <div class="col-12 col-md-9"><input type="password"
-                                                                        id="password-input" name="password-input"
+                                                                        id="password2-input" name="password-input"
                                                                         placeholder="18175306923"
                                                                         class="form-control"></div>
                                                             </div>
@@ -211,7 +196,7 @@
                                                                         class=" form-control-label">输入原密码</label>
                                                                 </div>
                                                                 <div class="col-12 col-md-9"><input type="password"
-                                                                        id="password-input" name="password-input"
+                                                                        id="password5-input" name="password-input"
                                                                         placeholder="请输入原密码"
                                                                         class="form-control"></div>
                                                             </div>
@@ -230,7 +215,7 @@
                                                                         class=" form-control-label">确认新密码</label>
                                                                 </div>
                                                                 <div class="col-12 col-md-9"><input type="password"
-                                                                        id="password-input" name="password-input"
+                                                                        id="password3-input" name="password-input"
                                                                         placeholder="请确认新密码"
                                                                         class="form-control"></div>
                                                             </div>
@@ -245,7 +230,6 @@
                                                             </div>
                                                         </form>
                                         </div><!--second_tab-->
-                                        
 
                                     </div>
 
@@ -256,22 +240,7 @@
                     </div>
                 </div>
             </div>
-
-
-            <!--  /moneytable -->
-
-            <!-- Orders -->
-
-            <!-- /.orders -->
-            <!-- To Do and Live Chat -->
-
-            <!-- /To Do and Live Chat -->
-            <!-- Calender Chart Weather  -->
-
-            <!-- /Calender Chart Weather -->
-
         </div>
-
 
     <script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -295,8 +264,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
     <script src="assets/js/init/fullcalendar-init.js"></script>
 
-           
-    </script>
+
     <!--Local Stuff-->
     <script>
         jQuery(document).ready(function ($) {

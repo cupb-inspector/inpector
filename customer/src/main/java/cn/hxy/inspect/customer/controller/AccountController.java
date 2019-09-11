@@ -1,9 +1,9 @@
-package cn.hxy.inspect.entity.customer.controller;
+package cn.hxy.inspect.customer.controller;
 
+import cn.hxy.inspect.customer.service.AccountService;
 import cn.hxy.inspect.entity.Account;
 import cn.hxy.inspect.entity.customer.User;
-import cn.hxy.inspect.entity.customer.service.AccountService;
-import cn.hxy.inspect.entity.customer.service.UserService;
+import cn.hxy.inspect.customer.service.UserService;
 import cn.hxy.inspect.util.Configuration;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -32,6 +33,8 @@ import java.util.UUID;
 @RequestMapping("/")
 public class AccountController {
 	private final static Logger logger = LoggerFactory.getLogger(OrderController.class);
+	@Resource
+	UserService userService;
 
 	@RequestMapping(value = "/account-charge", method = RequestMethod.POST)
 	public void cusInsertOrder(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
@@ -41,7 +44,7 @@ public class AccountController {
 		String fileUuid = null;
 		if (user != null) {
 			// 查询最新的个人信息
-			UserService userService = new UserService();
+			userService = new UserService();
 			user = userService.selectUserByTel(user.getCustel());
 
 			Account account = new Account();
@@ -256,7 +259,7 @@ public class AccountController {
 			logger.info("提现的信息：" + value + "\t" + notes);
 			// 查询用户的实际金额是否充足！
 			if (value != null && !"null".equals(value)) {
-				UserService userService = new UserService();
+				userService = new UserService();
 				user = userService.selectUserById(user.getCusid());
 				int money =user.getCusMoney();
 				float temMoney = Float.parseFloat(user.getCusTempMoney());

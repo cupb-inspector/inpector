@@ -1,4 +1,4 @@
-package cn.hxy.inspect.entity.dao.util;
+package cn.hxy.inspect.dao.util;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;

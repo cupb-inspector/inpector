@@ -1,4 +1,4 @@
-package cn.hxy.inspect.entity.customer.controller;
+package cn.hxy.inspect.customer.controller;
 
 import cn.hxy.inspect.entity.customer.User;
 import org.slf4j.Logger;

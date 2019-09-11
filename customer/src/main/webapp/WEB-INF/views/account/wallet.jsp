@@ -1,19 +1,7 @@
 <jsp:include page="/WEB-INF/views/commons.jsp" />
-<%@page import="hxy.inspec.customer.service.UserService"%>
-<%@page import="hxy.inspec.customer.po.User"%>
-<%@page import="hxy.inspec.customer.service.AccountService"%>
-<%@page import="hxy.inspec.customer.po.Account"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-request.setCharacterEncoding("utf-8");
-User user = (User) request.getSession().getAttribute("user");
-
-//查询最新的金额数字
-UserService s = new UserService();
-User u =s.login(user.getCustel());
-%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -42,12 +30,6 @@ User u =s.login(user.getCustel());
 	<link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
 
 	<style>
-		html,
-		body {
-			margin: 0px;
-			width: 100%;
-			height: 100%;
-		}
 
 		#weatherWidget .currentDesc {
 			color: #ffffff !important;
@@ -129,7 +111,7 @@ User u =s.login(user.getCustel());
 								<div class="stat-content">
 									<div class="text-left dib">
 										<div class="stat-text">
-											￥<span class=""><%=u.getCusMoney() %></span>
+											￥<span class="">${user.cusMoney}</span>
 										</div>
 										<div class="stat-heading">人民币余额</div>
 									</div>
@@ -151,15 +133,12 @@ User u =s.login(user.getCustel());
 										<a href="withdraw">
 											<button type="button" class="btn btn-outline-primary">提现</button>
 										</a>
-
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
-
 
 				<div class="col-lg-3 col-md-6">
 					<div class="card">
@@ -171,7 +150,7 @@ User u =s.login(user.getCustel());
 								<div class="stat-content">
 									<div class="text-left dib">
 										<div class="stat-text">
-											￥<span class=""><%=u.getCusTempMoney() %></span>
+											￥<span class="">${user.cusTempMoney}</span>
 										</div>
 										<div class="stat-heading">过渡货币</div>
 									</div>
@@ -248,28 +227,38 @@ User u =s.login(user.getCustel());
 												</tr>
 											</thead>
 											<tbody>
-												<%
-												AccountService accountService = new AccountService();
-												
-												List<Account>  ls = accountService.selectAllByUserId(user.getCusid());
-													if(ls!=null&&ls.size()!=0){
-														for(int i=0;i<ls.size();i++){
-															Account a = ls.get(i);
-														%>
+											<c:forEach items="${list}" var="order" varStatus="status">
 												<tr>
-													<th scope="row"><%=i+1 %></th>
-													<td><%=a.getTime() %></td>
-													<td><%=a.getTypeString() %></td>
-													<td><%=a.getOperateString()+a.getValue() %></td>
-													<!--  
-													<td><%=a.getSurplus() %></td>
-													-->
-													<td><%=a.getStatusString() %></td>
+													<td>${order.id }</td>
+													<td>${order.time}</td>
+													<td>${order.typeString}</td>
+													<td>${order.operateString}${order.value}</td>
+													<td>${order.statusString}</td>
 												</tr>
-												<% 
-														}
-													}
-												%>
+											</c:forEach>
+
+											<%--												<%--%>
+<%--												AccountService accountService = new AccountService();--%>
+<%--												--%>
+<%--												List<Account>  ls = accountService.selectAllByUserId(user.getCusid());--%>
+<%--													if(ls!=null&&ls.size()!=0){--%>
+<%--														for(int i=0;i<ls.size();i++){--%>
+<%--															Account a = ls.get(i);--%>
+<%--														%>--%>
+<%--												<tr>--%>
+<%--													<th scope="row"><%=i+1 %></th>--%>
+<%--													<td><%=a.getTime() %></td>--%>
+<%--													<td><%=a.getTypeString() %></td>--%>
+<%--													<td><%=a.getOperateString()+a.getValue() %></td>--%>
+<%--													<!--  --%>
+<%--													<td><%=a.getSurplus() %></td>--%>
+<%--													-->--%>
+<%--													<td><%=a.getStatusString() %></td>--%>
+<%--												</tr>--%>
+<%--												<% --%>
+<%--														}--%>
+<%--													}--%>
+<%--												%>--%>
 											</tbody>
 										</table>
 									</div>

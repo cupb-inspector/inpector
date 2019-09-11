@@ -1,7 +1,7 @@
-package cn.hxy.inspect.entity.customer.controller;
+package cn.hxy.inspect.customer.controller;
 
 import cn.hxy.inspect.entity.customer.User;
-import cn.hxy.inspect.entity.customer.service.UserService;
+import cn.hxy.inspect.customer.service.UserService;
 import cn.hxy.inspect.util.CodeMd5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

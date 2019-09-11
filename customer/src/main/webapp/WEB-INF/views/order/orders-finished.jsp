@@ -1,36 +1,8 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="hxy.inspec.customer.util.Configuration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@page import="hxy.inspec.customer.po.Orders"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="hxy.inspec.customer.service.OrderService"%>
-<%@page import="hxy.inspec.customer.po.User"%>
+		 pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="">
-<%
-	request.setCharacterEncoding("utf-8");
-	User user = (User) request.getSession().getAttribute("user");
-	List<Orders> ls = null;
-	if (user == null) {
-		//登录过期！重新登录提示页！
-		response.sendRedirect(request.getContextPath() + "/admin-lose");
-		//request.getRequestDispatcher("/WEB-INF/a.jsp").forward(request, response);
-	} else {
-		OrderService o = new OrderService();
-		HashMap<String, Object> map =new HashMap<String, Object> ();
-		List<Integer> list0 = new ArrayList<Integer>();
-		list0.add(Configuration.BILL_REPORT_VERIFIED);
-		list0.add(Configuration.BILL_REPORT_PASSED_BY_ADMIN_UNPAID);
-		list0.add(Configuration.BILL_REFUSED_BY_ADMIN_UNPAID);
-		list0.add(Configuration.BILL_REFUSED_BY_ADMIN);
-		map.put("cusId", user.getCusid());
-		map.put("list",list0);
-		ls = o.findOrdersByRange(map);
-	}
-%>
-
 
 <head>
 <meta charset="utf-8">
@@ -53,16 +25,6 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-<style>
-        html,
-        body {
-            margin: 0px;
-            width: 100%;
-            height: 100%;
-        }
-</style>
 </head>
 <body>
 
@@ -89,24 +51,17 @@
 									</tr>
 								</thead>
 								<tbody>
-
-									<%
-										if (ls != null && ls.size() != 0) {
-											for (int i = 0; i < ls.size(); i++) {
-												Orders orders = ls.get(i);
-									%>
+								<c:forEach items="${list}" var="order" varStatus="status">
 									<tr>
-										<td><%=orders.getOrderid()%></td>
-										<td><%=orders.getExcedate()%></td>
-										<td><%=orders.getFactoryname()%></td>
-										<td><%=orders.getGoods()%></td>
-										<td><%=orders.getStatusString()%></td>
-										<td><a href="details3?id=<%=orders.getOrderid()%>">详情</a></td>
+										<td>${order.orderid }</td>
+										<td>${order.excedate}</td>
+										<td>${order.factoryname}</td>
+										<td>${order. goods}</td>
+										<td>${order.getStatusString()}</td>
+										<td><a href="details3?id=${ order.orderid }">详情</a></td>
 									</tr>
-									<%
-										}
-										}
-									%>
+								</c:forEach>
+
 								</tbody>
 							</table>
 						</div>

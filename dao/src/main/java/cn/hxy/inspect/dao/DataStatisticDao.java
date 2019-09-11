@@ -1,7 +1,7 @@
-package cn.hxy.inspect.entity.dao;
+package cn.hxy.inspect.dao;
 
+import cn.hxy.inspect.dao.util.DataConnection;
 import cn.hxy.inspect.entity.admin.DataStatistic;
-import cn.hxy.inspect.entity.dao.util.DataConnection;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

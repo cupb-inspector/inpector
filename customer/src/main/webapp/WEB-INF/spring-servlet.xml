@@ -8,6 +8,8 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<context:component-scan
 		base-package="cn.hxy.inspect.customer.controller" />
+	<context:component-scan
+			base-package="cn.hxy.inspect.customer.service" />
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

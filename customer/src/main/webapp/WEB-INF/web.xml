@@ -125,14 +125,14 @@
     <url-pattern>/orders-draft</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>orders-finished</servlet-name>
-    <jsp-file>/WEB-INF/views/order/orders-finished.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>orders-finished</servlet-name>
-    <url-pattern>/orders-finished</url-pattern>
-  </servlet-mapping>
+<!--  <servlet>-->
+<!--    <servlet-name>orders-finished</servlet-name>-->
+<!--    <jsp-file>/WEB-INF/views/order/orders-finished.jsp</jsp-file>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>orders-finished</servlet-name>-->
+<!--    <url-pattern>/orders-finished</url-pattern>-->
+<!--  </servlet-mapping>-->
 
   <!-- <servlet>
       <servlet-name>orders-unfinished</servlet-name>
@@ -154,23 +154,23 @@
     <url-pattern>/integral</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>personal</servlet-name>
-    <jsp-file>/WEB-INF/views/account/personal.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>personal</servlet-name>
-    <url-pattern>/personal</url-pattern>
-  </servlet-mapping>
+<!--  <servlet>-->
+<!--    <servlet-name>personal</servlet-name>-->
+<!--    <jsp-file>/WEB-INF/views/account/personal.jsp</jsp-file>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>personal</servlet-name>-->
+<!--    <url-pattern>/personal</url-pattern>-->
+<!--  </servlet-mapping>-->
 
-  <servlet>
-    <servlet-name>wallet</servlet-name>
-    <jsp-file>/WEB-INF/views/account/wallet.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>wallet</servlet-name>
-    <url-pattern>/wallet</url-pattern>
-  </servlet-mapping>
+<!--  <servlet>-->
+<!--    <servlet-name>wallet</servlet-name>-->
+<!--    <jsp-file>/WEB-INF/views/account/wallet.jsp</jsp-file>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>wallet</servlet-name>-->
+<!--    <url-pattern>/wallet</url-pattern>-->
+<!--  </servlet-mapping>-->
 
   <servlet>
     <servlet-name>complaint-lists</servlet-name>

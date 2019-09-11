@@ -1,4 +1,4 @@
-package cn.hxy.inspect.entity.customer.controller;
+package cn.hxy.inspect.customer.controller;
 
 import java.io.IOException;
 
