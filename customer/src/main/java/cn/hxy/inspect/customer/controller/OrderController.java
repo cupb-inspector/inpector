@@ -1,13 +1,13 @@
-package cn.hxy.inspect.customer.controller;
+package cn.hxy.inspect.entity.customer.controller;
 
-import cn.hxy.inspect.Account;
-import cn.hxy.inspect.Orders;
-import cn.hxy.inspect.admin.DataStatistic;
-import cn.hxy.inspect.customer.User;
-import cn.hxy.inspect.customer.service.DataStatisticService;
-import cn.hxy.inspect.customer.service.OrderService;
-import cn.hxy.inspect.customer.service.UserService;
-import cn.hxy.inspect.dao.GetOrderStatusWithList;
+import cn.hxy.inspect.entity.Account;
+import cn.hxy.inspect.entity.Orders;
+import cn.hxy.inspect.entity.admin.DataStatistic;
+import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.entity.customer.service.DataStatisticService;
+import cn.hxy.inspect.entity.customer.service.OrderService;
+import cn.hxy.inspect.entity.customer.service.UserService;
+import cn.hxy.inspect.entity.dao.GetOrderStatusWithList;
 import cn.hxy.inspect.util.Configuration;
 import cn.hxy.inspect.util.DateUtil;
 import org.apache.tomcat.util.http.fileupload.FileItem;

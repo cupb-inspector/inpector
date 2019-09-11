@@ -1,8 +1,8 @@
-package cn.hxy.inspect.customer.controller;
+package cn.hxy.inspect.entity.customer.controller;
 
-import cn.hxy.inspect.Orders;
-import cn.hxy.inspect.customer.User;
-import cn.hxy.inspect.customer.service.OrderService;
+import cn.hxy.inspect.entity.Orders;
+import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.entity.customer.service.OrderService;
 import cn.hxy.inspect.util.Configuration;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;

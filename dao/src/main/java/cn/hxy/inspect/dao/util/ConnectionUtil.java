@@ -1,4 +1,4 @@
-package cn.hxy.inspect.dao.util;
+package cn.hxy.inspect.entity.dao.util;
 
 import org.apache.ibatis.io.Resources;
 import org.dom4j.Document;

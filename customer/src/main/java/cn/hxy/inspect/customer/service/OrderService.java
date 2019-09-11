@@ -1,7 +1,7 @@
-package cn.hxy.inspect.customer.service;
+package cn.hxy.inspect.entity.customer.service;
 
-import cn.hxy.inspect.Orders;
-import cn.hxy.inspect.dao.OrdersDao;
+import cn.hxy.inspect.entity.Orders;
+import cn.hxy.inspect.entity.dao.OrdersDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

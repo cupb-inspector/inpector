@@ -1,10 +1,10 @@
-package cn.hxy.inspect.dao;
+package cn.hxy.inspect.entity.dao;
 
 import java.io.IOException;
 import java.util.List;
 
-import cn.hxy.inspect.Account;
-import cn.hxy.inspect.dao.util.DataConnection;
+import cn.hxy.inspect.entity.Account;
+import cn.hxy.inspect.entity.dao.util.DataConnection;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

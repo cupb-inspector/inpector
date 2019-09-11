@@ -1,6 +1,6 @@
-package cn.hxy.inspect.customer.interceptor;
+package cn.hxy.inspect.entity.customer.interceptor;
 
-import cn.hxy.inspect.customer.User;
+import cn.hxy.inspect.entity.customer.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;

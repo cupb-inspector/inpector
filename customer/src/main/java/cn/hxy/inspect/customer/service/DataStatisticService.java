@@ -1,7 +1,7 @@
-package cn.hxy.inspect.customer.service;
+package cn.hxy.inspect.entity.customer.service;
 
-import cn.hxy.inspect.admin.DataStatistic;
-import cn.hxy.inspect.dao.DataStatisticDao;
+import cn.hxy.inspect.entity.admin.DataStatistic;
+import cn.hxy.inspect.entity.dao.DataStatisticDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,10 +1,11 @@
-package cn.hxy.inspect.dao;
+package cn.hxy.inspect.entity.dao;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class GetOrderStatusWithList {
@@ -16,7 +17,7 @@ public class GetOrderStatusWithList {
 		list = new ArrayList<Integer>();
 		//利用java反射机制获取类中各成员
 		try {
-			Class clazz = Class.forName("hxy.inspec.admin.util.Configuration");
+			Class clazz = Class.forName("cn.hxy.inspect.util.Configuration");
 			Field[] fields = clazz.getFields();
 			for (Field field : fields) {
 				if (field.getName() == "FILE_ROOT_DIR" || field.getName() == "BILL_PRICE" || field.getName() == "IMAGE_URL" || field.getName() == "MYSQL_HOST"
