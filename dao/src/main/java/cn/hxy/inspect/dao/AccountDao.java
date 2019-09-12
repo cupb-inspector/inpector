@@ -30,7 +30,68 @@ public class AccountDao {
 		return goodsList;
 	
 	}
-	public List<Account> selectAllByTel(String tel) {
-		return null;
+
+	public List<Account> selectAllByTel(String tel) throws IOException {
+		// TODO Auto-generated method stub
+
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Account> goodsList = sqlSession.selectList("Account.findOrdersByTel", tel);
+		logger.info("查询结果条数"+goodsList.size());
+
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+
 	}
+	public List<Account> selectAllByStatus(String tel) throws IOException {
+		// TODO Auto-generated method stub
+
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Account> goodsList = sqlSession.selectList("Account.findAllByStatus", tel);
+		logger.info("查询结果条数"+goodsList.size());
+
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+
+	}
+	public List<Account> selectAll() throws IOException {
+
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Account> goodsList = sqlSession.selectList("Account.selectAll");
+		logger.info("查询结果条数"+goodsList.size());
+
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+	public Account selectAccountById(String id) throws IOException {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		Account goodsList = sqlSession.selectOne("Account.selectAccountById",id);
+		logger.info("查询结果"+goodsList);
+
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+	public int updateStatus(Account account) throws IOException {
+		// TODO Auto-generated method stub
+		SqlSession  sqlSession = DataConnection.getSqlSession();
+		logger.info("更新的Account:"+account);
+		int flag=sqlSession.update("Account.updateStatus", account);
+		sqlSession.commit();//清空缓存
+		sqlSession.close();
+		return flag;
+
+	}
+	public List<Account> selectAllByType(String type) throws IOException {
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Account> goodsList = sqlSession.selectList("Account.selectAllByType",type);
+		logger.info("查询结果条数"+goodsList.size());
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+
 }

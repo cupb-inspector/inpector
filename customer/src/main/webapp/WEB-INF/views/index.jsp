@@ -207,7 +207,7 @@
                     <li class="nav-item menu-item-has-children">
                         <a class="nav-link" data-toggle="collapse" href="#account1" aria-haspopup="true"
                             aria-expanded="false" aria-controls="account1">
-                            <i class="menu-icon fa fa-user"></i>
+                            <i class="menu-icon fa fa-cusUser"></i>
                             我的账户
                         </a>
                         <div class="collapse" id="account1">
@@ -291,16 +291,16 @@
                         </div>
                     </div>
 
-                    <div class="user-area dropdown float-right">
+                    <div class="cusUser-area dropdown float-right">
                         <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
-                            <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
+                            <img class="cusUser-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar">
                         </a>
 
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" target="myiframe"  href="personal"><i class="fa fa- user"></i>账户设置</a>
+                        <div class="cusUser-menu dropdown-menu">
+                            <a class="nav-link" target="myiframe"  href="personal"><i class="fa fa- cusUser"></i>账户设置</a>
 
-                            <a class="nav-link" href="user-login-out"><i class="fa fa- user"></i>安全退出</a>
+                            <a class="nav-link" href="cusUser-login-out"><i class="fa fa- cusUser"></i>安全退出</a>
 
                         </div>
                     </div>

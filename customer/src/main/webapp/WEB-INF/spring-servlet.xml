@@ -27,7 +27,7 @@
 
 			<!-- 但是排除下面这些，也就是不拦截请求 -->
 			<mvc:exclude-mapping path="/loginVerify" />
-			<mvc:exclude-mapping path="/register-user" />
+			<mvc:exclude-mapping path="/register-cusUser" />
 
 			<!--拦截器所在的包下 -->
 			<bean id="userInterceptor"

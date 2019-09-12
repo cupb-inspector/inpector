@@ -16,14 +16,6 @@
 <link rel="stylesheet" href="assets/css/flag-icon.min.css">
 <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
 <link rel="stylesheet" href="assets/css/style.css">
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-<style>
-html, body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-}
-</style>
 <script src="js/jquery.min.js"></script>
 <!--基于jQuery写的消息提示
   https://www.awaimai.com/1627.html

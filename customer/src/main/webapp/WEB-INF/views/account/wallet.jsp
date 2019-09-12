@@ -111,7 +111,7 @@
 								<div class="stat-content">
 									<div class="text-left dib">
 										<div class="stat-text">
-											￥<span class="">${user.cusMoney}</span>
+											￥<span class="">${cusUser.cusMoney}</span>
 										</div>
 										<div class="stat-heading">人民币余额</div>
 									</div>
@@ -150,7 +150,7 @@
 								<div class="stat-content">
 									<div class="text-left dib">
 										<div class="stat-text">
-											￥<span class="">${user.cusTempMoney}</span>
+											￥<span class="">${cusUser.cusTempMoney}</span>
 										</div>
 										<div class="stat-heading">过渡货币</div>
 									</div>
@@ -240,7 +240,7 @@
 											<%--												<%--%>
 <%--												AccountService accountService = new AccountService();--%>
 <%--												--%>
-<%--												List<Account>  ls = accountService.selectAllByUserId(user.getCusid());--%>
+<%--												List<Account>  ls = accountService.selectAllByUserId(cusUser.getCusid());--%>
 <%--													if(ls!=null&&ls.size()!=0){--%>
 <%--														for(int i=0;i<ls.size();i++){--%>
 <%--															Account a = ls.get(i);--%>

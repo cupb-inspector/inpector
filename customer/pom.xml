@@ -69,6 +69,11 @@
             <version>9.0.19</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>9.0.22</version>
+        </dependency>
         <!--jstl start -->
         <dependency>
             <groupId>jstl</groupId>
@@ -93,11 +98,7 @@
             <artifactId>dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>9.0.22</version>
-        </dependency>
+
     </dependencies>
 
     <build>

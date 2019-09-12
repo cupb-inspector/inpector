@@ -176,14 +176,14 @@
                                                 <tr>
                                                     <td><i class='fa fa-check-circle'
                                                             style='color:forestgreen'></i> 用户名</td>
-                                                    <td >${user.cusname}</td>
+                                                    <td >${cusUser.cusname}</td>
                                                     <td><a class='connect' href='#' style='color:mediumblue'></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class='fa fa-check-circle' style='color:forestgreen'></i> 手机号码
                                                     </td>
-                                                    <td>${user.custel}</td>
+                                                    <td>${cusUser.custel}</td>
                                                     <td><a class='connect' href='#' style='color:mediumblue'></a>
                                                     </td>
                                                 </tr>
@@ -211,7 +211,7 @@
                                                 <tr>
                                                     <td><i class='fa fa-check-circle' style='color:forestgreen'></i> 绑定邮箱
                                                     </td>
-                                                    <td><div id ="displayEmail">${user.email}</div></td>
+                                                    <td><div id ="displayEmail">${cusUser.email}</div></td>
                                                     <td><a class='connect' href = "JavaScript:void(0)" onclick = "openEmail()" style='color:mediumblue'>修改邮箱</a>
                                                    
                                                     </td>
@@ -472,7 +472,7 @@
                             <strong class="card-title">修改密码</strong>
                         </div>
                         <div class="card-body">
-                            <div action="register-user" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div action="register-cusUser" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="row form-group">
                                         <div class="col col-md-3"><label style="float:right" for="text-input" class=" form-control-label">原密码</label></div>
                                         <div class="col-12 col-md-9"><input type="text" id="origin" name="username"  class="form-control"></div>
@@ -514,7 +514,7 @@
                             <strong class="card-title">修改邮箱</strong>
                         </div>
                         <div class="card-body">
-                            <div action="register-user" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <div action="register-cusUser" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="row form-group">
                                         <div class="col col-md-3"><label style="float:right" for="text-input" class=" form-control-label">新邮箱</label></div>
                                         <div class="col-12 col-md-9"><input type="text" id="email"  class="form-control"></div>

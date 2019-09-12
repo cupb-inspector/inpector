@@ -48,13 +48,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="sqlmap/UserMapper.xml" />
 		<mapper resource="sqlmap/OrderMapper.xml" />
 		<mapper resource="sqlmap/AccountMapper.xml" />
 		<mapper resource="sqlmap/DataStatisticMapper.xml" />
-		<!-- <mapper resource="sqlmap/GoodsMapper.xml" /> <mapper resource="sqlmap/RawFileMapper.xml" 
-			/> <mapper resource="sqlmap/NetTypeMapper.xml" /> <mapper resource="sqlmap/PriceofNetTypeAndProvince.xml" 
-			/> <mapper resource="sqlmap/TransferBillMapper.xml" /> <mapper resource="sqlmap/NetBeanMapper.xml" 
-			/> -->
+		<mapper resource="sqlmap/CusUserMapper.xml" />
+		<mapper resource="sqlmap/AdminUserMapper.xml" />
+		<mapper resource="sqlmap/InspectorMapper.xml" />
 	</mappers>
 </configuration>  

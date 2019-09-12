@@ -2,7 +2,7 @@ package cn.hxy.inspect.customer.controller;
 
 import cn.hxy.inspect.customer.service.AccountService;
 import cn.hxy.inspect.entity.Account;
-import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.entity.customer.CusUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,11 +33,11 @@ public class PersonalController {
         // 返回页面防止出现中文乱码
         request.setCharacterEncoding("UTF-8");
         // 获取用户是否登录
-        User user = (User) request.getSession().getAttribute("user");
-        List<Account> ls = accountService.selectAllByUserId(user.getCusid());
+        CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
+        List<Account> ls = accountService.selectAllByUserId(cusUser.getCusid());
         //查找客户的钱包信息
-        if (user != null) {
-            model.addAttribute("user", user);
+        if (cusUser != null) {
+            model.addAttribute("user", cusUser);
             model.addAttribute("list", ls);
         }
         return "account/wallet";
@@ -54,11 +54,11 @@ public class PersonalController {
             e.printStackTrace();
         }
         // 获取用户是否登录
-        User user = (User) request.getSession().getAttribute("user");
+        CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 
         //查找客户的钱包信息
-        if (user != null) {
-            model.addAttribute("user", user);
+        if (cusUser != null) {
+            model.addAttribute("user", cusUser);
         }
         return "account/personal";
 

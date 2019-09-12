@@ -24,8 +24,6 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-  
   <script src="js/jquery.min.js"></script>
   <!--基于jQuery写的消息提示
   https://www.awaimai.com/1627.html
@@ -125,6 +123,8 @@
     				console.log(result);//打印服务端返回的数据(调试用)
     				if (result.resultCode == 200) {
     					//跳转到首页
+
+						console.log("用户登录验证成功，跳转首页")
     					window.location.href = 'index';
     				} else if (result.resultCode == 601) {
     					//	$(this).remove();
@@ -162,8 +162,7 @@
         //Form1.btnsubmit.click();
       }
     }
-    
-    
+
     </script>
 
 </head>
@@ -220,6 +219,5 @@
 	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/jquery.matchHeight.min.js"></script>
 	<script src="assets/js/main.js"></script>
-
 </body>
 </html>

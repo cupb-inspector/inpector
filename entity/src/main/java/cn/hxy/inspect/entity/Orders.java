@@ -1,7 +1,7 @@
 package cn.hxy.inspect.entity;
-import lombok.Data;
 
 import cn.hxy.inspect.util.Configuration;
+import lombok.Data;
 
 @Data
 public class Orders {

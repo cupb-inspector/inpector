@@ -37,7 +37,7 @@
 							<strong class="card-title">全部订单</strong>
 						</div>
 						<div class="card-body"  id="div-table-container">
-							<table id="table-user" class="table table-striped table-bordered table-hover table-condensed">
+							<table id="table-cusUser" class="table table-striped table-bordered table-hover table-condensed">
 								<thead>
 									<tr>
 									<th>订单号</th>
@@ -95,12 +95,12 @@
 
 <!--  
 	<script src="report/js/constant.js"></script>
-	<script src="report/js/user-manage.js"></script>
+	<script src="report/js/cusUser-manage.js"></script>
 -->
 
 	<!-- 数据加载 -->
 	<script src="report/js/constant.js"></script>
-	<script src="report/js/user-manage2.js"></script>
+	<script src="report/js/cusUser-manage2.js"></script>
 <!-- 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -145,7 +145,7 @@
 				);
 			}
 			//添加数据到表格
-			$('#table-user').DataTable(
+			$('#table-cusUser').DataTable(
 					 {
 						 destroy:true,//防止多次初始化
 						 data: data

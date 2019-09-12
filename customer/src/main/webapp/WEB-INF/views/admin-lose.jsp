@@ -9,7 +9,7 @@
 <meta name="description" content="这是一个 table 页面">
 <meta name="keywords" content="table">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	content="width=device-width, initial-scale=1, maximum-scale=1, cusUser-scalable=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
 <link rel="icon" type="image/png" href="assets/i/favicon.png">

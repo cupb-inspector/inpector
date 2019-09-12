@@ -7,7 +7,7 @@ public class Account {
 	private String id;
 	private String userId;// 用户
 	private String operate;// 加减
-	private String value;// 值
+	private int value;// 值
 	private String surplus;// 账户剩余
 	private String time;// 操作时间
 	private String type;// 类别：提现，充值，还是消费,消费可能是一句话。依据类别来显示

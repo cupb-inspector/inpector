@@ -1,7 +1,7 @@
 package cn.hxy.inspect.customer.service;
 
-import cn.hxy.inspect.entity.customer.User;
 import cn.hxy.inspect.dao.customer.UserDao;
+import cn.hxy.inspect.entity.customer.CusUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -11,16 +11,16 @@ import java.io.IOException;
 @Service
 public class UserService {
 	private final static Logger logger = LoggerFactory.getLogger(UserService.class);
-	public User login(String custel) {
+	public CusUser login(String custel) {
 		//依据电话号码查询数据库，返回对象，比对是否正确
 		logger.info("查询是否存在:"+custel);
 		UserDao userDao = new UserDao();
 		return userDao.selectUserByPhone(custel);
 	}
-	public boolean insert(User user) {
+	public boolean insert(CusUser cusUser) {
 		UserDao userDao = new UserDao();
 		try {
-		int flag=	userDao.insert(user);
+		int flag=	userDao.insert(cusUser);
 		if (flag==1) {
 			return true;
 		}
@@ -30,7 +30,7 @@ public class UserService {
 		return false;
 		
 	}
-	public User selectUserByTel(String custel) {
+	public CusUser selectUserByTel(String custel) {
 		// TODO Auto-generated method stub
 		//依据电话号码查询数据库，返回对象，比对是否正确
 		logger.info("查询是否存在:"+custel);
@@ -39,7 +39,7 @@ public class UserService {
 	
 	}
 	
-	public User selectUserById(String id) {
+	public CusUser selectUserById(String id) {
 		// TODO Auto-generated method stub
 		//依据电话号码查询数据库，返回对象，比对是否正确
 		logger.info("查询是否存在:"+id);
@@ -48,19 +48,19 @@ public class UserService {
 	
 	}
 	
-	public int updateOrders(User user) {
+	public int updateOrders(CusUser cusUser) {
 		// TODO Auto-generated method stub
 		UserDao userDao = new UserDao();
-		return  userDao.updateOrders(user);
+		return  userDao.updateOrders(cusUser);
 		
 		
 		
 		
 	}
-	public int update(User user) {
+	public int update(CusUser cusUser) {
 		// TODO Auto-generated method stub
 		UserDao userDao = new UserDao();
-	return	userDao.update(user);
+	return	userDao.update(cusUser);
 		
 	}
 

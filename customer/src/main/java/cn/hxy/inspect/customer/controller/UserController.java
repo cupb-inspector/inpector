@@ -1,6 +1,6 @@
 package cn.hxy.inspect.customer.controller;
 
-import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.customer.service.UserService;
 import cn.hxy.inspect.util.CodeMd5;
 import org.slf4j.Logger;
@@ -45,9 +45,9 @@ public class UserController {
 		UserService userService = new UserService();
 		if (tel != null && password != null && !"".equals(tel) && !"".equals(password)) {
 
-			User user = userService.login(tel);
-			if (user != null) {
-				logger.info("用户存在" + user.getCusname());
+			CusUser cusUser = userService.login(tel);
+			if (cusUser != null) {
+				logger.info("用户存在" + cusUser.getCusname());
 				// 检查密码
 				String newpasswd = null;
 				CodeMd5 codeMd5 = new CodeMd5();
@@ -56,12 +56,12 @@ public class UserController {
 				} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-				if (newpasswd.equals(user.getCuspasswd())) {
+				if (newpasswd.equals(cusUser.getCuspasswd())) {
 					// 匹配成功
 					resultCode = 200;
 					// 把用户对象存储到session
-					request.getSession().setAttribute("user", user);
-					logger.info("成功登录用户：" + user.getCusname() + "\t" + user.getCustel() + "\t" + user.getCusid());
+					request.getSession().setAttribute("user", cusUser);
+					logger.info("成功登录用户：" + cusUser.getCusname() + "\t" + cusUser.getCustel() + "\t" + cusUser.getCusid());
 				} else {
 					// 提示密码不正确
 					resultCode = 601;
@@ -87,9 +87,9 @@ public class UserController {
 
 	@RequestMapping(value = "/modify-email", method = RequestMethod.POST)
 	public void modifyEmail(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 		int resultCode = 0;
-		if (user != null) {
+		if (cusUser != null) {
 			String email = null;
 			try {
 				email = request.getParameter("email").trim();// 这个应该是新邮箱
@@ -97,9 +97,9 @@ public class UserController {
 			}
 			if (email != null && !email.isEmpty()) {
 
-				user.setEmail(email);
+				cusUser.setEmail(email);
 				UserService userService = new UserService();
-				userService.update(user);
+				userService.update(cusUser);
 
 				resultCode = 200;
 			} else {
@@ -122,9 +122,9 @@ public class UserController {
 
 	@RequestMapping(value = "/modify-passwd", method = RequestMethod.POST)
 	public void modify(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 		int resultCode = 0;
-		if (user != null) {
+		if (cusUser != null) {
 			String origin = null;
 			String new2 = null;
 			try {
@@ -139,11 +139,11 @@ public class UserController {
 				try {
 					origin = codeMd5.codeMd5(origin);
 					new2 = codeMd5.codeMd5(new2);
-					if (user.getCuspasswd().equals(origin)) {
+					if (cusUser.getCuspasswd().equals(origin)) {
 						// 更新密码
-						user.setCuspasswd(new2);
+						cusUser.setCuspasswd(new2);
 						UserService userService = new UserService();
-						userService.update(user);
+						userService.update(cusUser);
 						resultCode = 200;
 					} else {
 						resultCode = 502;// 原密码错误
@@ -209,25 +209,25 @@ public class UserController {
 
 			if (username != null && password != null && !"".equals(username) && !"".equals(password)) {
 
-				User user = new User();
-				user.setCusname(username);
-				user.setCuspasswd(newpasswd);
-				user.setCustel(tel);
-				user.setEmail(email);
-				user.setCusgrade("0");
-				user.setCusMoney(0);
-				user.setCusOrders(0);
-				user.setCusTempMoney("0");
+				CusUser cusUser = new CusUser();
+				cusUser.setCusname(username);
+				cusUser.setCuspasswd(newpasswd);
+				cusUser.setCustel(tel);
+				cusUser.setEmail(email);
+				cusUser.setCusgrade("0");
+				cusUser.setCusMoney(0);
+				cusUser.setCusOrders(0);
+				cusUser.setCusTempMoney(0);
 				// 检查用户是否存在
 				UserService userService = new UserService();
-				User user1 = userService.login(tel);
-				if (user1 != null) {
-					logger.info("用户存在" + user1.getCusname());
+				CusUser cusUser1 = userService.login(tel);
+				if (cusUser1 != null) {
+					logger.info("用户存在" + cusUser1.getCusname());
 					// 检查密码
-					if (password.equals(user1.getCuspasswd())) {
+					if (password.equals(cusUser1.getCuspasswd())) {
 						// 匹配成功
 						logger.info("密码正确");
-						request.getSession().setAttribute("user", user);
+						request.getSession().setAttribute("user", cusUser);
 						resultCode = 200;
 					} else {
 						// 提示密码不正确
@@ -238,11 +238,11 @@ public class UserController {
 				} else {
 					logger.info("用户未注册");
 					// 提示用户未注册
-					if (userService.insert(user)) {
+					if (userService.insert(cusUser)) {
 						logger.info("用户注册成功");
 						// 新注册的用户是没有id的，因此需要再次读取数据库查看id
-						user = userService.selectUserByTel(user.getCustel());
-						request.getSession().setAttribute("user", user);
+						cusUser = userService.selectUserByTel(cusUser.getCustel());
+						request.getSession().setAttribute("user", cusUser);
 						resultCode = 200;
 					} else
 						;
@@ -268,15 +268,15 @@ public class UserController {
 
 	@RequestMapping(value = "/user-login-out", method = RequestMethod.GET)
 	public String userLoginOut(ModelMap model, HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("user");
-		if (user != null) {
-			logger.info(user.getCusname() + "将要退出登录");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
+		if (cusUser != null) {
+			logger.info(cusUser.getCusname() + "将要退出登录");
 			// false代表：不创建session对象，只是从request中获取。
 			HttpSession session = request.getSession(false);
 			if (session == null) {
 
 			} else
-				session.removeAttribute("user");
+				session.removeAttribute("cusUser");
 //	https://blog.csdn.net/u010143291/article/details/51597507 
 		}
 		return "login";

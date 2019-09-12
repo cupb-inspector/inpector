@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="cn.hxy.inspect.entity.customer.User"%>
+<%@page import="cn.hxy.inspect.entity.customer.CusUser"%>
+<%@ page import="cn.hxy.inspect.entity.customer.CusUser" %>
 <%
 request.setCharacterEncoding("utf-8");
-User user = (User) request.getSession().getAttribute("user");
-if (user == null) {
+CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
+if (cusUser == null) {
 	//登录过期！重新登录提示页！
 	%>
 	<script type="text/javascript">

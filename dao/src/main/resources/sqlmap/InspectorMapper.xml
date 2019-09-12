@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Inspector">
+	<insert id="insert" parameterType="cn.hxy.inspect.entity.inspector.Inspector"
+		useGeneratedKeys="true">
+		insert into inspector(userName, userTel ,
+		userPasswd
+		,userGrade,province,city,district,address,rmb,email,integral ,orders,status)
+		values(#{userName} ,#{userTel}, #{userPasswd} ,
+		#{userGrade},#{province},#{city},#{district},#{address},#{rmb},#{email},#{integral},#{orders},#{status})
+	</insert>
+	<select id="selectAll" resultType="cn.hxy.inspect.entity.inspector.Inspector">
+		select * from inspector
+	</select>
+	<select id="findUserByNumber" parameterType="String"
+		resultType="cn.hxy.inspect.entity.inspector.Inspector">
+		SELECT * FROM inspector WHERE userTel=#{userTel}
+	</select>
+	
+	<select id="findUserById" parameterType="String"
+		resultType="cn.hxy.inspect.entity.inspector.Inspector">
+		SELECT * FROM inspector WHERE userId=#{userId}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="cn.hxy.inspect.entity.inspector.Inspector">
+		delete from inspector where
+		custel=#{custel}
+	</delete>
+	<!-- 修改用户 -->
+	<update id="update" parameterType="cn.hxy.inspect.entity.inspector.Inspector">
+		update inspector set
+		userName=#{userName},userTel=#{userTel},ttkdpasswd1=#{ttkdpasswd1},ttkdpasswd=#{ttkdpasswd},passwd=#{passwd},date=#{date},address=#{address}
+		where custel=#{custel}
+	</update>
+
+</mapper>

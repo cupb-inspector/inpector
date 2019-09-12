@@ -1,6 +1,6 @@
 package cn.hxy.inspect.customer.interceptor;
 
-import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.entity.customer.CusUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -21,9 +21,9 @@ public class UserInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object org) throws Exception {
 		// 根据session查询用户信息，如果用户不为空返回true
 		logger.info(String.format("拦截预处理%s", request.getRequestURI()));
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 
-		if (user != null) {
+		if (cusUser != null) {
 			logger.info("拦截器检测到了用户");
 			return true;
 		} else {

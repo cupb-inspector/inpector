@@ -1,8 +1,8 @@
 package cn.hxy.inspect.customer.controller;
 
-import cn.hxy.inspect.entity.Orders;
-import cn.hxy.inspect.entity.customer.User;
 import cn.hxy.inspect.customer.service.OrderService;
+import cn.hxy.inspect.entity.Orders;
+import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.util.Configuration;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -197,10 +197,10 @@ public class ReportController {
 	@RequestMapping(value = "/verifyReport2", method = RequestMethod.POST)
 	public void conformOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 
 		int resultCode = -1;
-		if (user != null) {
+		if (cusUser != null) {
 			String id = request.getParameter("id").trim();// 执行日期
 			String flag = request.getParameter("flag").trim();// 执行日期
 			Orders order = new Orders();
@@ -244,10 +244,10 @@ public class ReportController {
 	public HashMap<String, Object> selectReport(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 		HashMap<String, Object> hashMap = new HashMap<>();
 		int resultCode = -1;
-		if (user != null) {
+		if (cusUser != null) {
 //			分页加载的实现技术
 			String fuzzySearch = request.getParameter("fuzzySearch").trim();// 是否模糊搜索
 			String startIndex = request.getParameter("startIndex").trim();// 分页加载的起点
@@ -257,12 +257,12 @@ public class ReportController {
 			HashMap<String, Object> hashMap2 = new HashMap<>();
 			hashMap2.put("start", Integer.parseInt(startIndex));
 			hashMap2.put("size", Integer.parseInt(pageSize));
-			hashMap2.put("cusId", user.getCusid());
+			hashMap2.put("cusId", cusUser.getCusid());
 			hashMap2.put("status", Configuration.BILL_REPORT_VERIFIED);
 			logger.info(hashMap2.toString());
 //			查找该用户的报告，在订单表里面查找状态字和用户的tel
 			Orders orders = new Orders();
-			orders.setCusId(user.getCusid());
+			orders.setCusId(cusUser.getCusid());
 			orders.setStatus(Configuration.BILL_REPORT_SUBMIT);
 
 			OrderService orderService = new OrderService();

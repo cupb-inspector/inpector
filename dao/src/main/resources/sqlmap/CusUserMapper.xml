@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="User">
-	<insert id="insert" parameterType="cn.hxy.inspect.entity.customer.User"
+<mapper namespace="CusUser">
+	<insert id="insert" parameterType="cn.hxy.inspect.entity.customer.CusUser"
 		useGeneratedKeys="true">
 		insert into cususer(custel, cusname ,
 		cuspasswd
@@ -14,26 +14,26 @@
 		,#{cusname}, #{cuspasswd} ,
 		#{cusaddress},#{cusdate},#{cusvip},#{custrade},#{cusgrade},#{email},#{cusOrders},#{cusMoney},#{cusTempMoney})
 	</insert>
-	<select id="selectAll" resultType="cn.hxy.inspect.entity.customer.User">
+	<select id="selectAll" resultType="cn.hxy.inspect.entity.customer.CusUser">
 		select * from cususer
 	</select>
 	<select id="findUserByNumber" parameterType="String"
-		resultType="cn.hxy.inspect.entity.customer.User">
+		resultType="cn.hxy.inspect.entity.customer.CusUser">
 		SELECT * FROM cususer WHERE custel=#{custel}
 	</select>
 
 	<select id="findUserById" parameterType="String"
-		resultType="cn.hxy.inspect.entity.customer.User">
+		resultType="cn.hxy.inspect.entity.customer.CusUser">
 		SELECT * FROM cususer WHERE cusid=#{cusid}
 	</select>
 
 	<!-- 删除 -->
-	<delete id="delete" parameterType="cn.hxy.inspect.entity.customer.User">
+	<delete id="delete" parameterType="cn.hxy.inspect.entity.customer.CusUser">
 		delete from cususer where
 		custel=#{custel}
 	</delete>
 	<!-- 修改用户 -->
-	<update id="update" parameterType="cn.hxy.inspect.entity.customer.User">
+	<update id="update" parameterType="cn.hxy.inspect.entity.customer.CusUser">
 		update cususer set
 		<if test="cusMoney!=null">
 			cusMoney=#{cusMoney} ,
@@ -55,7 +55,7 @@
 
 	<!-- 修改用户 -->
 	<update id="updateOrders"
-		parameterType="cn.hxy.inspect.entity.customer.User">
+		parameterType="cn.hxy.inspect.entity.customer.CusUser">
 		update cususer set
 		cusOrders=#{cusOrders},cusMoney=#{cusMoney} where custel=#{custel}
 	</update>

@@ -1,6 +1,6 @@
 package cn.hxy.inspect.customer.controller;
 
-import cn.hxy.inspect.entity.customer.User;
+import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.customer.service.DataStatisticService;
 import cn.hxy.inspect.customer.service.OrderService;
 import cn.hxy.inspect.customer.service.UserService;
@@ -42,12 +42,12 @@ public class OrderController {
 	public void cusInsertOrder(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
 		org.json.JSONObject user_data = new org.json.JSONObject();
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 		int resultCode = -1;
 		int cusMoney = -1;// 用户钱包余额
 		int moneyStatus = -1;// 0不足，1充足
 		int billPrice = Configuration.BILL_PRICE;// 订单默认价格
-		if (user != null) {
+		if (cusUser != null) {
 			String orderId = DateUtil.getCurrentDateStr();// 采用微信的同样方式生成订单号，长度17
 			user_data.put("orderId", orderId);// 返回订单号
 	
@@ -74,9 +74,9 @@ public class OrderController {
 			boolean freshMan = false;
 			// 判断是否为新用户，如果是新用户，则第一单免费
 			UserService userService = new UserService();
-			user = userService.selectUserById(user.getCusid());
+			cusUser = userService.selectUserById(cusUser.getCusid());
 
-			if (user.getCusOrders() == 0) {
+			if (cusUser.getCusOrders() == 0) {
 				freshMan = true;
 				status=Configuration.BILL_SUBMITTED;//新用户直接提交成功！
 			}
@@ -203,7 +203,7 @@ public class OrderController {
 				String date = dateFormat.format(now);
 				Orders order = new Orders();
 				order.setOrderid(orderId);
-				order.setCusId(user.getCusid());
+				order.setCusId(cusUser.getCusid());
 				order.setCost(cost);
 				order.setDate(date);
 				order.setExcedate(excdate);
@@ -229,10 +229,10 @@ public class OrderController {
 				if (orderService.insert(order)) {
 					resultCode = 200;
 					// 更新订单总数
-					int a = user.getCusOrders() + 1;
-					user.setCusOrders(a);
+					int a = cusUser.getCusOrders() + 1;
+					cusUser.setCusOrders(a);
 					//更新用户信息
-					userService.updateOrders(user);
+					userService.updateOrders(cusUser);
 					//更新总订单信息
 					DataStatisticService dataStatisticService = new DataStatisticService();
 					DataStatistic dataStatistic = dataStatisticService.select();
@@ -259,7 +259,7 @@ public class OrderController {
 
 			if (status == Configuration.BILL_UNPAY) {
 				// 返回钱包信息，
-				cusMoney = user.getCusMoney();
+				cusMoney = cusUser.getCusMoney();
 
 				if (cusMoney >= billPrice) {
 					// 余额充足
@@ -297,7 +297,7 @@ public class OrderController {
 	@RequestMapping(value = "/cusSelectOrder", method = RequestMethod.POST)
 	public void cusSelectOrder(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 
 	}
 
@@ -306,11 +306,11 @@ public class OrderController {
 	@RequestMapping(value = "/orderPay", method = RequestMethod.POST)
 	public HashMap<String, Object> orderPay(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 		int resultCode = 0;
 		HashMap<String, Object> hashMap = new HashMap<>();
-		if (user != null) {
-			logger.info(String.format("用户%s在支付订单", user.getCusname()));
+		if (cusUser != null) {
+			logger.info(String.format("用户%s在支付订单", cusUser.getCusname()));
 
 			// 获取订单号即可完成支付？这个逻辑有点扯？
 			boolean flag = false;
@@ -331,21 +331,21 @@ public class OrderController {
 
 						// 扣款
 						UserService userService = new UserService();
-						user = userService.selectUserById(user.getCusid());
+						cusUser = userService.selectUserById(cusUser.getCusid());
 						
-						int a = user.getCusMoney() - Configuration.BILL_PRICE;// 每单的定价
+						int a = cusUser.getCusMoney() - Configuration.BILL_PRICE;// 每单的定价
 						//如果余额充足，则完成订单支付。如果余额不足返回不足提示信息
 						if(a>=0) {
-							logger.info(String.format("%s 余额充足 %s", user.getCusname(),user.getCusMoney()));
-							user.setCusMoney(a);
-							userService.update(user);
+							logger.info(String.format("%s 余额充足 %s", cusUser.getCusname(), cusUser.getCusMoney()));
+							cusUser.setCusMoney(a);
+							userService.update(cusUser);
 							// 更新订单状态
 							orders.setStatus(Configuration.BILL_PAY);// 订单已支付
 							orderService.updateStatus(orders);
 							resultCode = 200;
 						}else {
 							//余额不足，跳转到充值界面
-							logger.warn(String.format("%s余额不足：%s", user.getCusname(),user.getCusMoney()));
+							logger.warn(String.format("%s余额不足：%s", cusUser.getCusname(), cusUser.getCusMoney()));
 							resultCode = 607;
 						}
 					
@@ -374,8 +374,8 @@ public class OrderController {
 	@RequestMapping(value = "/details2", method = RequestMethod.GET)
 	public String details2(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
-		if (user != null) {
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
+		if (cusUser != null) {
 
 			String ordersId = request.getParameter("id").trim();// 备注
 			// 先依据id查询该订单，再判断该订单是否是该用户的，防止恶意的爬虫
@@ -431,8 +431,8 @@ public class OrderController {
 	@RequestMapping(value = "/details3", method = RequestMethod.GET)
 	public String details3(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
-		if (user != null) {
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
+		if (cusUser != null) {
 
 			String ordersId = request.getParameter("id").trim();// 备注
 			// 先依据id查询该订单，再判断该订单是否是该用户的，防止恶意的爬虫
@@ -486,7 +486,7 @@ public class OrderController {
 			throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 		List<Orders> ls = null;
 		// 将status放入list中
 		List<Integer> list = new ArrayList<>();
@@ -505,7 +505,7 @@ public class OrderController {
 		list.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_REPORT_REFUSED_BY_ADMIN_UNPAID,
 				Configuration.BILL_REPORT_PASSED_BY_ADMIN_UNPAID));
 		logger.info("" + list);
-		map.put("cusId", user.getCusid());
+		map.put("cusId", cusUser.getCusid());
 		map.put("list", list);
 		ls = o.findOrdersByRange(map);
 		model.addAttribute("list", ls);
@@ -518,12 +518,12 @@ public class OrderController {
 			throws UnsupportedEncodingException {
 		request.setCharacterEncoding("utf-8");
 
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 		List<Orders> ls = null;
 		// 将status放入list中
 		OrderService o = new OrderService();
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("cusId", user.getCusid());
+		map.put("cusId", cusUser.getCusid());
 		//用户确认报告通过
 		map.put("status", Configuration.BILL_REPORT_PASSED);
 		try {

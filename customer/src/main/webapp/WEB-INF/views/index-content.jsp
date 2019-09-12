@@ -7,18 +7,18 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/commons.jsp" />
 <%@page import="cn.hxy.inspect.customer.service.UserService"%>
-<%@page import="cn.hxy.inspect.entity.customer.User"%>
+<%@page import="cn.hxy.inspect.entity.customer.CusUser"%>
 <!DOCTYPE html>
 <html class="no-js" lang="">
 <%
 //查询个人信息
 request.setCharacterEncoding("utf-8");
-User user = (User) request.getSession().getAttribute("user");
-User u =null;
-if(user!=null){
+CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
+CusUser u =null;
+if(cusUser !=null){
 	//查询最新的金额数字
 	UserService s = new UserService();
-	 u =	s.login(user.getCustel());
+	 u =	s.login(cusUser.getCustel());
 }
 %>
 <head>
@@ -226,7 +226,7 @@ if(user!=null){
                                     
 											hashMap2.put("start", 0);
 											hashMap2.put("size", 5);
-											hashMap2.put("cusId", user.getCusid());
+											hashMap2.put("cusId", cusUser.getCusid());
 											hashMap2.put("status", Configuration.BILL_REPORT_PASSED);
 											
 											OrderService orderService = new OrderService();

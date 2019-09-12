@@ -47,6 +47,16 @@
 		</if>
 	</select>
 
+	<!-- 查询某个日期未完成的订单，根据分页数据start 和size查询数据 -->
+	<select id="selectOrdersByDateAndStatus" parameterType="Map"
+			resultType="cn.hxy.inspect.entity.Orders">
+		select * from orders WHERE status &lt; #{status} and excedate =
+		#{excedate}
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
 	<!-- 查询未完成的最近的订单，根据分页数据start 和size查询数据 -->
 	<select id="findOrdersByStatusJudge" parameterType="Map"
 		resultType="cn.hxy.inspect.entity.Orders">
@@ -89,7 +99,11 @@
 	
 	<select id="findOrdersByRange" parameterType="Map"
 		resultType="cn.hxy.inspect.entity.Orders" >
-		select * from orders WHERE cusId=#{cusId} and status in 
+		select * from orders WHERE
+		<if test="cusId!=null">
+			cusId=#{cusId} and
+		</if>
+		status in
 		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
             #{item}  
         </foreach>
@@ -98,6 +112,11 @@
 	<select id="findOrdersByFinishedStatus" parameterType="Map"
 		resultType="cn.hxy.inspect.entity.Orders" >
 		select * from orders WHERE cusId=#{cusId} and status = #{second} or status = #{first}
+	</select>
+
+	<select id="findAllOrders"
+			resultType="cn.hxy.inspect.entity.Orders">
+		select * from orders
 	</select>
 
 </mapper>

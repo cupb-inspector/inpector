@@ -71,11 +71,11 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>user-index</servlet-name>
+    <servlet-name>cusUser-index</servlet-name>
     <jsp-file>/WEB-INF/views/index.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-    <servlet-name>user-index</servlet-name>
+    <servlet-name>cusUser-index</servlet-name>
     <url-pattern>/index</url-pattern>
   </servlet-mapping>
 

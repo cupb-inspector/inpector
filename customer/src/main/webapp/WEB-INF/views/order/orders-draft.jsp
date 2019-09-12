@@ -5,22 +5,18 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="cn.hxy.inspect.customer.service.OrderService"%>
-<%@page import="cn.hxy.inspect.entity.customer.User"%>
+<%@page import="cn.hxy.inspect.entity.customer.CusUser"%>
 <!doctype html>
 <html class="no-js" lang="">
 <%
 	request.setCharacterEncoding("utf-8");
-	User user = (User) request.getSession().getAttribute("user");
+	CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
 	List<Orders> ls = null;
-	if (user == null) {
-		//登录过期！重新登录提示页！
-		response.sendRedirect(request.getContextPath() + "/admin-lose");
-		//request.getRequestDispatcher("/WEB-INF/a.jsp").forward(request, response);
-	} else {
+	if (cusUser != null) {
 		OrderService o = new OrderService();
 		HashMap<String, Object> map =new HashMap<String, Object> ();
 		map.put("status", Configuration.BILL_TEMP);
-		map.put("cusId", user.getCusid());
+		map.put("cusId", cusUser.getCusid());
 		ls = o.selectAllByIdAndStatus(map);
 	}
 %>

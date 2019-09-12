@@ -1,9 +1,9 @@
 package cn.hxy.inspect.customer.controller;
 
 import cn.hxy.inspect.customer.service.AccountService;
-import cn.hxy.inspect.entity.Account;
-import cn.hxy.inspect.entity.customer.User;
 import cn.hxy.inspect.customer.service.UserService;
+import cn.hxy.inspect.entity.Account;
+import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.util.Configuration;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -39,16 +39,16 @@ public class AccountController {
 	@RequestMapping(value = "/account-charge", method = RequestMethod.POST)
 	public void cusInsertOrder(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 		int resultCode = 0;
 		String fileUuid = null;
-		if (user != null) {
+		if (cusUser != null) {
 			// 查询最新的个人信息
 			userService = new UserService();
-			user = userService.selectUserByTel(user.getCustel());
+			cusUser = userService.selectUserByTel(cusUser.getCustel());
 
 			Account account = new Account();
-			account.setUserId(user.getCusid());
+			account.setUserId(cusUser.getCusid());
 			account.setOperate("1");
 			Date now = new Date();
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");// 可以方便地修改日期格式
@@ -100,7 +100,7 @@ public class AccountController {
 					logger.info(key);
 					switch (key) {
 					case "value":
-						account.setValue(value);
+						account.setValue(Integer.parseInt(value));
 
 						break;
 					case "notes":
@@ -144,12 +144,12 @@ public class AccountController {
 				}
 			}
 			AccountService accountService = new AccountService();
-//			logger.info(user.getCusMoney());
-			logger.info(account.getValue());
+//			logger.info(cusUser.getCusMoney());
+//			logger.info(account.getValue());
 
-//			float a = Float.parseFloat(user.getCusMoney())+ Float.parseFloat(account.getValue());
+//			float a = Float.parseFloat(cusUser.getCusMoney())+ Float.parseFloat(account.getValue());
 			// 获取上一次的余额
-			float a = Float.parseFloat(user.getCusTempMoney()) + Float.parseFloat(account.getValue());
+			int a = (cusUser.getCusTempMoney()) + (account.getValue());
 
 			account.setSurplus(String.valueOf(a));
 
@@ -157,12 +157,12 @@ public class AccountController {
 				if (accountService.insert(account)) {
 					resultCode = 200;
 					// 处理用户的临时余额
-					user.setCusTempMoney(String.valueOf(a));
-					userService.update(user);
+					cusUser.setCusTempMoney((a));
+					userService.update(cusUser);
 					// 充值成功。获取用户的货币余额，处理下
 					// 应该由管理员通过后再加上去。
 					// int money =Integer.parseInt(
-					// account.getValue())+Integer.parseInt(user.getCusMoney());
+					// account.getValue())+Integer.parseInt(cusUser.getCusMoney());
 					// 更新用户的余额
 				} else
 					resultCode = 599;// 数据库内部操作异常
@@ -250,19 +250,19 @@ public class AccountController {
 	public void cusWithdraw(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("提现响应");
 		// 获取用户是否登录
-		User user = (User) request.getSession().getAttribute("user");
+		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 		int resultCode = 0;
-		if (user != null) {
+		if (cusUser != null) {
 			String value = request.getParameter("value").trim();
 			String notes = request.getParameter("notes").trim();
 			logger.info("提现的信息：" + value + "\t" + notes);
 			// 查询用户的实际金额是否充足！
 			if (value != null && !"null".equals(value)) {
 				userService = new UserService();
-				user = userService.selectUserById(user.getCusid());
-				int money =user.getCusMoney();
-				float temMoney = Float.parseFloat(user.getCusTempMoney());
-				float valuef = Float.parseFloat(value);
+				cusUser = userService.selectUserById(cusUser.getCusid());
+				int money = cusUser.getCusMoney();
+				int temMoney = (cusUser.getCusTempMoney());
+				int valuef = Integer.parseInt(value);
 				if (money >= valuef) {
 					logger.info("符合提现");
 					// 第一步检查是判断是否提现合理，但是这个时候还不去减少真正的余额，也就是可以继续消费。
@@ -270,20 +270,20 @@ public class AccountController {
 
 //					说明可以提现
 //					float a = money -valuef;//实际剩下余额
-					float b = temMoney - valuef;
-//					user.setCusMoney(String.valueOf(a));
-					user.setCusTempMoney(String.valueOf(b));
-					userService.update(user);
+					int b = temMoney - valuef;
+//					cusUser.setCusMoney(String.valueOf(a));
+					cusUser.setCusTempMoney((b));
+					userService.update(cusUser);
 
 					resultCode = 200;
 
 					AccountService accountService = new AccountService();
 					Account account = new Account();
 					account.setNotes(notes);
-					account.setValue(value);
+					account.setValue(Integer.parseInt(value));
 					account.setSurplus(String.valueOf(b));
 					account.setType("2");// 提现
-					account.setUserId(user.getCusid());
+					account.setUserId(cusUser.getCusid());
 					account.setOperate("2");
 					account.setStatus("0");
 

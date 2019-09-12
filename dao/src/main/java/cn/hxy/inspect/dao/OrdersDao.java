@@ -148,7 +148,74 @@ public class OrdersDao {
 		sqlSession.close();
 		return goodsList; 
 	}
-	
+
+	public List<Orders> selectAll() throws IOException {
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Orders> goodsList = sqlSession.selectList("Orders.findAllOrders");
+		logger.info("查询结果条数" + goodsList.size());
+		for (Orders good : goodsList) {
+//			System.out.format("%s\n", good.getNetName());
+		}
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+	public List<Orders> selectOrdersByStatus(int status) throws IOException {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Orders> goodsList = sqlSession.selectList("Orders.findOrdersByStatus", status);
+		logger.info("查询结果条数" + goodsList);
+
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+	public List<Orders> selectOrdersByDateAndStatus(HashMap<String, Object> map) throws IOException {
+		// TODO Auto-generated method stub
+		logger.info(String.valueOf(map));
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Orders> goodsList = sqlSession.selectList("Orders.selectOrdersByDateAndStatus", map);
+		logger.info("查询结果条数" + goodsList.size());
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+	public List<Orders> selectOrdersByStatusJudge(HashMap map) throws IOException {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Orders> goodsList = sqlSession.selectList("Orders.findOrdersByStatusJudge", map);
+		logger.info("查询结果条数" + goodsList);
+
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+	public int updateInspect(Orders order) {
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int flag = sqlSession.update("Orders.updateInspect", order);
+		sqlSession.commit();// 清空缓存
+		sqlSession.close();
+		return flag;
+
+	}
+	public int updateInspector(Orders order) {
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int flag = sqlSession.update("Orders.updateInspector", order);
+		logger.info("修改订单的质检员号码,结果为：" + flag);
+		sqlSession.commit();// 清空缓存
+		sqlSession.close();
+		return flag;
+	}
 	
 	
 }
