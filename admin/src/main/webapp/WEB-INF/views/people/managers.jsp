@@ -1,7 +1,4 @@
 <jsp:include page="/WEB-INF/views/commons.jsp"/>
-<%@page import="hxy.inspec.admin.services.AdminUserService"%>
-<%@page import="java.util.List"%>
-<%@page import="hxy.inspec.admin.po.AdminUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -39,7 +36,7 @@ List< AdminUser> c=   cusUserService.selectAll();
   <!--基于jQuery写的消息提示
   https://www.awaimai.com/1627.html
     -->
- 
+
   <script src="hxy/js/hxy-alert.js"></script>
   <link rel="stylesheet" href="hxy/css/hxy-alert.css">
     <style>
@@ -190,7 +187,7 @@ List< AdminUser> c=   cusUserService.selectAll();
                                                 <a href = "JavaScript:void(0)" onclick = "openDialogl()" style="color:blue">详细</a>
                                             </td>
                                         </tr>
-                                		 <% 
+                                		 <%
                                 	 }
                                  }
                                     %>
@@ -317,7 +314,7 @@ List< AdminUser> c=   cusUserService.selectAll();
                     </div> <!-- /.card -->
                
             </div> 
-            <div id="fade" class="black_overlay"></div> 
+            <div id="fade" class="black_overlay"></div>
         <!--/点击添加管理员-->
         <!--点击修改管理员权限-->
         <div id="light-l" class="white_content">

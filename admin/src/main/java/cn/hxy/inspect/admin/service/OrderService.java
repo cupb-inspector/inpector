@@ -172,9 +172,28 @@ public class OrderService {
         return list;
     }
 
-    public List<Orders> selectFinishedOrders(HashMap<String, Object> map) throws IOException {
-        cn.hxy.inspect.dao.OrdersDao ordersDao = new cn.hxy.inspect.dao.OrdersDao();
+    public List<Orders> selectFinishedOrders() throws IOException {
+        OrdersDao ordersDao = new OrdersDao();
+        // 将status放入list中
+        List<Integer> listParam = new ArrayList<>();
+        OrderService o = new OrderService();
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        // 获得一部分status
+        listParam.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_SUBMITTED,
+                Configuration.BILL_REFUSED_BY_ADMIN));
+
+        listParam.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_ASSIGNING_BY_ADMIN_UNPAID,
+                Configuration.BILL_REFUSED_BY_ADMIN_UNPAID));
+
+        listParam.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_INSPECTOR_CONFIRM,
+                Configuration.BILL_REPORT_VERIFIED));
+
+        listParam.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_REPORT_REFUSED_BY_ADMIN_UNPAID,
+                Configuration.BILL_REPORT_PASSED_BY_ADMIN_UNPAID));
+
+        map.put("list", listParam);
         List<Orders> list = ordersDao.findOrdersByRange(map);
+
         return list;
     }
 }

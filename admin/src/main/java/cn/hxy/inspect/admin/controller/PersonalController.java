@@ -19,6 +19,13 @@ import java.io.UnsupportedEncodingException;
 public class PersonalController {
 	private final static Logger logger = LoggerFactory.getLogger(PersonalController.class);
 
+
+	@RequestMapping(value = "/personal", method = RequestMethod.GET)
+	public String personal(ModelMap model, HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		return "personal";
+	}
+
 	@RequestMapping(value = "/wallet", method = RequestMethod.GET)
 	public void downloadReport(ModelMap model, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

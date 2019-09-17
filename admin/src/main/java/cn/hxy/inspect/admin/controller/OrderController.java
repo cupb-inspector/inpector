@@ -117,7 +117,7 @@ public class OrderController {
 	
 	@RequestMapping(value = "/orders-new", method = RequestMethod.GET)
 	public String customer_getUnfinishOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response)
-			throws UnsupportedEncodingException {
+            throws IOException {
 		request.setCharacterEncoding("utf-8");
 		AdminUser adminUser = (AdminUser) request.getSession().getAttribute("user");
 		List<Orders> ls = null;

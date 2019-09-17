@@ -4,10 +4,12 @@ import cn.hxy.inspect.dao.admin.AdminUserDao;
 import cn.hxy.inspect.entity.admin.AdminUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class AdminUserService {
 	private final static Logger logger = LoggerFactory.getLogger(AdminUserService.class);
 

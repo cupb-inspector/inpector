@@ -167,8 +167,8 @@ html, body {
 					</a>
 						<div class="collapse" id="managers">
 							<ul class="nav flex-column sub-menu">
-								<li><a href="managers" target="myiframe">管理员管理</a></li>
-								<li><a href="clients" target="myiframe">客户管理</a></li>
+								<li><a href="manager" target="myiframe">管理员管理</a></li>
+								<li><a href="client" target="myiframe">客户管理</a></li>
 								<li><a href="surveyor" target="myiframe">质检员管理</a></li>
 							</ul>
 						</div></li>

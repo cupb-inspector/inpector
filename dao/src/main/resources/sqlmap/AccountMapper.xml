@@ -76,5 +76,9 @@
 		update orders set status=#{status} where
 		orderid=#{orderid}
 	</update>
+	<select id="selectAllByType" parameterType="String"
+			resultType="cn.hxy.inspect.entity.Account">
+		SELECT * FROM account WHERE type=#{type}
+	</select>
 
 </mapper>

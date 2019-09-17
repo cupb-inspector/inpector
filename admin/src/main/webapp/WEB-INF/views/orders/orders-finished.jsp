@@ -1,25 +1,6 @@
-<%@page import="hxy.inspec.admin.util.Configuration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="hxy.inspec.admin.po.Orders"%>
-<%@page import="hxy.inspec.admin.po.AdminUser"%>
-<%@page import="java.util.List"%>
-<%@page import="hxy.inspec.admin.services.OrderService"%>
 <!doctype html>
-<%
-	AdminUser user = (AdminUser) request.getSession().getAttribute("user");
-	List<Orders> ls = null;
-	if (user != null) {
-		OrderService orderService = new OrderService();
-		ls = orderService.selectOrdersByStatus(Configuration.BILL_REPORT_PASSED);//报告由客户审核通过
-	} else {
-		%>
-			<script type="text/javascript">
-			window.top.location.href = 'login';
-			</script>
-		<% 
-	}
-%>
 <html class="no-js" lang="">
 <head>
 <meta charset="utf-8">
@@ -40,13 +21,6 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-<style>
-html, body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-}
-</style>
 </head>
 <body>
 	<div class="content" style="background: #f1f2f7; height: 100%">
@@ -62,7 +36,6 @@ html, body {
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-										<th class="serial">#</th>
 										<th>委托方</th>
 										<th>订单号</th>
 										<th>验货方</th>
@@ -71,27 +44,15 @@ html, body {
 									</tr>
 								</thead>
 								<tbody>
-
-									<%
-									if(ls!=null){
-										if (ls.size() != 0) {
-											for (int i = 0; i < ls.size(); i++) {
-												Orders o = ls.get(i);
-									%>
+								<c:forEach items="${list}" var="order" varStatus="status">
 									<tr>
-										<td><%=i + 1%></td>
-										<td><%=o.getCusId()%></td>
-										<td><%=o.getOrderid()%></td>
-										<td><%=o.getQualId()%></td>
-										<td><%=o.getExcedate()%></td>
-										<td><a href="orders-details-report-conform?id=<%=o.getOrderid()%>"
-											target="myiframe" style="color: blue">详情</a>
+										<td>${order.cusId }</td>
+										<td>${order.orderid }</td>
+										<td>${order.qualId }</td>
+										<td>${order.excedate}</td>
+										<td><a href="details3?id=${ order.orderid }">详情</a></td>
 									</tr>
-									<%
-										}
-										}
-									}
-									%>
+								</c:forEach>
 								</tbody>
 							</table>
 						</div>
