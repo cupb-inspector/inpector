@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/commons.jsp"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
@@ -50,9 +51,18 @@
                             </tr>
                             </thead>
                             <tbody>
-
-
-
+                            <c:forEach items="${list}" var="order" varStatus="status">
+                                <tr>
+                                    <td>${status.index +1 }</td>
+                                    <td>${order.userName }</td>
+                                    <td>${order.userTel }</td>
+                                    <td>${order.city }</td>
+                                    <td>${order.orders }</td>
+                                    <td>${order.integral}</td>
+                                    <td>${order.status}</td>
+                                    <td><a href="details3?id=${ order.userId }">详情</a></td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>

@@ -24,7 +24,7 @@ public class UserInterceptor implements HandlerInterceptor {
 		CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
 
 		if (cusUser != null) {
-			logger.info("拦截器检测到了用户");
+			logger.info("拦截器检测到了用户{}",cusUser.getCusname());
 			return true;
 		} else {
 			// 这里可以写登录超时返回给页面的错误信息。或者跳转页面

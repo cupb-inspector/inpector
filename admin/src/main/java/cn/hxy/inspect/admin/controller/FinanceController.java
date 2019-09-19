@@ -28,6 +28,15 @@ public class FinanceController {
         model.addAttribute("list",ls);
         return "finance/payment";
     }
+
+    /**
+     * 提现
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/withdraw", method = RequestMethod.GET)
     public String withdraw(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<Account> ls= accountService.selectAllByType("2");
