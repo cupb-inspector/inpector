@@ -30,7 +30,7 @@
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 		</Root>
-		<Logger name="hxy.inspec" level="${log.sql.level}"
+		<Logger name="cn.hxy.inspect" level="${log.sql.level}"
 			additivity="false">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />

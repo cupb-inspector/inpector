@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="30">
+	<properties>
+		<property name="LOG_HOME">.</property>
+		<property name="FILE_NAME">inspec</property>
+		<property name="log.sql.level">INFO</property>
+	</properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SS} [%t] %-5level %l - %msg%n" />
+		</Console>
+		<RollingFile name="RollingFile"
+			fileName="${FILE_NAME}.log"
+			filePattern="${FILE_NAME}-%d{yyyy-MM-dd}-%i.log.gz">
+			<!-- 每分钟生成 -->
+			<!-- <PatternLayout pattern="%d{HH:mm:ss.S} [%t] %-5level %l - %msg%n"/> -->
+			<!-- 每天生成文件 -->
+			<PatternLayout
+				pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="${log.sql.level}">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+		<Logger name="cn.hxy.inspec" level="${log.sql.level}"
+			additivity="false">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Logger>
+	</Loggers>
+</Configuration>
