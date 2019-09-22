@@ -2,10 +2,12 @@ package cn.hxy.inspect.admin.service;
 
 import cn.hxy.inspect.dao.inspector.InspectorDao;
 import cn.hxy.inspect.entity.inspector.Inspector;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class InspectorService {
 	public List<Inspector> selectAll() throws IOException {
 		InspectorDao ordersDao = new InspectorDao();

@@ -40,13 +40,11 @@ public class OrdersDao {
 		sqlSession.close();
 		return goodsList;
 	}
-	
+
 	/**
-	 * 
-	 * @param 插入订单信息
-	 * @return 返回订单的id号
+	 * @param order
+	 * @return
 	 * @throws IOException
-	 * eric
 	 */
 	public int insert(Orders order) throws IOException {
 		SqlSession sqlSession = DataConnection.getSqlSession();
@@ -216,6 +214,49 @@ public class OrdersDao {
 		sqlSession.close();
 		return flag;
 	}
-	
-	
+
+	//质检员模块
+	public  List<Orders>  findUserByQualIdAndStatus(Orders ordersId) {
+
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		List<Orders>  user = sqlSession.selectList("Orders.findUserByQualIdAndStatus", ordersId);
+		sqlSession.commit();//清空缓存
+		sqlSession.close();
+		return user;
+	}
+
+
+	public List<Orders> findOrdersByStatus(String status) throws IOException {
+
+
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		List<Orders> goodsList = sqlSession.selectList("Orders.findOrdersByStatus", status);
+		logger.info("查询结果条数"+goodsList.size());
+		for (Orders good : goodsList) {
+//			System.out.format("%s\n", good.getNetName());
+		}
+		sqlSession.commit();
+		sqlSession.close();
+		return goodsList;
+	}
+
+
+	public int updateReport(Orders order) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int flag=sqlSession.update("Orders.updateReport", order);
+		sqlSession.commit();//清空缓存
+		sqlSession.close();
+		return flag;
+	}
 }

@@ -49,6 +49,31 @@ public class InspectorDao {
 		sqlSession.close();
 		return user;
 	}
-	
+	public int insert(Inspector user) throws IOException {
+		SqlSession sqlSession = DataConnection.getSqlSession();
+		int flag = sqlSession.insert("Inspector.insert", user);
+		sqlSession.commit();
+		sqlSession.close();
+		logger.info("插入后结果：" + flag);
+		return flag;
+	}
+
+
+	public boolean update(Inspector user) {
+		// TODO Auto-generated method stub
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		int flag = sqlSession.update("Inspector.update", user);
+		logger.info("更新用户的信息：" + flag);
+		sqlSession.commit();// 清空缓存
+		sqlSession.close();
+		return flag>0; //这和customer 接口不一致呀
+
+	}
+
 
 }

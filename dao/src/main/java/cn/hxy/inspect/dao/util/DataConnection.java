@@ -57,7 +57,12 @@ public class DataConnection {
 	}
 	{}
 	public static void main(String args[]) {
-
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

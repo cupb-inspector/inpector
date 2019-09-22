@@ -117,7 +117,7 @@ public class OrderController {
 	
 	@RequestMapping(value = "/orders-new", method = RequestMethod.GET)
 	public String customer_getUnfinishOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response)
-			throws UnsupportedEncodingException {
+            throws IOException {
 		request.setCharacterEncoding("utf-8");
 		AdminUser adminUser = (AdminUser) request.getSession().getAttribute("user");
 		List<Orders> ls = null;
@@ -484,5 +484,23 @@ public class OrderController {
 		modelMap.addAttribute("list",list);
 		return "orders/orders-all";
 	}
+    @RequestMapping(value = "orders-checking",method = RequestMethod.GET)
+    public String ordersChecking(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        List<Orders> list = orderService.selectTodayTomorrowOrders();
+        modelMap.addAttribute("list",list);
+        return "orders/orders-checkings";
+    }
+    @RequestMapping(value = "orders-unfinished",method = RequestMethod.GET)
+    public String ordersUnfinished(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        List<Orders> list = orderService.selectUnfinishedOrders();
+        modelMap.addAttribute("list",list);
+        return "orders/orders-unfinished";
+    }
+    @RequestMapping(value = "orders-finished",method = RequestMethod.GET)
+    public String ordersFinished(ModelMap modelMap,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        List<Orders> list = orderService.selectFinishedOrders();
+        modelMap.addAttribute("list",list);
+        return "orders/orders-finished";
+    }
 
 }

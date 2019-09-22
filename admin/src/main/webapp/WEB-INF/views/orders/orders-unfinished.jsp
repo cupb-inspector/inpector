@@ -1,25 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="java.util.HashMap"%>
-<%@page import="hxy.inspec.admin.services.OrderService"%>
-
-<%@page import="hxy.inspec.admin.po.Orders"%>
-<%@page import="java.util.List"%>
-<!doctype html>
-<%@page import="hxy.inspec.admin.po.AdminUser"%>
-<%
-	AdminUser user = (AdminUser) request.getSession().getAttribute("user");
-	if (user == null) {
-		//request.getRequestDispatcher("/lose").forward(request, response);
-%>
-<script type="text/javascript">
-	window.top.location.href = 'login';
-</script>
-<%
-	} else {
-
-	}
-%>
 <html class="no-js" lang="">
 <!--<![endif]-->
 <head>
@@ -42,22 +23,11 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-<style>
-html, body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-}
-</style>
 </head>
 <body>
-
 	<div class="content" style="background: #f1f2f7; height: 100%">
 		<div class="animated fadeIn">
 			<div class="row">
-
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
@@ -78,30 +48,15 @@ html, body {
 									</tr>
 								</thead>
 								<tbody>
-									<%
-										HashMap<String, Object> map = new HashMap<String, Object>();
-										map.put("status", 10);//小于4的订单都是未分配的
-										OrderService orderService = new OrderService();
-										List<Orders> ls = orderService.selectOrdersByStatusJudge(map);
-
-										if (ls != null && ls.size() != 0) {
-											for (int i = 0; i < ls.size(); i++) {
-												Orders o = ls.get(i);
-									%>
+								<c:forEach items="${list}" var="order" varStatus="status">
 									<tr>
-										<td><%=o.getCusId()%></td>
-										<td><%=o.getExcedate()%></td>
-										<td><%=o.getFactoryaddress()%></td>
-										<td><%=o.getGoods()%></td>
-										<td><a href="orders-details-ajax?id=<%=o.getOrderid()%>"
-											target="myiframe" style="color: blue">详情</a>
+										<td>${order.cusId }</td>
+										<td>${order.excedate}</td>
+										<td>${order.factoryname}</td>
+										<td>${order. goods}</td>
+										<td><a href="details3?id=${ order.orderid }">详情</a></td>
 									</tr>
-									<%
-										}
-										}
-									%>
-
-
+								</c:forEach>
 
 
 								</tbody>

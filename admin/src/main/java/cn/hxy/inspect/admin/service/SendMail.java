@@ -1,7 +1,10 @@
 package cn.hxy.inspect.admin.service;
 
 import cn.hxy.inspect.entity.admin.MailAuthenticator;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -19,7 +22,7 @@ import java.util.Properties;
 public class SendMail {
 
 	// 日志记录
-	private static Logger logger = Logger.getLogger(SendMail.class);
+	private static Logger logger = LoggerFactory.getLogger(SendMail.class);
 	public static MailAuthenticator authenticator;
 	private MimeMessage message;
 	private Session session;
@@ -47,7 +50,7 @@ public class SendMail {
 			doSendHtmlEmail(title, content, receivers, fileList);
 			return true;
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("{}",e);
 			return false;
 		}
 
@@ -131,13 +134,13 @@ public class SendMail {
 
 			System.out.println(title + " Email send success!");
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("{}",e);
 		} finally {
 			if (transport != null) {
 				try {
 					transport.close();
 				} catch (MessagingException e) {
-					logger.error(e);
+					logger.error("{}",e);
 				}
 			}
 		}
