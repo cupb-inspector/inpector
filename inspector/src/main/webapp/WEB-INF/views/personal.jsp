@@ -1,40 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.Vector"%>
-<%@page import="hxy.inspec.inspector.po.Orders"%>
-<%@page import="hxy.inspec.inspector.po.User"%>
-<%@page import="hxy.inspec.inspector.services.UserService"%>
 <jsp:include page="/WEB-INF/views/commons.jsp"/>
-<%
-request.setCharacterEncoding("utf-8");
-	User user = (User) request.getSession().getAttribute("user");
-
-	if (user == null) {
-		System.out.print("用户没有登录");
-		request.getRequestDispatcher("login").forward(request, response);//保持浏览器地址不变
-	}else {
-		UserService userService = new UserService();
-		if (user.getUserId() == null) {//新用户注册后的情形
-			user = userService.login(user.getUserTel());
-		} else {
-			user = userService.findUserById(user.getUserId());
-		}
-		request.getSession().setAttribute("user", user);
-	}
-%>
-<%! 
-String addressGetter(String[] S){
-	String address="";
-	for (String s :S)
-		if(s==null)continue;
-		else address+=s;
-	return address;
-}
-%>
-<%
-String[] S = {user.getProvince(),user.getCity(),user.getDistrict(),user.getAddress()}; 
-String userAddress = addressGetter(S);
-%>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -57,10 +23,8 @@ String userAddress = addressGetter(S);
     <link rel="stylesheet" href="assets/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="assets/weather/css/weather-icons.css" rel="stylesheet" />
     <link href="assets/calendar/fullcalendar.css" rel="stylesheet" />
-
     <link href="assets/css/charts/chartist.min.css" rel="stylesheet">
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
 	<script src="js/jquery.min.js"></script>
@@ -93,14 +57,7 @@ String userAddress = addressGetter(S);
             -moz-opacity: 0.8; 
             opacity:.80; 
             filter: alpha(opacity=88); 
-        } 
-    
-    
-         html,body{
-                        margin: 0px;
-                        width: 100%;
-                        height: 100%;
-                    }
+        }
         #weatherWidget .currentDesc {
             color: #ffffff !important;
         }
@@ -143,7 +100,6 @@ String userAddress = addressGetter(S);
 
 
         }
-
         #connect {
             color: chocolate
         }
@@ -210,7 +166,7 @@ String userAddress = addressGetter(S);
                                                                 <div class="col col-md-3"><label
                                                                         class=" form-control-label">我的ID</label></div>
                                                                 <div class="col-12 col-md-9">
-                                                                    <p class="form-control-static"><%=user.getUserId()%></p>
+                                                                    <p class="form-control-static">${inspector.userId}</p>
                                                                 </div>
                                                             </div>
 
@@ -220,7 +176,7 @@ String userAddress = addressGetter(S);
                                                                 </div>
                                                                 <div class="col-12 col-md-9"><input type="text"
                                                                         id="inspector-userName-input" name="inspector-userName-input"
-                                                                        value="<%=user.getUserName()%>"
+                                                                        value="${inspector.userName}"
                                                                         class="form-control"></div>
                                                             </div>
                                                             <div class="row form-group">
@@ -228,7 +184,7 @@ String userAddress = addressGetter(S);
                                                                         class=" form-control-label">我的积分</label></div>
                                                                 <div class="col-12 col-md-9"><input type="text"
                                                                         id="user-grade" name="user-grade"
-                                                                        placeholder="<%=user.getIntegral() %>" disabled=""
+                                                                        placeholder="${inspector.integral}" disabled=""
                                                                         class="form-control"></div>
                                                             </div>
                                                             <div class="row form-group">
@@ -241,7 +197,7 @@ String userAddress = addressGetter(S);
                                                                         class="form-control"></textarea></div>
                                                             </div>
                                                             <div class="row form-group">
-                                                                <div class="col col-md-3"><label for="select"
+                                                                <div class="col col-md-3"><label for="inspector-status-select"
                                                                         class=" form-control-label">我的状态</label></div>
                                                                 <div class="col-12 col-md-9">
                                                                     <select name="inspector-status-select" id="inspector-status-select"
@@ -252,7 +208,7 @@ String userAddress = addressGetter(S);
                                                                         <option value="3">正在工作</option>
                                                                     </select>
                                                                     <script type="text/javascript">
-                                                            		document.getElementById("inspector-status-select")[<%=user.getStatus()%>].selected=true;
+                                                            		document.getElementById("inspector-status-select")[${inspector.status}].selected=true;
                                                             		</script>
                                                                 </div>
                                                             </div> 
@@ -262,7 +218,7 @@ String userAddress = addressGetter(S);
                                                                 <div class="col-12 col-md-9">
                                                                     <select name="disabledSelect" id="disabledSelect"
                                                                         disabled="" class="form-control">
-                                                                        <option value="0"><%=user.getEmail() %></option>
+                                                                        <option value="0">${inspector.email}</option>
                                                                         <option value="1">Option #1</option>
                                                                         <option value="2">Option #2</option>
                                                                         <option value="3">Option #3</option>
@@ -276,7 +232,7 @@ String userAddress = addressGetter(S);
                                                                 <div class="col-12 col-md-9"><input type="text"
                                                                         id="inspector-user-address" name="inspector-user-address"
                                                                         
-                                                                        value="<%=userAddress%>"
+                                                                        value="${inspector.address}"
                                                                         class="form-control"></div>
                                                             </div>
                                                            
@@ -321,14 +277,14 @@ String userAddress = addressGetter(S);
                                                 <tr>
                                                     <td><i class='fa fa-check-circle'
                                                             style='color:forestgreen'></i> 用户名</td>
-                                                    <td ><%=user.getUserName() %></td>
+                                                    <td >${inspector.userName}</td>
                                                     <td><a class='connect' href='#' style='color:mediumblue'></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td><i class='fa fa-check-circle' style='color:forestgreen'></i> 手机号码
                                                     </td>
-                                                    <td><%=user.getUserTel() %></td>
+                                                    <td>${inspector.userTel}</td>
                                                     <td><a class='connect' href='#' style='color:mediumblue'></a>
                                                     </td>
                                                 </tr>
@@ -342,7 +298,7 @@ String userAddress = addressGetter(S);
                                                 <tr>
                                                     <td><i class='fa fa-check-circle' style='color:forestgreen'></i> 绑定邮箱
                                                     </td>
-                                                    <td><div id ="displayEmail"><%=user.getEmail() %></div></td>
+                                                    <td><div id ="displayEmail">${inspector.email}</div></td>
                                                     <td><a class='connect' href = "JavaScript:void(0)" onclick = "openEmail()" style='color:mediumblue'>修改邮箱</a>
                                                    
                                                     </td>

@@ -1,34 +1,13 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
-<%@page import="hxy.inspec.inspector.po.Orders"%>
-<%@page import="hxy.inspec.inspector.po.User"%>
-<%@page import="hxy.inspec.inspector.services.OrderService"%>
 <!doctype html>
-
-<%
-	User user = (User) request.getSession().getAttribute("user");
-	List<Orders> ls = null;
-	if (user != null) {
-
-		Orders orders = new Orders();
-		orders.setQualId(user.getUserId());
-		orders.setStatus("4");//查询订单已分配的订单
-		OrderService orderService = new OrderService();
-		ls = orderService.findUserByQualIdAndStatus(orders);
-	} else {
-		request.getRequestDispatcher("/lose").forward(request, response);
-	}
-%>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Ela Admin - HTML5 Admin Template</title>
 <meta name="description" content="Ela Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
 <link rel="stylesheet" href="assets/css/normalize.css">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -43,15 +22,6 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-<style>
-html, body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-}
-</style>
 </head>
 <body>
 	<div class="content" style="background: #f1f2f7; height: 100%">
@@ -74,58 +44,39 @@ html, body {
 										<th>产品名称</th>
 										<th>状态</th>
 										<th>操作</th>
-
 									</tr>
 								</thead>
 								<tbody>
-										<%
-								if(ls!=null&&ls.size()!=0){
-									for(int i=0;i<ls.size();i++){
-										Orders o = ls.get(i);
-										%>
-										
-												<tr>
-										<td><%=o.getOrderid() %></td>
-										<td><%=o.getExcedate() %></td>
-										<td><%=o.getFactoryname() %></td>
-										<td><%=o.getGoods() %></td>
-										<td><%=o.getStatusString()%></td>
-										<td><a href="details?id=<%=o.getOrderid() %>">详情</a></td>
-
+								<c:forEach items="${list}" var="order" varStatus="status">
+									<tr>
+										<td>${status.index+1 }</td>
+										<td>${order.orderid }</td>
+										<td>${order.excedate}</td>
+										<td>${order.factoryname}</td>
+										<td>${order. goods}</td>
+										<td>${order.getStatusString()}</td>
+										<td><a href="orders-details-ajax?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
 									</tr>
-										<% 
-									}
-								}
-								%>
-								
-								
+								</c:forEach>
 
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 		</div>
 		<!-- .animated -->
 	</div>
 	<!-- .content -->
-
-
 	<div class="clearfix"></div>
-
 	<!-- Right Panel -->
-
 	<!-- Scripts -->
 	<script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script src="assets/js/popper.min.js"></script>
 	<script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/jquery.matchHeight.min.js"></script>
 	<script src="assets/js/main.js"></script>
-
-
 	<script src="assets/js/lib/data-table/datatables.min.js"></script>
 	<script src="assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
 	<script src="assets/js/lib/data-table/dataTables.buttons.min.js"></script>
@@ -136,14 +87,10 @@ html, body {
 	<script src="assets/js/lib/data-table/buttons.print.min.js"></script>
 	<script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
 	<script src="assets/js/init/datatables-init.js"></script>
-
-
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});
 	</script>
-
-
 </body>
 </html>

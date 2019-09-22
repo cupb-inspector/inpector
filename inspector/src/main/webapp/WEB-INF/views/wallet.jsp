@@ -1,31 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="hxy.inspec.inspector.services.UserService"%>
 <jsp:include page="/WEB-INF/views/commons.jsp" />
-<%@page import="hxy.inspec.inspector.po.User"%>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="">
-<!--<![endif]-->
-  <%
-	User user = (User) request.getSession().getAttribute("user");
-  
-	if (user == null) {
-		System.out.print("用户没有登录");
-%>
-<script type="text/javascript">
-	window.top.location.href = 'login';
-</script>
-<%
-	} else {
-		UserService userService = new UserService();
-	user=	userService.findUserById(user.getUserId());
-	}
-  %>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,7 +21,6 @@
     <link rel="stylesheet" href="assets/css/flag-icon.min.css">
     <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
     <link href="assets/weather/css/weather-icons.css" rel="stylesheet" />
     <link href="assets/calendar/fullcalendar.css" rel="stylesheet" />
 
@@ -48,11 +28,6 @@
     <link href="assets/css/lib/vector-map/jqvmap.min.css" rel="stylesheet">
 
     <style>
-        html,body{
-            margin: 0px;
-            width: 100%;
-            height: 100%;
-        }
         #weatherWidget .currentDesc {
             color: #ffffff !important;
         }
@@ -112,7 +87,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text">￥<%=user.getRmb() %></span></div>
+                                            <div class="stat-text"><span>￥${inspector.rmb}</span></div>
                                             <div class="stat-heading">余额</div>
                                         </div>
                                     </div>
@@ -130,7 +105,7 @@
                                     </div>
                                     <div class="stat-content">
                                         <div class="text-left dib">
-                                            <div class="stat-text"><%=user.getRmb() %></div>
+                                            <div class="stat-text">${inspector.rmb}</div>
                                             <div class="stat-heading">提现中</div>
                                         </div>
                                     </div>

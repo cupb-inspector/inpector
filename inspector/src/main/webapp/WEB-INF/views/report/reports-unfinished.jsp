@@ -1,24 +1,7 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.Vector"%>
-<%@page import="hxy.inspec.inspector.po.Orders"%>
-<%@page import="hxy.inspec.inspector.po.User"%>
-<%@page import="hxy.inspec.inspector.services.OrderService"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!doctype html>
-<%
-	//这里面应该是个人所有的未完成的订单 需要检查员ID 以及 未完成状态字集合、枚举
-	User user = (User) request.getSession().getAttribute("user");
-	List<Orders> ls = null;
-	if (user != null) {
-		//枚举模板，只要是迭代类型变量都可以
-		List<Integer> odUD=new Vector<Integer>();int[]temp = new int[]{1,2,3,4,5};for(int i:temp)odUD.add(i);
-		OrderService orderService = new OrderService();
-		ls = orderService.findOrdersByStatusAndInspector(odUD,user.getUserId());
-	} else {
-		request.getRequestDispatcher("/lose").forward(request, response);
-	}
-%>
 <html class="no-js" lang="">
 <!--<![endif]-->
 <head>
@@ -40,22 +23,12 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-<style>
-html, body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-}
-</style>
   <script src="js/jquery.min.js"></script>
   <!--基于jQuery写的消息提示
   https://www.awaimai.com/1627.html
     -->
   <link rel="stylesheet" href="hxy/css/hxy-alert.css">
   <script src="hxy/js/hxy-alert.js"></script>
-  
-
   <script type="text/javascript">
     function rob(e,id) {
     	  
@@ -89,22 +62,16 @@ html, body {
     					//	$(this).remove();
     					$('.alert').removeClass('alert-success')
     					$('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
-        				
-    					
     				};
     			},
     			error : function() {
     				//console.log(data);
     				$('.alert').removeClass('alert-success')
 					$('.alert').html('检查网络是否连接').addClass('alert-warning').show().delay(2000).fadeOut();
-    				
     			}
     		});
     }
-      
     </script>
-
-
 </head>
 <body>
 <div class="alert"></div>
@@ -132,27 +99,18 @@ html, body {
 									</tr>
 								</thead>
 								<tbody>
-
-									<%
-										if (ls != null && ls.size() != 0) {
-											for (int i = 0; i < ls.size(); i++) {
-												Orders o = ls.get(i);
-									%>
+								<c:forEach items="${list}" var="order" varStatus="status">
 									<tr>
-										<td><%=i + 1%></td>
-										<td><%=o.getExcedate()%></td>
-										<td><%=o.getFactoryaddress()%></td>
-
-										<td><%=o.getGoods()%></td>
-										<td><%=o.getFactoryname()%></td>
-
-										<td> <button onclick="rob(this,'<%=o.getOrderid()%>')" type="button" class="btn btn-success btn-sm" value="<%=o.getOrderid()%>"><i class="fa fa-magic"></i>&nbsp; 抢单</button></td>
+										<td>${status.index+1 }</td>
+										<td>${order.orderid }</td>
+										<td>${order.excedate}</td>
+										<td>${order.factoryname}</td>
+										<td>${order. goods}</td>
+										<td>${order.getStatusString()}</td>
+										<td><a href="orders-details-ajax?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
 									</tr>
-									<%
-										}
+								</c:forEach>
 
-										}
-									%>
 								</tbody>
 							</table>
 						</div>
@@ -165,15 +123,8 @@ html, body {
 		<!-- .animated -->
 	</div>
 	<!-- .content -->
-
-
 	<div class="clearfix"></div>
-
-
-
-
 	<!-- Right Panel -->
-
 	<!-- Scripts -->
 	<script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script src="assets/js/popper.min.js"></script>
@@ -191,13 +142,11 @@ html, body {
 	<script src="assets/js/lib/data-table/buttons.colVis.min.js"></script>
 	<script src="assets/js/init/datatables-init.js"></script>
 
-
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});
 	</script>
-
 
 </body>
 </html>

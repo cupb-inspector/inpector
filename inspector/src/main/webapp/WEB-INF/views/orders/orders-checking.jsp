@@ -1,31 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@page import="java.util.List"%>
-<%@page import="hxy.inspec.inspector.po.Orders"%>
-<%@page import="hxy.inspec.inspector.po.User"%>
-<%@page import="hxy.inspec.inspector.services.OrderService"%>
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
-<%
-User user = (User) request.getSession().getAttribute("user");
-List<Orders>  ls=null;
-if(user!=null){
-
-Orders orders =new Orders();
-orders.setQualId(user.getUserId());
-orders.setStatus("3");//查询订单已分配的订单
- OrderService orderService = new OrderService();
-   ls= orderService.findUserByQualIdAndStatus(orders);
-}
-else{
-	request.getRequestDispatcher("/lose").forward(request, response);
-}
-
-	
-%>
 <html class="no-js" lang="">
 <!--<![endif]-->
 <head>
@@ -34,9 +14,6 @@ else{
 <title>验货中</title>
 <meta name="description" content="Ela Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
 <link rel="stylesheet" href="assets/css/normalize.css">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/font-awesome.min.css">
@@ -51,15 +28,6 @@ else{
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
-<style>
-html, body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-}
-</style>
 </head>
 <body>
 	<div class="content" style="background: #f1f2f7; height: 100%">
@@ -76,6 +44,7 @@ html, body {
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
+										<th>#</th>
 										<th>订单号</th>
 										<th>验货日期</th>
 										<th>工厂名称</th>
@@ -86,26 +55,17 @@ html, body {
 									</tr>
 								</thead>
 								<tbody>
-	<%
-								if(ls!=null&&ls.size()!=0){
-									for(int i=0;i<ls.size();i++){
-										Orders o = ls.get(i);
-										%>
-										
-												<tr>
-										<td><%=o.getOrderid() %></td>
-										<td><%=o.getExcedate() %></td>
-										<td><%=o.getFactoryname() %></td>
-										<td><%=o.getGoods() %></td>
-										<td><%=o.getStatusString()%></td>
-										<td><a href="details2?id=<%=o.getOrderid() %>">详情</a></td>
-
+								<c:forEach items="${list}" var="order" varStatus="status">
+									<tr>
+										<td>${status.index+1 }</td>
+										<td>${order.orderid }</td>
+										<td>${order.excedate}</td>
+										<td>${order.factoryname}</td>
+										<td>${order. goods}</td>
+										<td>${order.getStatusString()}</td>
+										<td><a href="orders-details-ajax?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
 									</tr>
-										
-										<% 
-									}
-								}
-								%>
+								</c:forEach>
 								</tbody>
 							</table>
 						</div>

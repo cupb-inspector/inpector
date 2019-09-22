@@ -3,14 +3,14 @@ package cn.hxy.inspect.inspector.service;
 
 import cn.hxy.inspect.dao.inspector.InspectorDao;
 import cn.hxy.inspect.entity.inspector.Inspector;
-import org.apache.tomcat.jni.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 
-
+@Service
 public class UserService {
 	private final static Logger logger = LoggerFactory.getLogger(UserService.class);
 	public Inspector login(String phone) {

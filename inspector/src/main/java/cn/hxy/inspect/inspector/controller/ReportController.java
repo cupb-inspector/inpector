@@ -7,11 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.hxy.inspect.entity.Orders;
+import cn.hxy.inspect.entity.inspector.Inspector;
 import cn.hxy.inspect.inspector.service.OrderService;
 import cn.hxy.inspect.util.Configuration;
 import org.apache.tomcat.util.http.fileupload.FileItem;
@@ -31,6 +33,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class ReportController {
 	private final static Logger logger = LoggerFactory.getLogger(ReportController.class);
+
+
+	@RequestMapping(value = "reports-unfinished")
+	public String unfinished(ModelMap model, HttpServletRequest request) throws IOException {
+		//枚举模板，只要是迭代类型变量都可以
+		Inspector inspector = (Inspector)request.getSession().getAttribute("user");
+		List<Integer> odUD=new Vector<Integer>();int[]temp = new int[]{1,2,3,4,5};for(int i:temp)odUD.add(i);
+		OrderService orderService = new OrderService();
+		List<Orders> ls = orderService.findOrdersByStatusAndInspector(odUD,inspector.getUserId());
+
+		model.addAttribute("list",ls);
+
+		return "report/reports-unfinished";
+	}
 
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public void submitReport(ModelMap model, HttpServletRequest request, HttpServletResponse response)
