@@ -1,21 +1,6 @@
 <!doctype html>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@page import="cn.hxy.inspect.entity.admin.AdminUser"%>
-<%
-	AdminUser user = (AdminUser) request.getSession().getAttribute("user");
-	if (user == null) {
-		//request.getRequestDispatcher("/lose").forward(request, response);
-%>
-<script type="text/javascript">
-	window.top.location.href = 'login';
-</script>
-<%
-	} else {
-
-	}
-%>
-
 <html class="no-js" lang="">
 <head>
 <meta charset="utf-8">
@@ -126,7 +111,7 @@ html, body {
 							</ul>
 						</div></li>
 
-					<!-- 
+					<!--
                         <li class="nav-item menu-item-has-children">
                             <a class="nav-link" data-toggle="collapse" href="#evalution" aria-haspopup="true"
                                 aria-expanded="false" aria-controls="bill">
@@ -152,9 +137,9 @@ html, body {
 							<ul class="nav flex-column sub-menu">
 								<li><a href="payment" target="myiframe">充值统计</a></li>
 									<li><a href="withdraw" target="myiframe">提现统计</a></li>
-								<!--  
+								<!--
 								<li><a href="finance" target="myiframe">财务统计</a></li>
-							
+
 								<li><a href="refund" target="myiframe">退款处理</a></li>
 								<li><a href="chart" target="myiframe">财务报表</a></li>
 								-->

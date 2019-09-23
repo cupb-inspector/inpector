@@ -212,7 +212,12 @@ class SendEmailRunnable implements Runnable {
     public void run() {
 
         InspectorService inspectorService = new InspectorService();
-        Inspector inspector = inspectorService.findInspectorById(orders.getQualId());
+        Inspector inspector = null;
+        try {
+            inspector = inspectorService.findInspectorById(orders.getQualId());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (inspector != null && !"null".equals(inspector)) {
             // 发送邮件给质检员
             MailService mailService = new MailService();

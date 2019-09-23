@@ -27,7 +27,7 @@ public class InspectorService {
 	}
 	
 //	查找质检员信息
-	public Inspector findInspectorById(String id) {
+	public Inspector findInspectorById(String id) throws IOException {
 		
 		InspectorDao ordersDao = new InspectorDao();
 		

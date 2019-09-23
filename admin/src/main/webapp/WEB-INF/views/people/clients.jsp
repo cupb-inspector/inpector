@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/commons.jsp"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -44,11 +45,23 @@
                                             <th>地区</th>
                                             <th>钱包</th>
                                             <th>积分</th>                                               
-                                            <th>操作</th>           
+<%--                                            <th>操作</th>           --%>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <c:forEach items="${list}" var="order" varStatus="status">
+                                        <tr>
+                                            <td>${order.custel }</td>
+                                            <td>${order.cusname}</td>
+                                            <td>${order.email}</td>
+                                            <td>${order.country}</td>
+                                            <td>${order.province}</td>
+                                            <td>${order.cusTempMoney}</td>
+                                            <td>${order.cusgrade}</td>
 
+<%--                                            <td><a href="orders-details-all?id=${ order.cusid }" target="_blank" style="color: blue">详情</a></td>--%>
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

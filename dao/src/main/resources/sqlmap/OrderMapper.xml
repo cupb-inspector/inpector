@@ -119,4 +119,12 @@
 		select * from orders
 	</select>
 
+	<update id="updateInspector"
+			parameterType="cn.hxy.inspect.entity.Orders">
+		update orders set
+		qualId=#{qualId},status=#{status}
+		where
+		orderid=#{orderid}
+	</update>
+
 </mapper>

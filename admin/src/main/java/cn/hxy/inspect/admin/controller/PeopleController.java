@@ -1,8 +1,10 @@
 package cn.hxy.inspect.admin.controller;
 
 import cn.hxy.inspect.admin.service.AdminUserService;
+import cn.hxy.inspect.admin.service.CusUserService;
 import cn.hxy.inspect.admin.service.InspectorService;
 import cn.hxy.inspect.entity.admin.AdminUser;
+import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.entity.inspector.Inspector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +28,13 @@ public class PeopleController {
     AdminUserService adminUserService;
     @Resource
     InspectorService inspectorService;
+    @Resource
+    CusUserService cusUserService;
 
     @RequestMapping(value = "/client", method = RequestMethod.GET)
-    public String client(ModelMap model, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public String client(ModelMap model) throws ServletException, IOException {
+        List<CusUser> ls = cusUserService.selectAll();
+        model.addAttribute("list", ls);
         return "people/clients";
     }
 

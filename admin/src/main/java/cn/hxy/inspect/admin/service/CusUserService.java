@@ -4,10 +4,12 @@ import cn.hxy.inspect.dao.admin.CusUserDao;
 import cn.hxy.inspect.entity.customer.CusUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 
+@Service
 public class CusUserService {
 	private final static Logger logger = LoggerFactory.getLogger(CusUserService.class);
 	public List<CusUser> selectAll() throws IOException {
