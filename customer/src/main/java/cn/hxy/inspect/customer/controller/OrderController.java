@@ -325,7 +325,7 @@ public class OrderController {
 			if (flag) {
 				OrderService orderService = new OrderService();
 				try {
-					Orders orders = orderService.selectAllById(ordersId);
+					Orders orders = orderService.selectOrderById(ordersId);
 					if (orders != null && "true".equals(pay)) {
 						//第一步确定是否余额充足，不充足天转充值界面，充足就不跳转充值界面
 
@@ -381,7 +381,7 @@ public class OrderController {
 			// 先依据id查询该订单，再判断该订单是否是该用户的，防止恶意的爬虫
 			OrderService orderService = new OrderService();
 			try {
-				Orders orders = orderService.selectAllById(ordersId);
+				Orders orders = orderService.selectOrderById(ordersId);
 				if (orders != null) {
 					model.addAttribute("status", orders.getStatusString());
 					model.addAttribute("ordersId", ordersId);
@@ -438,7 +438,7 @@ public class OrderController {
 			// 先依据id查询该订单，再判断该订单是否是该用户的，防止恶意的爬虫
 			OrderService orderService = new OrderService();
 			try {
-				Orders orders = orderService.selectAllById(ordersId);
+				Orders orders = orderService.selectOrderById(ordersId);
 				if (orders != null) {
 					model.addAttribute("status", orders.getStatusString());
 					model.addAttribute("ordersId", ordersId);

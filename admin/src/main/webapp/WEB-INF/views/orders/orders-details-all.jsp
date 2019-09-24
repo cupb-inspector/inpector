@@ -222,19 +222,16 @@
                                  style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460">
 
                                 <div class="card-body">
-                                    <p style="color: #383d41"">
-                                    <h4>验货员</h4>
-                                    <small>订单可以在验货日期的24小时前取消。24小时内取消会扣分。</small>
+                                    <p style="color: #383d41">
+                                    <h4>报告</h4>
+                                    <small>报告可以在验货日期的24小时前取消。24小时内取消会扣分。</small>
                                     <code>重要</code>
                                     </p>
                                     <p>
-                                        <i class=" fa fa-envelope-o"></i> 验货员
-                                        <button type="button" id="showInspector" class="btn btn-outline-success btn-sm">
-                                            <i
-                                                    class="fa fa-magic"></i>&nbsp;
-                                            选择
-                                        </button>
-                                    <p>
+                                        <i class="fa fa-envelope-o"></i> 关于宝马X5前置反观镜的外壳质检报告.doc
+                                        <a href="">
+                                            <span class="pull-right">下载</span></a>
+                                    </p>
                                 </div>
                             </div>
                         </div>

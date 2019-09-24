@@ -290,7 +290,7 @@
                                              alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">待选择</h5>
                                         <div class="location text-sm-center"><i class="fa fa-map-marker"></i>
-                                            California
+                                            未知地区
                                         </div>
                                     </div>
                                     <div class="col-sm-8" align="center">

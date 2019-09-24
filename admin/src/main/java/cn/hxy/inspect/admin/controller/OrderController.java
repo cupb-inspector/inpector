@@ -34,6 +34,7 @@ import java.util.List;
 @RequestMapping("/")
 public class OrderController {
     private final static Logger logger = LoggerFactory.getLogger(OrderController.class);
+
     @Resource
     OrderService orderService;
     @Resource
@@ -128,19 +129,9 @@ public class OrderController {
 //		OrderService o = new OrderService();
         HashMap<String, Object> map = new HashMap<String, Object>();
         // 获得一部分status
-        list.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_SUBMITTED,
-                Configuration.BILL_REFUSED_BY_ADMIN));
-        logger.info("" + list);
-        list.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_ASSIGNING_BY_ADMIN_UNPAID,
-                Configuration.BILL_REFUSED_BY_ADMIN_UNPAID));
-        logger.info("" + list);
-        list.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_INSPECTOR_CONFIRM,
-                Configuration.BILL_REPORT_VERIFIED));
-        logger.info("" + list);
-        list.addAll(GetOrderStatusWithList.getStatusSublist(Configuration.BILL_REPORT_REFUSED_BY_ADMIN_UNPAID,
-                Configuration.BILL_REPORT_PASSED_BY_ADMIN_UNPAID));
-        logger.info("" + list);
-//		map.put("cusId", adminUser.getAdminId());
+        list.add(Configuration.BILL_PAY);
+        list.add(Configuration.BILL_UNPAY);
+        logger.info("{}", list);
         map.put("list", list);
         ls = orderService.findOrdersByRange(map);
         model.addAttribute("list", ls);

@@ -135,16 +135,6 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
 
-
-  <servlet>
-    <servlet-name>lose</servlet-name>
-    <jsp-file>/WEB-INF/views/lose.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>lose</servlet-name>
-    <url-pattern>/lose</url-pattern>
-  </servlet-mapping>
-
   <servlet>
     <servlet-name>mynews</servlet-name>
     <jsp-file>/WEB-INF/views/mynews.jsp</jsp-file>
@@ -217,14 +207,7 @@
     <servlet-name>orders-checking</servlet-name>
     <url-pattern>/orders-checking</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>orders-examining</servlet-name>
-    <jsp-file>/WEB-INF/views/orders/orders-examining.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>orders-examining</servlet-name>
-    <url-pattern>/orders-examining</url-pattern>
-  </servlet-mapping>
+
   <servlet>
     <servlet-name>orders-finished</servlet-name>
     <jsp-file>/WEB-INF/views/orders/orders-finished.jsp</jsp-file>
@@ -241,15 +224,6 @@
   <servlet-mapping>
     <servlet-name>orders-refused</servlet-name>
     <url-pattern>/orders-refused</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>orders-details</servlet-name>
-    <jsp-file>/WEB-INF/views/orders/orders-details.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>orders-details</servlet-name>
-    <url-pattern>/orders-details</url-pattern>
   </servlet-mapping>
 
   <servlet>

@@ -39,9 +39,15 @@ html, body {
   
 
   <script type="text/javascript">
+	  function printl(id) {
+		  console.log("传入的值"+id)
+		  id=id-1
+		  console.log("传入的值"+id)
+	  }
     function rob(e,id,flag) {
-    	  
-    	  console.log(id+"\t");
+		console.log(id)
+		id=id-1
+    	  console.log(id +"\t"+flag);
     		$.ajax({
     			//几个参数需要注意一下
     			url : "${pageContext.request.contextPath}/conform",//url
@@ -51,7 +57,7 @@ html, body {
     			dataType : "json",//预期服务器返回的数据类型
     			cache : false,
     			data : {
-    				"id" : id,
+    				"id" : ${order.orderid},
     				"flag":flag
     			},//这个是发送给服务器的数据
 
@@ -108,12 +114,12 @@ html, body {
 										<div class="row form-group">
 											<div class="col col-md-6">
 												<p>
-													订单号：<span>${ordersId}</span>
+													订单号：<span>${order.orderid}</span>
 												</p>
 											</div>
 											<div class="col col-md-6">
 												<p>
-													订单状态：<span>${status}</span>
+													订单状态：<span>${order.statusString}</span>
 												</p>
 											</div>
 										</div>
@@ -191,8 +197,9 @@ html, body {
                                     </small>
                                 </div>
                                 <div class="card-body">
-                                    <button type="button"  onclick="rob(this,${ordersId},'conform')" class="btn btn-success btn-lg">接受</button>
-                                    <button type="button"  onclick="rob(this,${ordersId},'cancel')" class="btn btn-danger btn-lg">拒绝</button>
+									<button type="button"  onclick="printl(${order.orderid})" class="btn btn-danger btn-lg">拒绝</button>
+                                    <button type="button"  onclick="rob(this,${order.orderid},'conform')" class="btn btn-success btn-lg">接受</button>
+                                    <button type="button"  onclick="rob(this,${order.orderid},'cancel')" class="btn btn-danger btn-lg">拒绝</button>
                                 </div>
                             </div><!-- /# card -->
 

@@ -57,7 +57,7 @@ public class OrderService {
 
     public Orders selectOrderById(String ordersId) throws IOException {
         OrdersDao ordersDao = new OrdersDao();
-        Orders list = ordersDao.selectAllById(ordersId);
+        Orders list = ordersDao.selectOrderById(ordersId);
         return list;
     }
 

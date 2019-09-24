@@ -55,7 +55,7 @@
 										<td>${order.factoryname}</td>
 										<td>${order. goods}</td>
 										<td>${order.getStatusString()}</td>
-										<td><a href="orders-details-ajax?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
+										<td><a href="orders-details?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
 									</tr>
 								</c:forEach>
 

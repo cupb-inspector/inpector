@@ -110,13 +110,14 @@
                             <div class="collapse" id="bill">
                                 <ul class="nav flex-column sub-menu">
                                     <li><a href="orders-examining" target="myiframe">待审核</a></li>
-                                    <li><a href="orders-refused" target="myiframe">审核拒绝</a></li>
-        
-                                    <li><a href="orders-check" target="myiframe">待验货</a></li>
-                                    <li><a href="orders-checking" target="myiframe">验货中</a></li>
-        
-                                    <li><a href="orders-finished" target="myiframe">已完成</a></li>
-                                    <li><a href="orders-cancel" target="myiframe">已取消</a></li>
+                                    <li><a href="orders-all" target="myiframe">所有订单</a></li>
+<%--                                    <li><a href="orders-refused" target="myiframe">审核拒绝</a></li>--%>
+<%--        --%>
+<%--                                    <li><a href="orders-check" target="myiframe">待验货</a></li>--%>
+<%--                                    <li><a href="orders-checking" target="myiframe">验货中</a></li>--%>
+<%--        --%>
+<%--                                    <li><a href="orders-finished" target="myiframe">已完成</a></li>--%>
+<%--                                    <li><a href="orders-cancel" target="myiframe">已取消</a></li>--%>
                                </ul>
                             </div>
                         </li>
