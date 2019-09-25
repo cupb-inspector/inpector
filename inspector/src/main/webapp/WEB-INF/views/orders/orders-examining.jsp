@@ -38,7 +38,8 @@
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-									<th>订单号</th>
+										<th>#</th>
+										<th>订单号</th>
 										<th>验货日期</th>
 										<th>工厂名称</th>
 										<th>产品名称</th>

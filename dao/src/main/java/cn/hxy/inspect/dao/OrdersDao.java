@@ -58,7 +58,7 @@ public class OrdersDao {
 	public Orders selectOrderById(String ordersId) throws IOException {
 		SqlSession sqlSession = DataConnection.getSqlSession();
 		Orders goodsList = sqlSession.selectOne("Orders.findOrdersById", ordersId);
-		logger.info("查询订单信息:"+goodsList);
+		logger.info("查询得到的订单信息:"+goodsList);
 		sqlSession.commit();
 		sqlSession.close();
 		return goodsList;

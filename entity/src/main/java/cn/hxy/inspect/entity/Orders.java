@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class Orders {
+
 	private String orderid;//订单号
 	private String cusId;//用户信息
 	private String qualId;//质检员信息

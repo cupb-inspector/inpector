@@ -135,5 +135,9 @@
 		where
 		orderid=#{orderid}
 	</update>
+	<update id="updateReport" parameterType="cn.hxy.inspect.entity.Orders">
+		update orders set
+		reportfile=#{reportfile},reportfileuuid=#{reportfileuuid},status=#{status} where orderid=#{orderid}
+	</update>
 
 </mapper>

@@ -37,7 +37,7 @@
                         <table id="bootstrap-data-table"
                                class="table table-striped table-bordered">
                             <thead>
-                            <tr>
+                            <tr><th>#</th>
                                 <th>订单号</th>
                                 <th>验货日期</th>
                                 <th>工厂名称</th>
@@ -55,7 +55,7 @@
                                     <td>${order.factoryname}</td>
                                     <td>${order. goods}</td>
                                     <td>${order.getStatusString()}</td>
-                                    <td><a href="orders-details-ajax?id=${ order.orderid }" target="_blank"
+                                    <td><a href="orders-details-all?id=${order.orderid}" target="_blank"
                                            style="color: blue">详情</a></td>
                                 </tr>
                             </c:forEach>

@@ -3,7 +3,6 @@ package cn.hxy.inspect.inspector.controller;
 import cn.hxy.inspect.entity.Orders;
 import cn.hxy.inspect.entity.inspector.Inspector;
 import cn.hxy.inspect.inspector.service.OrderService;
-import org.apache.tomcat.jni.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import static cn.hxy.inspect.util.Configuration.BILL_ASSIGNING;
+import static cn.hxy.inspect.util.Configuration.*;
 
 
 @Controller
@@ -41,6 +40,19 @@ public class OrderController {
 
         return "orders/checks";
     }
+
+
+    @RequestMapping(value = "/orders-details-all", method = RequestMethod.GET)
+    public String detailsAll(@RequestParam("id") String id, ModelMap model, HttpServletRequest request) throws IOException {
+        //找到已经分配的订单
+        Inspector user = (Inspector) request.getSession().getAttribute("user");
+       Orders orders =  orderService.selectOrderByOrderId(id);
+
+
+        model.addAttribute("orders", orders);
+        return "orders/orders-details-all";
+    }
+
 
     @RequestMapping(value = "/orders-cancel", method = RequestMethod.GET)
     public String cancel(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -230,10 +242,10 @@ public class OrderController {
 
             if ("cancel".equals(flag)) {
                 logger.info("质检员拒绝了订单");
-                order.setStatus(1);//如果质检员拒绝，那么直接修改状态为1
+                order.setStatus(BILL_REFUSED_BY_INSPECTOR);//如果质检员拒绝，那么直接修改状态为1
             } else if ("conform".equals(flag)) {
                 logger.info("质检员接受了订单");
-                order.setStatus(3);//自己抢单的订单直接正在验货
+                order.setStatus(BILL_INSPECTOR_CONFIRM);//自己抢单的订单直接正在验货
             }
 
 
