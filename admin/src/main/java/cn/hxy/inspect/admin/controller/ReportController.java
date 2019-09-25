@@ -6,6 +6,7 @@ import cn.hxy.inspect.entity.admin.AdminUser;
 import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.entity.inspector.Inspector;
 import cn.hxy.inspect.util.Configuration;
+import cn.hxy.inspect.util.SystemProperties;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
@@ -69,13 +70,11 @@ public class ReportController {
         logger.info("下载文件名：" + fileName);
         // 上传的文件都是保存在/WEB-INF/upload目录下的子目录当中
 //		String fileSaveRootPath = this.getServletContext().getRealPath("/WEB-INF/upload");
-        File fileFolder = new File("reports");
-        if (!fileFolder.exists()) {
-            fileFolder.mkdirs();
-        }
-        Configuration.FILE_ROOT_DIR = fileFolder.getAbsolutePath();
+
+        String reportDir = SystemProperties.getProperty("reportDir");
+
+        File file = new File(reportDir, fileName);
         // 得到要下载的文件
-        File file = new File(Configuration.FILE_ROOT_DIR + "/" + fileName);
         logger.info("下载文件：" + file);
         // 如果文件不存在
         if (!file.exists()) {

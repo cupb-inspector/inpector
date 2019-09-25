@@ -228,8 +228,8 @@
                                     <code>重要</code>
                                     </p>
                                     <p>
-                                        <i class="fa fa-envelope-o"></i> 关于宝马X5前置反观镜的外壳质检报告.doc
-                                        <a href="">
+                                        <i class="fa fa-envelope-o"></i> ${orders.reportfile}
+                                        <a href="downloadFile?fileuuid=${orders.reportfileuuid}&filename=${orders.reportfile}">
                                             <span class="pull-right">下载</span></a>
                                     </p>
                                 </div>

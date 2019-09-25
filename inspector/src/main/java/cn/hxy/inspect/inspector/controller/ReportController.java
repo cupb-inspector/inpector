@@ -18,6 +18,7 @@ import cn.hxy.inspect.entity.Orders;
 import cn.hxy.inspect.entity.inspector.Inspector;
 import cn.hxy.inspect.inspector.service.OrderService;
 import cn.hxy.inspect.util.Configuration;
+import cn.hxy.inspect.util.SystemProperties;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
@@ -54,6 +55,14 @@ public class ReportController {
         return "report/reports-unfinished";
     }
 
+    /**Description:
+     * 提交报告
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/submitReport", method = RequestMethod.POST)
     @ResponseBody
     public HashMap<String, Object> submitReport(ModelMap model, HttpServletRequest request, HttpServletResponse response)
@@ -106,7 +115,7 @@ public class ReportController {
                     if ("id".equals(name)) {
                         ordersId = value;
                     }
-                    resultCode="401";
+                    resultCode = "401";
 
                 } else {
                     String fileName = item.getName();
@@ -114,14 +123,13 @@ public class ReportController {
 
                     String reportfileuuid = uuid + fileName;
                     logger.info("Length of reportFileUUID:" + reportfileuuid.length());
-
-                    File fileFolder = new File("reports");
+                    String reportDir = SystemProperties.getProperty("reportDir");
+                    File fileFolder = new File(reportDir);
                     if (!fileFolder.exists()) {
                         fileFolder.mkdirs();
                     }
-                    Configuration.FILE_ROOT_DIR = fileFolder.getAbsolutePath();
 
-                    File file = new File(Configuration.FILE_ROOT_DIR, reportfileuuid);
+                    File file = new File(fileFolder, reportfileuuid);
 
                     try { // 创建一个文件输出流
                         InputStream in = item.getInputStream();
@@ -149,7 +157,7 @@ public class ReportController {
 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        resultCode = "601";// 错误
+                        resultCode = "500";// 错误
                     }
                     logger.info("文件名路径：" + file.getAbsolutePath());
                 }

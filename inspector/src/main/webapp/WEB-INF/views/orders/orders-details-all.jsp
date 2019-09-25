@@ -28,19 +28,12 @@
         $(document).ready(function () {
             $("#btn1").click(function () {
                 console.log($("#myfiles")[0].files[0])
-
                 if ($("#myfiles")[0].files[0]===undefined){
                     $('.alert').removeClass('alert-success')
                     $('.alert').html('请选择报告').addClass('alert-warning').show().delay(2000).fadeOut();
                     return
                 }
-
-
-
                 var fordata = new FormData();
-
-
-
                 fordata.append('id','${orders.orderid}');
                 fordata.append('file', document.getElementById("myfiles").files[0]);
                 $.ajax({
