@@ -55,6 +55,79 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#btn1').click(function () {
+                $.ajax({
+
+                    url: "${pageContext.request.contextPath}/auditReport",//url
+                    type: "POST",//方法类型
+                    //	async: false,//同步需要等待服务器返回数据后再执行后面的两个函数，success和error。如果设置成异步，那么可能后面的success可能执行后还是没有收到消息。
+                    dataType: "json",//预期服务器返回的数据类型
+                    //	cache: false,
+                    data: {
+                        "id": '${orders.orderid}',
+                        "flag": 'conform'
+                    },//这个是发送给服务器的数据
+
+                    success: function (result) {
+                        console.log(result);//打印服务端返回的数据(调试用)
+                        if (result.resultCode == 200) {
+
+                            $('.hxy-alert').removeClass('hxy-alert-warning')
+                            $('.hxy-alert').html('操作成功').addClass('hxy-alert-success').show().delay(2000).fadeOut();
+
+                        } else if (result.resultCode == 603) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('登录失效').addClass('alert-warning').show().delay(2000).fadeOut();
+
+                            document.getElementById("passwd").value = ''
+
+                        } else if (result.resultCode == 404) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
+                        };
+                    }
+                });
+            });
+
+            $('#btn2').click(function () {
+                $.ajax({
+
+                    url: "${pageContext.request.contextPath}/auditReport",//url
+                    type: "POST",//方法类型
+                    //	async: false,//同步需要等待服务器返回数据后再执行后面的两个函数，success和error。如果设置成异步，那么可能后面的success可能执行后还是没有收到消息。
+                    dataType: "json",//预期服务器返回的数据类型
+                    //	cache: false,
+                    data: {
+                        "id": '${orders.orderid}',
+                        "flag": 'cancel'
+                    },//这个是发送给服务器的数据
+
+                    success: function (result) {
+                        console.log(result);//打印服务端返回的数据(调试用)
+                        if (result.resultCode == 200) {
+
+                            $('.hxy-alert').removeClass('hxy-alert-warning')
+                            $('.hxy-alert').html('分配成功').addClass('hxy-alert-success').show().delay(2000).fadeOut();
+
+                        } else if (result.resultCode == 601) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('密码错误').addClass('alert-warning').show().delay(2000).fadeOut();
+
+                            document.getElementById("passwd").value = ''
+
+                        } else if (result.resultCode == 404) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
+                        };
+                    }
+                });
+            });
+
             $("#showInspector").click(function () {
                 document.getElementById('MyDiv').style.display = 'block';
                 document.getElementById('fade').style.display = 'block';
@@ -87,10 +160,7 @@
                     success: function (result) {
                         console.log(result);//打印服务端返回的数据(调试用)
                         if (result.resultCode == 200) {
-                            //$('#closeInspector').click();
-                            document.getElementById('MyDiv').style.display = 'none';
-                            document.getElementById('fade').style.display = 'none';
-                            //跳转到首页
+
                             $('.hxy-alert').removeClass('hxy-alert-warning')
                             $('.hxy-alert').html('分配成功').addClass('hxy-alert-success').show().delay(2000).fadeOut();
 
@@ -105,8 +175,7 @@
                             //	$(this).remove();
                             $('.alert').removeClass('alert-success')
                             $('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
-                        }
-                        ;
+                        };
                     },
                     error: function () {
                         //console.log(data);
@@ -231,6 +300,12 @@
                                         <i class="fa fa-envelope-o"></i> ${orders.reportfile}
                                         <a href="downloadFile?fileuuid=${orders.reportfileuuid}&filename=${orders.reportfile}">
                                             <span class="pull-right">下载</span></a>
+                                    </p>
+                                    <p>
+                                    <div style="float: left">
+                                        <button type="button" id="btn1" class="btn btn-success btn-lg">通过</button>
+                                        <button type="button" id="btn2"  class="btn btn-danger btn-lg">拒绝</button>
+                                    </div>
                                     </p>
                                 </div>
                             </div>

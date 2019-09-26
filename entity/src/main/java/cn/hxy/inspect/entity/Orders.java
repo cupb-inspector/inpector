@@ -50,7 +50,7 @@ public class Orders {
 		case Configuration.BILL_INSPECTOR_CONFIRM:
 			value="质检员确认验货";
 			break;
-		case Configuration.BILL_REPORT_SUBMIT:
+		case Configuration.BILL_REPORT_SUBMIT_UNPAID:
 			value="报告已提交";
 			break;
 		case Configuration.BILL_REPORT_VERIFIED:
