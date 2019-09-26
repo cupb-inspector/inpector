@@ -26,18 +26,9 @@
 	<!-- 遮罩层 -->
 	<script src="js/jquery.spin.merge.js"></script>
 	<!-- 提取到文件了 -->
-	<script src="inspector/order/js/checkcontent.js"></script>
+	<script src="js/checkcontent.js"></script>
 	<style>
-		/* .white_content {
-			display: none;
-			position: absolute;
-			top: 15%;
-			left: 25%;
-			width: 55%;
-			height: 55%;
-			padding: 20px;
-			z-index: 1002;
-		} */
+
 
 		.white_content {
 			display: none;

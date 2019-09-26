@@ -68,7 +68,7 @@ public class AccountDao {
 	public Account selectAccountById(String id) throws IOException {
 		// TODO Auto-generated method stub
 		SqlSession sqlSession = DataConnection.getSqlSession();
-		Account goodsList = sqlSession.selectOne("Account.selectAccountById",id);
+		Account goodsList = sqlSession.selectOne("Account.findAccountById",id);
 		logger.info("查询结果"+goodsList);
 
 		sqlSession.commit();

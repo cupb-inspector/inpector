@@ -52,33 +52,22 @@
 		</if>
 	</select>
 	
-	<select id="findUserByOrdersId" parameterType="String"
+	<select id="findAccountById" parameterType="String"
 		resultType="cn.hxy.inspect.entity.Account">
-		SELECT * FROM orders WHERE ordesrid=#{ordesrid}
+		SELECT * FROM account WHERE id=#{id}
 	</select>
-	<select id="findOrdersById" parameterType="String"
-		resultType="cn.hxy.inspect.entity.Account">
-		SELECT * FROM orders WHERE orderid=#{orderid}
-	</select>
-	<delete id="delete"
-		parameterType="cn.hxy.inspect.entity.Account">
-		delete from orders where
-		userTel=#{userTel}
-	</delete>
-	<update id="update"
-		parameterType="cn.hxy.inspect.entity.Account">
-		update orders set
-		cusname=#{cusname},cususerid=#{cususerid},ttkdpasswd1=#{ttkdpasswd1},ttkdpasswd=#{ttkdpasswd},passwd=#{passwd},date=#{date},address=#{address}
-		where userTel=#{userTel}
-	</update>
-	<update id="updateStatus"
-		parameterType="cn.hxy.inspect.entity.Account">
-		update orders set status=#{status} where
-		orderid=#{orderid}
-	</update>
+
 	<select id="selectAllByType" parameterType="String"
 			resultType="cn.hxy.inspect.entity.Account">
 		SELECT * FROM account WHERE type=#{type}
 	</select>
-
+	<update id="updateStatus"
+			parameterType="cn.hxy.inspect.entity.Account">
+		update account set
+		<if test="result!=null">
+			result = #{result},
+		</if>
+		status=#{status} where
+		id=#{id}
+	</update>
 </mapper>
