@@ -85,12 +85,22 @@ public class ReportController {
 
     }
 
+    /**
+     * Description：用户不需要提交报告
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @Deprecated
     @RequestMapping(value = "/submitReport", method = RequestMethod.POST)
-    public void submitReport(HttpServletRequest request, HttpServletResponse response)
+    @ResponseBody
+    public HashMap<String, Object> submitReport(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        HashMap<String, Object> hashMap = new HashMap<>();
         // 接收报告文件和订单的id，修改订单的报告位置
-        logger.info("开始报告");
-        String resultCode = "";
+        logger.info("用户开始提交订单附件，服务器正在处理订单附件");
+        String resultCode = "0";
         String ordersId = null;
 //		doGet(request, response);
         // 使用Apache文件上传组件处理文件上传步骤：
@@ -103,94 +113,86 @@ public class ReportController {
         // 3、判断提交上来的数据是否是上传表单的数据
         if (!ServletFileUpload.isMultipartContent(request)) {
             // 按照传统方式获取数据
-            return;
-        }
+            resultCode = "404";
+        } else {
+            // 4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
 
-        // 4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
+            List<FileItem> list = null;
 
-        List<FileItem> list = null;
+            // 解决：https://blog.csdn.net/sinat_34104446/article/details/82755403
 
-        // 解决：https://blog.csdn.net/sinat_34104446/article/details/82755403
+            RequestContext context = new ServletRequestContext(request);
+            try {
+                list = upload.parseRequest(context);
+                logger.info("遍历的大小" + list.size());
+            } catch (FileUploadException e) {
+                e.printStackTrace();
+            }
 
-        RequestContext context = new ServletRequestContext(request);
-        try {
-            list = upload.parseRequest(context);
-            logger.info("遍历的大小" + list.size());
-        } catch (FileUploadException e) {
-            e.printStackTrace();
-        }
+            for (FileItem item : list) {
+                logger.info("遍历文件");
 
-        for (FileItem item : list) {
-            logger.info("遍历文件");
+                // 如果fileitem中封装的是普通输入项的数据
+                // System.out.println("名字："+item.getName());
 
-            // 如果fileitem中封装的是普通输入项的数据
-            // System.out.println("名字："+item.getName());
+                if (item.isFormField()) {
+                    logger.info(item.getFieldName());
+                    String name = item.getFieldName();
+                    // 解决普通输入项的数据的中文乱码问题
+                    String value = item.getString("UTF-8");
+                    logger.info(name + "\t" + value);
+                    if ("id".equals(name)) {
+                        ordersId = value;
+                    }
 
-            if (item.isFormField()) {
-                logger.info(item.getFieldName());
-                String name = item.getFieldName();
-                // 解决普通输入项的数据的中文乱码问题
-                String value = item.getString("UTF-8");
-                logger.info(name + "\t" + value);
-                if ("id".equals(name)) {
-                    ordersId = value;
+                } else {
+                    String fileName = item.getName();
+                    String uuid = UUID.randomUUID().toString().replace("-", "");// 全球唯一标识码
+                    String reportFileUuid = uuid + fileName;
+                    String reportDir = SystemProperties.getProperty("reportDir");
+                    File file = new File(reportDir, reportFileUuid);
+                    try { // 创建一个文件输出流
+                        InputStream in = item.getInputStream();
+                        FileOutputStream out = new FileOutputStream(file);
+                        // 创建一个缓冲区
+                        byte buffer[] = new byte[1024]; // 判断输入流中的数据是否已经读完的标识
+                        int len = 0;
+                        // 循环将输入流读入到缓冲区当中，(len=in.read(buffer))>0就表示in里面还有数据
+                        while ((len = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, len);
+                        } // 关闭输入流
+                        in.close();
+                        // 关闭输出流
+                        out.close(); // 删除处理文件上传时生成的临时文件
+                        item.delete();
+                        resultCode = "200";
+                        // 更新订单，附件
+                        Orders orders = new Orders();
+                        orders.setOrderid(ordersId);
+                        orders.setFile(fileName);
+                        orders.setFileuuid(reportFileUuid);
+                        orders.setStatus(Configuration.BILL_SUBMITTED);
+                        OrderService orderService = new OrderService();
+                        orderService.updateReport(orders);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        resultCode = "601";// 错误
+                    }
+                    logger.info("文件路径：{}", file.getAbsolutePath());
                 }
-
-            } else {
-                String fileName = item.getName();
-                String uuid = UUID.randomUUID().toString().replace("-", "");// 全球唯一标识码
-                String reportfileuuid = uuid + fileName;
-                File fileFolder = new File("reports");
-                if (!fileFolder.exists()) {
-                    fileFolder.mkdirs();
-                }
-                Configuration.FILE_ROOT_DIR = fileFolder.getAbsolutePath();
-                File file = new File(Configuration.FILE_ROOT_DIR, reportfileuuid);
-                try { // 创建一个文件输出流
-                    InputStream in = item.getInputStream();
-                    FileOutputStream out = new FileOutputStream(file);
-                    // 创建一个缓冲区
-                    byte buffer[] = new byte[1024]; // 判断输入流中的数据是否已经读完的标识
-                    int len = 0;
-                    // 循环将输入流读入到缓冲区当中，(len=in.read(buffer))>0就表示in里面还有数据
-                    while ((len = in.read(buffer)) > 0) {
-                        out.write(buffer, 0, len);
-                    } // 关闭输入流
-                    in.close();
-                    // 关闭输出流
-                    out.close(); // 删除处理文件上传时生成的临时文件
-                    item.delete();
-                    resultCode = "200";
-                    // 更新订单，报告
-                    Orders orders = new Orders();
-                    orders.setOrderid(ordersId);
-                    orders.setReportfile(fileName);
-                    orders.setReportfileuuid(reportfileuuid);
-                    orders.setStatus(Configuration.BILL_SUBMITTED);
-                    OrderService orderService = new OrderService();
-                    orderService.updateReport(orders);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    resultCode = "601";// 错误
-                }
-                logger.info("文件名路径：" + file.getAbsolutePath());
             }
         }
         // 返回信息
-        org.json.JSONObject user_data = new org.json.JSONObject();
-        user_data.put("resultCode", resultCode);
-        user_data.put("key2", "today4");
-        user_data.put("key3", "today2");
-        String jsonStr2 = user_data.toString();
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().append(jsonStr2);
+        hashMap.put("resultCode", resultCode);
+        return hashMap;
     }
 
     @RequestMapping(value = "/verifyReport2", method = RequestMethod.POST)
-    public void conformOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    public HashMap<String, Object> conformOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
         // 获取用户是否登录
-        CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
-
+        CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
+        HashMap<String, Object> hashMap = new HashMap<>();
         int resultCode = -1;
         if (cusUser != null) {
             String id = request.getParameter("id").trim();// 执行日期
@@ -213,22 +215,12 @@ public class ReportController {
             } else {
                 resultCode = 500;
             }
-            ;
         } else {
-
+            resultCode = 404;
         }
         logger.info("返回注册信息");
-        org.json.JSONObject user_data = new org.json.JSONObject();
-        user_data.put("resultCode", resultCode);
-        user_data.put("key2", "today4");
-        user_data.put("key3", "today2");
-        String jsonStr2 = user_data.toString();
-        response.setCharacterEncoding("UTF-8");
-        try {
-            response.getWriter().append(jsonStr2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        hashMap.put("resultCode", resultCode);
+        return hashMap;
     }
 
     @ResponseBody
@@ -236,7 +228,7 @@ public class ReportController {
     public HashMap<String, Object> selectReport(ModelMap model, HttpServletRequest request,
                                                 HttpServletResponse response) {
         // 获取用户是否登录
-        CusUser cusUser = (CusUser) request.getSession().getAttribute("cusUser");
+        CusUser cusUser = (CusUser) request.getSession().getAttribute("user");
         HashMap<String, Object> hashMap = new HashMap<>();
         int resultCode = -1;
         if (cusUser != null) {
@@ -280,7 +272,8 @@ public class ReportController {
                 hashMap.put("total", list.size());
 //				hashMap.put("draw", list.size());
             } catch (IOException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
+                logger.error("{}:{}", e.getMessage(), e);
             }
             ;
         } else {

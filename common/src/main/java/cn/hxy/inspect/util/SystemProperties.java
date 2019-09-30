@@ -11,7 +11,7 @@ import java.util.Properties;
 public class SystemProperties {
 
     static Properties properties = new Properties();
-    static InputStream in = SystemProperties.class.getClassLoader().getResourceAsStream("dev.properties");
+    static InputStream in = SystemProperties.class.getClassLoader().getResourceAsStream("prod.properties");
 
     static {
         try {

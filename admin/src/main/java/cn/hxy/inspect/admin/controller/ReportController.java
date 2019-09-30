@@ -68,18 +68,26 @@ public class ReportController {
     }
 
 
+    /**
+     * Description:下载用户提交的附件以及质检员提交的报告，用于审查
+     *
+     * @param model
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
     public void downloadReport(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
 //		request.setCharacterEncoding("utf-8");
         // 得到要下载的文件名
-        String fileName = request.getParameter("fileuuid"); // 2323928392489-美人鱼.avi
+        String fileName = request.getParameter("fileuuid");
         // 处理文件名
         String realName = request.getParameter("filename");
 //        fileName = new String(fileName.getBytes("iso8859-1"), "UTF-8");
 //        realName = new String(realName.getBytes("iso8859-1"), "UTF-8");
-        logger.info("下载文件名：" + fileName);
+        logger.info("管理员下载文件名：" + fileName);
         // 上传的文件都是保存在/WEB-INF/upload目录下的子目录当中
 //		String fileSaveRootPath = this.getServletContext().getRealPath("/WEB-INF/upload");
 
@@ -228,11 +236,11 @@ public class ReportController {
 
     @RequestMapping(value = "/auditReport", method = RequestMethod.POST)
     @ResponseBody
-    public HashMap<String,Object> conformOrders(HttpServletRequest request)
+    public HashMap<String, Object> conformOrders(HttpServletRequest request)
             throws IOException {
         // 获取用户是否登录
         AdminUser user = (AdminUser) request.getSession().getAttribute("user");
-        HashMap<String,Object> hashMap =new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         String msg = null;
         int resultCode = -1;
         if (user != null) {
@@ -279,8 +287,8 @@ public class ReportController {
             resultCode = 603;// 用户登录失效
             msg = "用户登录失效，请重新登录！";
         }
-        hashMap.put("resultCode",resultCode);
-        hashMap.put("msg",msg);
+        hashMap.put("resultCode", resultCode);
+        hashMap.put("msg", msg);
         return hashMap;
 
     }

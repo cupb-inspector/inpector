@@ -157,30 +157,16 @@ public class OrderController {
         // 依据订单查询订单的客户信息
         cusUser = cusUserService.selectUserById(orders.getCusId());
 
+        model.addAttribute("cusUser",cusUser);
 
         if (orders != null && cusUser != null) {
-            model.addAttribute("status", orders.getStatusString());
-            model.addAttribute("ordersId", ordersId);
-            model.addAttribute("goods", orders.getGoods());
-            model.addAttribute("custel", orders.getCusId());
-            model.addAttribute("exceData", orders.getExcedate());
+
             String inspectTel = orders.getQualId();
             if ("null".equals(inspectTel)) {
-                model.addAttribute("inspec", "请填写质检员号码");
-            } else
-                model.addAttribute("inspec", orders.getQualId());
-
-            model.addAttribute("exceData", orders.getExcedate());
-            model.addAttribute("factoyName", orders.getFactoryname());
-            model.addAttribute("facAddress", orders.getFactoryaddress());
-            model.addAttribute("facMan", orders.getFactoryman());
-            model.addAttribute("facTel", orders.getFactorytel());
-            model.addAttribute("cusName", cusUser.getCusname());
-            model.addAttribute("city", cusUser.getCity());
-            model.addAttribute("email", cusUser.getEmail());
-            model.addAttribute("cusOrders", cusUser.getCusOrders());
-            model.addAttribute("money", cusUser.getCusMoney());
-            model.addAttribute("integral", cusUser.getCusgrade());
+                orders.setQualId("请填写质检员");
+            } else {
+            }
+            model.addAttribute("orders", orders);
         }
 
         List<Inspector> inspectorLs = inspectorService.selectAll();
@@ -441,7 +427,8 @@ public class OrderController {
                     resultCode = 200;
                 } else {
                     resultCode = 500;
-                };
+                }
+                ;
             } else {
 
             }

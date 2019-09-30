@@ -145,19 +145,19 @@
                                         <div class="row form-group">
                                             <div class="col col-md-6">
                                                 <p>
-                                                    订单号：<span id='ordersId' value='${ordersId}'>${ordersId}</span>
+                                                    订单号：<span id='ordersId' value='${orders.orderid}'>${orders.orderid}</span>
                                                 </p>
                                             </div>
                                             <div class="col col-md-6">
                                                 <p>
-                                                    订单状态：<span>${status}</span>
+                                                    订单状态：<span>${orders.statusString}</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="row form-group">
                                             <div class="col col-md-4">
                                                 <p>
-                                                    验货时间：<span>${exceData}</span>
+                                                    验货时间：<span>${orders.excedate}</span>
                                                 </p>
                                             </div>
                                             <div class="col col-md-4">
@@ -179,29 +179,29 @@
                                             </div>
                                             <div class="col col-md-4">
                                                 <p>
-                                                    产品信息：<span>${goods}</span>
+                                                    产品信息：<span>${orders.goods}</span>
                                                 </p>
                                             </div>
                                             <div class="col col-md-4">
                                                 <p>
-                                                    工厂名称：<span>${factoyName}</span>
+                                                    工厂名称：<span>${orders.factoryname}</span>
                                                 </p>
                                             </div>
                                         </div>
                                         <div class="row form-group">
                                             <div class="col col-md-4">
                                                 <p>
-                                                    工厂地址：<span>${facAddress}</span>
+                                                    工厂地址：<span>${orders.factoryaddress}</span>
                                                 </p>
                                             </div>
                                             <div class="col col-md-4">
                                                 <p>
-                                                    联系人姓名：<span>${facMan}</span>
+                                                    联系人姓名：<span>${orders.factoryname}</span>
                                                 </p>
                                             </div>
                                             <div class="col col-md-4">
                                                 <p>
-                                                    手机号：<span>${facTel}</span>
+                                                    手机号：<span>${orders.factorytel}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -209,7 +209,7 @@
                                         <div class="row form-group">
                                             <div class="col col-md-4">
                                                 <p>
-                                                    下单日期：<span>${date}</span>
+                                                    下单日期：<span>${orders.date}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -224,14 +224,20 @@
 
                                 <div class="card-body">
                                     <p style="color: #383d41">
-                                    <h4>报告</h4>
-                                    <small>报告可以在验货日期的24小时前取消。24小时内取消会扣分。</small>
+                                    <h4>附件</h4>
+                                    <small>管理员需要审核附件中信息是否存在异常，可以更新该附件，然后批准给质检员下载。</small>
                                     <code>重要</code>
                                     </p>
                                     <p>
-                                        <i class="fa fa-envelope-o"></i> 关于宝马X5前置反观镜的外壳质检报告.doc
-                                        <a href="">
+                                        <i class="fa fa-envelope-o"></i> ${orders.file}
+                                        <a href="downloadFile?fileuuid=${orders.fileuuid}&filename=${orders.file}">
                                             <span class="pull-right">下载</span></a>
+                                    </p>
+                                    <p>
+                                    <div style="float: left">
+                                        <button type="button" id="btn1" class="btn btn-success btn-lg">通过</button>
+                                        <button type="button" id="btn2"  class="btn btn-danger btn-lg">更新</button>
+                                    </div>
                                     </p>
                                 </div>
                             </div>
@@ -254,24 +260,24 @@
                                     <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block" src="images/admin.jpg"
                                              alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">${cusName}</h5>
+                                        <h5 class="text-sm-center mt-2 mb-1">${cusUser.cusname}</h5>
                                         <div class="location text-sm-center">
-                                            <i class="fa fa-map-marker"></i> ${city}
+                                            <i class="fa fa-map-marker"></i> ${cusUser.city}
                                         </div>
                                     </div>
                                     <br/>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item"><a href="#"> <i class="fa fa-envelope-o"></i> 邮箱
-                                            <span class="pull-right">${email }</span></a>
+                                            <span class="pull-right">${cusUser.email }</span></a>
                                         </li>
                                         <li class="list-group-item"><a href="#"> <i class="fa fa-tasks"></i> 总订单数 <span
-                                                class="pull-right">${cusOrders}</span></a>
+                                                class="pull-right">${cusUser.cusOrders}</span></a>
                                         </li>
                                         <li class="list-group-item"><a href="#"> <i class="fa fa-money"></i> 钱包 <span
-                                                class="pull-right">${money}</span></a>
+                                                class="pull-right">${cusUser.cusMoney}</span></a>
                                         </li>
                                         <li class="list-group-item"><a href="#"> <i class="fa fa-star-o"></i> 积分<span
-                                                class="pull-right r-activity">${integral}</span></a></li>
+                                                class="pull-right r-activity">${cusUser.custrade}</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -290,7 +296,7 @@
                                              alt="Card image cap">
                                         <h5 class="text-sm-center mt-2 mb-1">待选择</h5>
                                         <div class="location text-sm-center"><i class="fa fa-map-marker"></i>
-                                            未知地区
+                                            有待确定
                                         </div>
                                     </div>
                                     <div class="col-sm-8" align="center">

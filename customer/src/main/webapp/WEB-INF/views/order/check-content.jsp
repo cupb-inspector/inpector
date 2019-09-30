@@ -260,7 +260,7 @@
 
 							<div class="row form-group">
 								<div class="col col-md-2">
-									<label for="textarea-input" class=" form-control-label"
+									<label for="profile" class=" form-control-label"
 										style="float: right">备注</label>
 								</div>
 								<div class="col-12 col-md-9">
@@ -276,7 +276,7 @@
 
 							<div class="row form-group">
 								<div class="col col-md-2">
-									<label for="file-multiple-input" class=" form-control-label"
+									<label for="afile" class=" form-control-label"
 										style="float: right">资料</label>
 								</div>
 								<div class="col-12 col-md-9">

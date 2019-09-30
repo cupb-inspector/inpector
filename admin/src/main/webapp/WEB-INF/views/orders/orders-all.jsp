@@ -30,7 +30,7 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<strong class="card-title">新订单</strong>
+							<strong class="card-title">所有订单</strong>
 						</div>
 						<div class="card-body">
 							<table id="bootstrap-data-table"
