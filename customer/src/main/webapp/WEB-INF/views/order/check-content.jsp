@@ -268,9 +268,9 @@
 										placeholder="请填写一些注意事项或者要求，建议等" class="form-control"
 										onkeyup="javascript:checkWords(this);"
 										onmousedown="javascript:checkWords(this);"></textarea>
-									<small class="help-block form-text">还可以输入<span
-											style="font-family: Georgia; font-size: 26px;" id="wordCheck">200</span>个汉字
-									</small>
+<%--									<small class="help-block form-text">还可以输入<span--%>
+<%--											style="font-family: Georgia; font-size: 26px;" id="wordCheck">200</span>个汉字--%>
+<%--									</small>--%>
 								</div>
 							</div>
 
