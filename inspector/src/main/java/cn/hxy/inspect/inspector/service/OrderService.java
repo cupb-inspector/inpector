@@ -33,6 +33,11 @@ public class OrderService {
 		return false;
 	}
 
+	public Orders selectOrderByOrderId(String id) throws IOException {
+	    OrdersDao ordersDao =new OrdersDao();
+	    return  ordersDao.selectOrderById(id);
+    }
+
 	public List<Orders> selectAllByTel(String tel) throws IOException {
 		OrdersDao ordersDao = new OrdersDao();
 		List<Orders> list = ordersDao.selectAllByTel(tel);
@@ -78,12 +83,6 @@ public class OrderService {
 				
 		return list;
 	}
-	
-	public Orders selectAllById(String ordersId) throws IOException {
-		OrdersDao ordersDao = new OrdersDao();
-		Orders list = ordersDao.selectAllById(ordersId);
-		return list;
-	}
 
 	public boolean updateInspector(Orders order) {
 		OrdersDao ordersDao = new OrdersDao();
@@ -96,7 +95,6 @@ public class OrderService {
 	}
 
 	public boolean updateReport(Orders order) {
-		// TODO Auto-generated method stub
 		OrdersDao ordersDao = new OrdersDao();
 		int flag = ordersDao.updateReport(order);
 		if (flag == 1) {
@@ -105,10 +103,13 @@ public class OrderService {
 			return false;
 		}
 	}
-	
-	
-	
-	
-	
+
+
+	public List<Orders> findAllOrdersByQualId(String userId) {
+
+		OrdersDao ordersDao =new OrdersDao();
+		return  ordersDao.findAllOrdersByQualId(userId);
+	}
+
 
 }

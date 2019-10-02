@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class Orders {
+
 	private String orderid;//订单号
 	private String cusId;//用户信息
 	private String qualId;//质检员信息
@@ -49,7 +50,7 @@ public class Orders {
 		case Configuration.BILL_INSPECTOR_CONFIRM:
 			value="质检员确认验货";
 			break;
-		case Configuration.BILL_REPORT_SUBMIT:
+		case Configuration.BILL_REPORT_SUBMIT_UNPAID:
 			value="报告已提交";
 			break;
 		case Configuration.BILL_REPORT_VERIFIED:

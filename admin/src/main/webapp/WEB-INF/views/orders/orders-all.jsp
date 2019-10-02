@@ -30,13 +30,14 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-header">
-							<strong class="card-title">新订单</strong>
+							<strong class="card-title">所有订单</strong>
 						</div>
 						<div class="card-body">
 							<table id="bootstrap-data-table"
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
+                                        <th>订单号</th>
 										<th>客户</th>
 										<th>验货日期</th>
 										<th>验货地址</th>
@@ -49,12 +50,13 @@
 								<tbody>
 								<c:forEach items="${list}" var="order" varStatus="status">
 									<tr>
+                                        <td>${order.orderid }</td>
 										<td>${order.cusId }</td>
 										<td>${order.excedate}</td>
 										<td>${order.factoryname}</td>
 										<td>${order. goods}</td>
 										<td>${order.getStatusString()}</td>
-										<td><a href="orders-details-ajax?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
+										<td><a href="orders-details-all?id=${ order.orderid }" target="_blank" style="color: blue">详情</a></td>
 									</tr>
 								</c:forEach>
 								</tbody>

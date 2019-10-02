@@ -20,7 +20,7 @@
 		SELECT * FROM inspector WHERE userTel=#{userTel}
 	</select>
 	
-	<select id="findUserById" parameterType="String"
+	<select id="findInspectorById" parameterType="String"
 		resultType="cn.hxy.inspect.entity.inspector.Inspector">
 		SELECT * FROM inspector WHERE userId=#{userId}
 	</select>

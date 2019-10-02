@@ -55,10 +55,10 @@ public class OrdersDao {
 		return flag;
 	}
 	
-	public Orders selectAllById(String ordersId) throws IOException {
+	public Orders selectOrderById(String ordersId) throws IOException {
 		SqlSession sqlSession = DataConnection.getSqlSession();
 		Orders goodsList = sqlSession.selectOne("Orders.findOrdersById", ordersId);
-		logger.info("查询结果条数"+goodsList);
+		logger.info("查询得到的订单信息:"+goodsList);
 		sqlSession.commit();
 		sqlSession.close();
 		return goodsList;
@@ -216,15 +216,30 @@ public class OrdersDao {
 	}
 
 	//质检员模块
-	public  List<Orders>  findUserByQualIdAndStatus(Orders ordersId) {
-
+	public  List<Orders>  findUserByQualIdAndStatus(Orders orders) {
+		logger.info("质检员查询订单信息 {}",orders);
 		SqlSession sqlSession = null;
 		try {
 			sqlSession = DataConnection.getSqlSession();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		List<Orders>  user = sqlSession.selectList("Orders.findUserByQualIdAndStatus", ordersId);
+		List<Orders>  user = sqlSession.selectList("Orders.findUserByQualIdAndStatus", orders);
+		sqlSession.commit();//清空缓存
+		sqlSession.close();
+		return user;
+	}
+
+	//质检员模块
+	public  List<Orders>  findAllOrdersByQualId(String qualId) {
+		logger.info("质检员{}查询所有订单信息",qualId);
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = DataConnection.getSqlSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		List<Orders>  user = sqlSession.selectList("Orders.findAllOrdersByQualId", qualId);
 		sqlSession.commit();//清空缓存
 		sqlSession.close();
 		return user;

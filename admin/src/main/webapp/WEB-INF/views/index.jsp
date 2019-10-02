@@ -1,21 +1,6 @@
 <!doctype html>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@page import="cn.hxy.inspect.entity.admin.AdminUser"%>
-<%
-	AdminUser user = (AdminUser) request.getSession().getAttribute("user");
-	if (user == null) {
-		//request.getRequestDispatcher("/lose").forward(request, response);
-%>
-<script type="text/javascript">
-	window.top.location.href = 'login';
-</script>
-<%
-	} else {
-
-	}
-%>
-
 <html class="no-js" lang="">
 <head>
 <meta charset="utf-8">
@@ -31,7 +16,6 @@
 <link rel="stylesheet" href="assets/css/flag-icon.min.css">
 <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
 <link rel="stylesheet" href="assets/css/style.css">
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 <link href="assets/weather/css/weather-icons.css" rel="stylesheet" />
 <link href="assets/calendar/fullcalendar.css" rel="stylesheet" />
 <link href="assets/css/charts/chartist.min.css" rel="stylesheet">
@@ -106,9 +90,9 @@ html, body {
 						<div class="collapse" id="bill">
 							<ul class="nav flex-column sub-menu">
 								<li><a href="orders-new" target="myiframe">新订单</a></li>
-								<li><a href="orders-checking" target="myiframe">最近验货订单</a></li>
-								<li><a href="orders-unfinished" target="myiframe">未完成订单</a></li>
-								<li><a href="orders-finished" target="myiframe">已完成订单</a></li>
+<%--								<li><a href="orders-checking" target="myiframe">最近验货订单</a></li>--%>
+<%--								<li><a href="orders-unfinished" target="myiframe">未完成订单</a></li>--%>
+<%--								<li><a href="orders-finished" target="myiframe">已完成订单</a></li>--%>
 								<li><a href="orders-all" target="myiframe">所有订单</a></li>
 							</ul>
 						</div></li>
@@ -126,7 +110,7 @@ html, body {
 							</ul>
 						</div></li>
 
-					<!-- 
+					<!--
                         <li class="nav-item menu-item-has-children">
                             <a class="nav-link" data-toggle="collapse" href="#evalution" aria-haspopup="true"
                                 aria-expanded="false" aria-controls="bill">
@@ -152,9 +136,9 @@ html, body {
 							<ul class="nav flex-column sub-menu">
 								<li><a href="payment" target="myiframe">充值统计</a></li>
 									<li><a href="withdraw" target="myiframe">提现统计</a></li>
-								<!--  
+								<!--
 								<li><a href="finance" target="myiframe">财务统计</a></li>
-							
+
 								<li><a href="refund" target="myiframe">退款处理</a></li>
 								<li><a href="chart" target="myiframe">财务报表</a></li>
 								-->
@@ -172,10 +156,10 @@ html, body {
 								<li><a href="surveyor" target="myiframe">质检员管理</a></li>
 							</ul>
 						</div></li>
-					<li class="nav-item menu-item"><a class="nav-link"
-						href="personal" target="myiframe"> <i
-							class="menu-icon fa fa-user"></i>我的账户
-					</a></li>
+<%--					<li class="nav-item menu-item"><a class="nav-link"--%>
+<%--						href="personal" target="myiframe"> <i--%>
+<%--							class="menu-icon fa fa-user"></i>我的账户--%>
+<%--					</a></li>--%>
 					<!--
 					<li class="nav-item menu-item"><a class="nav-link"
 						href="mynews" target="myiframe"> <i

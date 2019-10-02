@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>新订单详情</title>
+    <title>订单详情</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/normalize.css">
@@ -27,7 +26,7 @@
     <style>
         .black_overlay {
             display: none;
-            position: fixed;
+            position: absolute;
             top: 0%;
             left: 0%;
             width: 100%;
@@ -41,7 +40,7 @@
 
         .white_content {
             display: none;
-            position: fixed;
+            position: absolute;
             top: 10%;
             left: 10%;
             width: 80%;
@@ -56,6 +55,79 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $('#btn1').click(function () {
+                $.ajax({
+
+                    url: "${pageContext.request.contextPath}/auditReport",//url
+                    type: "POST",//方法类型
+                    //	async: false,//同步需要等待服务器返回数据后再执行后面的两个函数，success和error。如果设置成异步，那么可能后面的success可能执行后还是没有收到消息。
+                    dataType: "json",//预期服务器返回的数据类型
+                    //	cache: false,
+                    data: {
+                        "id": '${orders.orderid}',
+                        "flag": 'conform'
+                    },//这个是发送给服务器的数据
+
+                    success: function (result) {
+                        console.log(result);//打印服务端返回的数据(调试用)
+                        if (result.resultCode == 200) {
+
+                            $('.hxy-alert').removeClass('hxy-alert-warning')
+                            $('.hxy-alert').html('操作成功').addClass('hxy-alert-success').show().delay(2000).fadeOut();
+
+                        } else if (result.resultCode == 603) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('登录失效').addClass('alert-warning').show().delay(2000).fadeOut();
+
+                            document.getElementById("passwd").value = ''
+
+                        } else if (result.resultCode == 404) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
+                        };
+                    }
+                });
+            });
+
+            $('#btn2').click(function () {
+                $.ajax({
+
+                    url: "${pageContext.request.contextPath}/auditReport",//url
+                    type: "POST",//方法类型
+                    //	async: false,//同步需要等待服务器返回数据后再执行后面的两个函数，success和error。如果设置成异步，那么可能后面的success可能执行后还是没有收到消息。
+                    dataType: "json",//预期服务器返回的数据类型
+                    //	cache: false,
+                    data: {
+                        "id": '${orders.orderid}',
+                        "flag": 'cancel'
+                    },//这个是发送给服务器的数据
+
+                    success: function (result) {
+                        console.log(result);//打印服务端返回的数据(调试用)
+                        if (result.resultCode == 200) {
+
+                            $('.hxy-alert').removeClass('hxy-alert-warning')
+                            $('.hxy-alert').html('分配成功').addClass('hxy-alert-success').show().delay(2000).fadeOut();
+
+                        } else if (result.resultCode == 601) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('密码错误').addClass('alert-warning').show().delay(2000).fadeOut();
+
+                            document.getElementById("passwd").value = ''
+
+                        } else if (result.resultCode == 404) {
+                            //	$(this).remove();
+                            $('.alert').removeClass('alert-success')
+                            $('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
+                        };
+                    }
+                });
+            });
+
             $("#showInspector").click(function () {
                 document.getElementById('MyDiv').style.display = 'block';
                 document.getElementById('fade').style.display = 'block';
@@ -88,10 +160,7 @@
                     success: function (result) {
                         console.log(result);//打印服务端返回的数据(调试用)
                         if (result.resultCode == 200) {
-                            //$('#closeInspector').click();
-                            document.getElementById('MyDiv').style.display = 'none';
-                            document.getElementById('fade').style.display = 'none';
-                            //跳转到首页
+
                             $('.hxy-alert').removeClass('hxy-alert-warning')
                             $('.hxy-alert').html('分配成功').addClass('hxy-alert-success').show().delay(2000).fadeOut();
 
@@ -106,8 +175,7 @@
                             //	$(this).remove();
                             $('.alert').removeClass('alert-success')
                             $('.alert').html('手机号未注册').addClass('alert-warning').show().delay(2000).fadeOut();
-                        }
-                        ;
+                        };
                     },
                     error: function () {
                         //console.log(data);
@@ -150,7 +218,7 @@
                                             </div>
                                             <div class="col col-md-6">
                                                 <p>
-                                                    订单状态：<span>${orders.statusString}</span>
+                                                    订单状态：<span>${orders.status}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -196,7 +264,7 @@
                                             </div>
                                             <div class="col col-md-4">
                                                 <p>
-                                                    联系人姓名：<span>${orders.factoryname}</span>
+                                                    联系人姓名：<span>${orders.factoryman}</span>
                                                 </p>
                                             </div>
                                             <div class="col col-md-4">
@@ -224,19 +292,19 @@
 
                                 <div class="card-body">
                                     <p style="color: #383d41">
-                                    <h4>附件</h4>
-                                    <small>管理员需要审核附件中信息是否存在异常，可以更新该附件，然后批准给质检员下载。</small>
+                                    <h4>报告</h4>
+                                    <small>报告可以在验货日期的24小时前取消。24小时内取消会扣分。</small>
                                     <code>重要</code>
                                     </p>
                                     <p>
-                                        <i class="fa fa-envelope-o"></i> ${orders.file}
-                                        <a href="downloadFile?fileuuid=${orders.fileuuid}&filename=${orders.file}">
+                                        <i class="fa fa-envelope-o"></i> ${orders.reportfile}
+                                        <a href="downloadFile?fileuuid=${orders.reportfileuuid}&filename=${orders.reportfile}">
                                             <span class="pull-right">下载</span></a>
                                     </p>
                                     <p>
                                     <div style="float: left">
                                         <button type="button" id="btn1" class="btn btn-success btn-lg">通过</button>
-                                        <button type="button" id="btn2"  class="btn btn-danger btn-lg">更新</button>
+                                        <button type="button" id="btn2"  class="btn btn-danger btn-lg">拒绝</button>
                                     </div>
                                     </p>
                                 </div>
@@ -277,7 +345,7 @@
                                                 class="pull-right">${cusUser.cusMoney}</span></a>
                                         </li>
                                         <li class="list-group-item"><a href="#"> <i class="fa fa-star-o"></i> 积分<span
-                                                class="pull-right r-activity">${cusUser.custrade}</span></a></li>
+                                                class="pull-right r-activity">${cusUser.cusgrade}</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -285,27 +353,34 @@
                     </div>
                     <!-- /.card -->
                     <div class="col-lg-6 col-xl-12">
-                        <div class="card br-0  ">
+                        <div class="card br-0">
                             <div class="card">
                                 <div class="card-header">
-                                    <i class="fa fa-user"></i><strong class="card-title pl-2">验货员资料</strong>
+                                    <i class="fa fa-user"></i><strong class="card-title pl-2">质检员资料</strong>
                                 </div>
                                 <div class="card-body">
-                                    <div class="mx-auto d-block col-sm-4" style="float: left">
+                                    <div class="mx-auto d-block">
                                         <img class="rounded-circle mx-auto d-block" src="images/admin.jpg"
                                              alt="Card image cap">
-                                        <h5 class="text-sm-center mt-2 mb-1">待选择</h5>
-                                        <div class="location text-sm-center"><i class="fa fa-map-marker"></i>
-                                            有待确定
+                                        <h5 class="text-sm-center mt-2 mb-1">${inspector.userName}</h5>
+                                        <div class="location text-sm-center">
+                                            <i class="fa fa-map-marker"></i> ${inspector.city}
                                         </div>
                                     </div>
-                                    <div class="col-sm-8" align="center">
-                                        <div>
-                                            <button id="showInspector" type="submit" class="btn btn-primary btn-sm">
-                                                <i class="fa fa-pencil-square-o"></i> 选择质检员
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <br/>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><a href="#"> <i class="fa fa-envelope-o"></i> 邮箱
+                                            <span class="pull-right">${inspector.email }</span></a>
+                                        </li>
+                                        <li class="list-group-item"><a href="#"> <i class="fa fa-tasks"></i> 总订单数 <span
+                                                class="pull-right">${inspector.orders}</span></a>
+                                        </li>
+                                        <li class="list-group-item"><a href="#"> <i class="fa fa-money"></i> 钱包 <span
+                                                class="pull-right">${inspector.money}</span></a>
+                                        </li>
+                                        <li class="list-group-item"><a href="#"> <i class="fa fa-star-o"></i> 积分<span
+                                                class="pull-right r-activity">${inspector.integral}</span></a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -353,19 +428,6 @@
                                     </thead>
                                     <tbody>
                                     <!-- 显示质检员信息 -->
-                                    <c:forEach items="${list}" var="inspector" varStatus="status">
-                                        <tr>
-                                            <td>${status.index +1 }</td>
-                                            <td>${inspector.userName }</td>
-                                            <td>${inspector.userTel }</td>
-                                            <td>${inspector.city }</td>
-                                            <td>${inspector.orders }</td>
-                                            <td>${inspector.integral}</td>
-                                            <td>${inspector.status}</td>
-                                            <td>	<button type="button"  value ='${inspector.userId}'
-                                                            class="selectInspector btn btn-outline-success btn-sm"><i class="fa fa-magic"></i>&nbsp; 选择</button></td>
-                                        </tr>
-                                    </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

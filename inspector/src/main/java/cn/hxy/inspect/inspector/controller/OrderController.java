@@ -3,13 +3,14 @@ package cn.hxy.inspect.inspector.controller;
 import cn.hxy.inspect.entity.Orders;
 import cn.hxy.inspect.entity.inspector.Inspector;
 import cn.hxy.inspect.inspector.service.OrderService;
-import org.apache.tomcat.jni.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
+
+import static cn.hxy.inspect.util.Configuration.*;
 
 
 @Controller
@@ -36,6 +40,19 @@ public class OrderController {
 
         return "orders/checks";
     }
+
+
+    @RequestMapping(value = "/orders-details-all", method = RequestMethod.GET)
+    public String detailsAll(@RequestParam("id") String id, ModelMap model, HttpServletRequest request) throws IOException {
+        //找到已经分配的订单
+        Inspector user = (Inspector) request.getSession().getAttribute("user");
+       Orders orders =  orderService.selectOrderByOrderId(id);
+
+
+        model.addAttribute("orders", orders);
+        return "orders/orders-details-all";
+    }
+
 
     @RequestMapping(value = "/orders-cancel", method = RequestMethod.GET)
     public String cancel(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,11 +87,23 @@ public class OrderController {
         Inspector user = (Inspector) request.getSession().getAttribute("user");
         Orders orders = new Orders();
         orders.setQualId(user.getUserId());
-        orders.setStatus(4);//查询订单已分配的订单
+        orders.setStatus(BILL_ASSIGNING);//查询订单已分配的订单
+        logger.info("{} 查询所有管理员分配到的订单",user.getUserId());
         orderService = new OrderService();
         List<Orders> ls = orderService.findUserByQualIdAndStatus(orders);
         model.addAttribute("list", ls);
         return "orders/orders-examining";
+    }
+
+    @RequestMapping(value = "/orders-all", method = RequestMethod.GET)
+    public String all(ModelMap model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Inspector user = (Inspector) request.getSession().getAttribute("user");
+
+        logger.info("{} 查询质检员的所有订单",user.getUserId());
+
+        List<Orders> ls = orderService.findAllOrdersByQualId(user.getUserId());
+        model.addAttribute("list", ls);
+        return "orders/orders-all";
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
@@ -194,28 +223,33 @@ public class OrderController {
 
 
     @RequestMapping(value = "/conform", method = RequestMethod.POST)
-    public void conformOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    public HashMap<String,Object> conformOrders( HttpServletRequest request,@RequestParam("id")String id) {
         // 获取用户是否登录
         Inspector user = (Inspector) request.getSession().getAttribute("user");
+        HashMap<String,Object> hashMap =new HashMap<>();
+        //TODO 这里有一个bug,前端传传入函数的值是错误的
+
+        logger.info("质检员确认是否接受订单{}",id);
+
 
         int resultCode = -1;
         if (user != null) {
-            String id = request.getParameter("id").trim();// 执行日期
             String flag = request.getParameter("flag").trim();// 执行日期
             Orders order = new Orders();
-            order.setOrderid(id);
+            order.setOrderid(String.valueOf(id));
+            order.setQualId(user.getUserId());
 
             if ("cancel".equals(flag)) {
                 logger.info("质检员拒绝了订单");
-                order.setStatus(1);//如果质检员拒绝，那么直接修改状态为1
+                order.setStatus(BILL_REFUSED_BY_INSPECTOR);//如果质检员拒绝，那么直接修改状态为1
             } else if ("conform".equals(flag)) {
                 logger.info("质检员接受了订单");
-                order.setStatus(3);//自己抢单的订单直接正在验货
+                order.setStatus(BILL_INSPECTOR_CONFIRM);//自己抢单的订单直接正在验货
             }
 
 
 //			为该用户更新订单，依据订单的id查找订单，修改质检员的电话号码
-            OrderService orderService = new OrderService();
             if (orderService.updateInspector(order)) {
                 resultCode = 200;
             } else {
@@ -226,18 +260,9 @@ public class OrderController {
         } else {
 
         }
-        logger.info("返回注册信息");
-        org.json.JSONObject user_data = new org.json.JSONObject();
-        user_data.put("resultCode", resultCode);
-        user_data.put("key2", "today4");
-        user_data.put("key3", "today2");
-        String jsonStr2 = user_data.toString();
-        response.setCharacterEncoding("UTF-8");
-        try {
-            response.getWriter().append(jsonStr2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        hashMap.put("resultCode",resultCode);
+        return hashMap;
 
     }
 
@@ -281,17 +306,17 @@ public class OrderController {
 
     }
 
-    @RequestMapping(value = "/details", method = RequestMethod.GET)
-    public String details(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/orders-details", method = RequestMethod.GET)
+    public String details(ModelMap model, HttpServletRequest request, @RequestParam("id") String ordersId) {
         // 获取用户是否登录
         Inspector user = (Inspector) request.getSession().getAttribute("user");
         if (user != null) {
-
-            String ordersId = request.getParameter("id").trim();// 备注
             //先依据id查询该订单，再判断该订单是否是该用户的，防止恶意的爬虫
-            OrderService orderService = new OrderService();
             try {
-                Orders orders = orderService.selectAllById(ordersId);
+                Orders orders = orderService.selectOrderByOrderId(ordersId);
+
+                model.addAttribute("order",orders);
+
                 if (orders != null) {
                     model.addAttribute("status", orders.getStatusString());
                     model.addAttribute("ordersId", ordersId);
@@ -304,7 +329,6 @@ public class OrderController {
                     } else
                         model.addAttribute("inspec", orders.getQualId());
 
-
                     model.addAttribute("exceData", orders.getExcedate());
                     model.addAttribute("factoyName", orders.getFactoryname());
                     model.addAttribute("facAddress", orders.getFactoryaddress());
@@ -314,7 +338,6 @@ public class OrderController {
                     model.addAttribute("", orders.getExcedate());
                 }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -336,7 +359,7 @@ public class OrderController {
             //先依据id查询该订单，再判断该订单是否是该用户的，防止恶意的爬虫
             OrderService orderService = new OrderService();
             try {
-                Orders orders = orderService.selectAllById(ordersId);
+                Orders orders = orderService.selectOrderByOrderId(ordersId);
                 if (orders != null) {
                     model.addAttribute("status", orders.getStatusString());
                     model.addAttribute("ordersId", ordersId);
@@ -359,7 +382,6 @@ public class OrderController {
                     model.addAttribute("", orders.getExcedate());
                 }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 

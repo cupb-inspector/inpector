@@ -1,24 +1,7 @@
-<%@page import="java.util.List"%>
-<%@page import="java.util.Vector"%>
-<%@page import="hxy.inspec.inspector.po.Orders"%>
-<%@page import="hxy.inspec.inspector.po.User"%>
-<%@page import="hxy.inspec.inspector.services.OrderService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!doctype html>
-<%
-	//这里面应该是个人所有的未完成的订单 需要检查员ID 以及 未完成状态字集合、枚举
-	User user = (User) request.getSession().getAttribute("user");
-	List<Orders> ls = null;
-	if (user != null) {
-		//枚举模板，只要是迭代类型变量都可以
-		List<Integer> odUD=new Vector<Integer>();int[]temp = new int[]{1,2,3,4,5};for(int i:temp)odUD.add(i);
-		OrderService orderService = new OrderService();
-		ls = orderService.findOrdersByStatusAndInspector(odUD,user.getUserId());
-	} else {
-		request.getRequestDispatcher("/lose").forward(request, response);
-	}
-%>
+
 <html class="no-js" lang="">
 <!--<![endif]-->
 <head>
@@ -133,26 +116,6 @@ html, body {
 								</thead>
 								<tbody>
 
-									<%
-										if (ls != null && ls.size() != 0) {
-											for (int i = 0; i < ls.size(); i++) {
-												Orders o = ls.get(i);
-									%>
-									<tr>
-										<td><%=i + 1%></td>
-										<td><%=o.getExcedate()%></td>
-										<td><%=o.getFactoryaddress()%></td>
-
-										<td><%=o.getGoods()%></td>
-										<td><%=o.getFactoryname()%></td>
-
-										<td> <button onclick="rob(this,'<%=o.getOrderid()%>')" type="button" class="btn btn-success btn-sm" value="<%=o.getOrderid()%>"><i class="fa fa-magic"></i>&nbsp; 抢单</button></td>
-									</tr>
-									<%
-										}
-
-										}
-									%>
 								</tbody>
 							</table>
 						</div>

@@ -2,8 +2,8 @@ package cn.hxy.inspect.util;
 
 //静态变量类
 public class Configuration {
-	public static String FILE_ROOT_DIR = "";// 用于存储文件目录,这个目录不可以采用应用下的目录，因为应用一旦更新就没了。
-	public static String IMAGE_URL = "";
+	public static String FILE_ROOT_DIR = SystemProperties.getProperty("reportDir");// 用于存储文件目录,这个目录不可以采用应用下的目录，因为应用一旦更新就没了。
+	public static String IMAGE_URL = SystemProperties.getProperty("IMAGE_URL");
 	public static String MYSQL_HOST = "";
 	public static String MYSQL_PASSWD = "";
 	public static String MYSQL_USER = "";
@@ -19,7 +19,7 @@ public class Configuration {
 	public static final int BILL_ASSIGNED = 151;// 订单已分配
 	public static final int BILL_DELAY_BY_ADMIN = 200; // 管理员延期分配订单
 	public static final int BILL_REFUSED_BY_ADMIN = 250; // 订单被管理员取消
-//新老用户赊账
+
 	public static final int BILL_ASSIGNING_BY_ADMIN_UNPAID = 300;// 订单被管理员接受并正在分配质检员
 	public static final int BILL_ASSIGNED_BY_ADMIN_UNPAID = 301;// 订单已分配
 	public static final int BILL_DELAY_BY_ADMIN_UNPAID = 350; // 管理员延期分配订单
@@ -28,22 +28,17 @@ public class Configuration {
 	public static final int BILL_INSPECTOR_CONFIRM = 450;// 订单被验货员接受
 	public static final int BILL_REFUSED_BY_INSPECTOR = 500;// 验货员拒绝
 	public static final int BILL_DELAY_BY_ADMIN_0INSPECTOR = 550; // 管理员找不到验货员
-	// 新老用户赊账
 	public static final int BILL_ASSIGNED_UNPAID = 600;// 验货员接单BILL_INSPECTOR_CONFIRM
 	public static final int BILL_REFUSED_BY_INSPECTOR_UNPAID = 650;// 验货员拒绝
 	public static final int BILL_DELAY_BY_ADMIN_0INSPECTOR_UNPAID = 700; // 管理员找不到验货员
-
 	public static final int BILL_REPORT_SUBMIT = 750;// 验货员已提交报告
 	public static final int BILL_REPORT_DELAY = 800;// 验货员延期提交报告
 	public static final int BILL_CANCEL_BY_INSPECTOR = 850; // 验货员取消订单
-	// 新老用户赊账
 	public static final int BILL_REPORT_SUBMIT_UNPAID = 900;// 验货员已提交报告
 	public static final int BILL_REPORT_DELAY_UNPAID = 950;// 验货员延期提交报告
 	public static final int BILL_CANCEL_BY_INSPECTOR_UNPAID = 1000; // 验货员取消订单
-
 	public static final int BILL_REPORT_REFUSED_BY_ADMIN = 1050; // 订单报告被管理员拒绝
 	public static final int BILL_REPORT_VERIFIED = 1100; // 订单报告被管理员通过
-	// 新老用户赊账
 	public static final int BILL_REPORT_REFUSED_BY_ADMIN_UNPAID = 1150; // 订单报告被管理员拒绝
 	public static final int BILL_REPORT_PASSED_BY_ADMIN_UNPAID = 1200; // 订单报告被管理员通过并等待付款
 

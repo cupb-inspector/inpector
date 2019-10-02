@@ -26,18 +26,9 @@
 	<!-- 遮罩层 -->
 	<script src="js/jquery.spin.merge.js"></script>
 	<!-- 提取到文件了 -->
-	<script src="inspector/order/js/checkcontent.js"></script>
+	<script src="js/checkcontent.js"></script>
 	<style>
-		/* .white_content {
-			display: none;
-			position: absolute;
-			top: 15%;
-			left: 25%;
-			width: 55%;
-			height: 55%;
-			padding: 20px;
-			z-index: 1002;
-		} */
+
 
 		.white_content {
 			display: none;
@@ -269,7 +260,7 @@
 
 							<div class="row form-group">
 								<div class="col col-md-2">
-									<label for="textarea-input" class=" form-control-label"
+									<label for="profile" class=" form-control-label"
 										style="float: right">备注</label>
 								</div>
 								<div class="col-12 col-md-9">
@@ -277,15 +268,15 @@
 										placeholder="请填写一些注意事项或者要求，建议等" class="form-control"
 										onkeyup="javascript:checkWords(this);"
 										onmousedown="javascript:checkWords(this);"></textarea>
-									<small class="help-block form-text">还可以输入<span
-											style="font-family: Georgia; font-size: 26px;" id="wordCheck">200</span>个汉字
-									</small>
+<%--									<small class="help-block form-text">还可以输入<span--%>
+<%--											style="font-family: Georgia; font-size: 26px;" id="wordCheck">200</span>个汉字--%>
+<%--									</small>--%>
 								</div>
 							</div>
 
 							<div class="row form-group">
 								<div class="col col-md-2">
-									<label for="file-multiple-input" class=" form-control-label"
+									<label for="afile" class=" form-control-label"
 										style="float: right">资料</label>
 								</div>
 								<div class="col-12 col-md-9">

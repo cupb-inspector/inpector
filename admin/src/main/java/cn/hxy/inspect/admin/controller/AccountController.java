@@ -38,8 +38,7 @@ public class AccountController {
 				model.addAttribute("date", account.getTime());
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("{}:{}",e.getMessage(),e);
 			}
 		}
 		return "finance/payment-details";

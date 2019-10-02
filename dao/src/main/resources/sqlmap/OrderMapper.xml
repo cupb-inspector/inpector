@@ -119,4 +119,25 @@
 		select * from orders
 	</select>
 
+	<!-- 查询所有质检员的订单和状态 -->
+	<select id="findUserByQualIdAndStatus" parameterType="cn.hxy.inspect.entity.Orders"
+			resultType="cn.hxy.inspect.entity.Orders">
+		SELECT * FROM orders WHERE qualId=#{qualId} and status=#{status}
+	</select>
+	<select id="findAllOrdersByQualId" parameterType="String"
+			resultType="cn.hxy.inspect.entity.Orders">
+		SELECT * FROM orders WHERE qualId=#{qualId}
+	</select>
+	<update id="updateInspector"
+			parameterType="cn.hxy.inspect.entity.Orders">
+		update orders set
+		qualId=#{qualId},status=#{status}
+		where
+		orderid=#{orderid}
+	</update>
+	<update id="updateReport" parameterType="cn.hxy.inspect.entity.Orders">
+		update orders set
+		reportfile=#{reportfile},reportfileuuid=#{reportfileuuid},status=#{status} where orderid=#{orderid}
+	</update>
+
 </mapper>

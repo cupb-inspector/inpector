@@ -54,7 +54,7 @@
 										<td>${order.excedate}</td>
 										<td>${order.factoryname}</td>
 										<td>${order. goods}</td>
-										<td><a href="details3?id=${ order.orderid }">详情</a></td>
+										<td><a href="details3?id=${ order.orderid }" target="_blank">详情</a></td>
 									</tr>
 								</c:forEach>
 

@@ -1,11 +1,13 @@
 package cn.hxy.inspect.admin.controller;
 
 import cn.hxy.inspect.admin.service.*;
+import cn.hxy.inspect.entity.BaseResponse;
 import cn.hxy.inspect.entity.Orders;
 import cn.hxy.inspect.entity.admin.AdminUser;
 import cn.hxy.inspect.entity.customer.CusUser;
 import cn.hxy.inspect.entity.inspector.Inspector;
 import cn.hxy.inspect.util.Configuration;
+import cn.hxy.inspect.util.SystemProperties;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.RequestContext;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -25,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,50 +36,65 @@ import java.util.UUID;
 @RequestMapping("/")
 public class ReportController {
 
+    private final static Logger logger = LoggerFactory.getLogger(OrderController.class);
     @Resource
     ReportService reportService;
-    private final static Logger logger = LoggerFactory.getLogger(OrderController.class);
+    @Resource
+    CusUserService cusUserService;
+    @Resource
+    InspectorService inspectorService;
+    @Resource
+    MailService mailService;
+
     @RequestMapping(value = "/report-unprocess", method = RequestMethod.GET)
     public String reportUnprocess(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reportService.unprocess(model,request,response);
+        reportService.unprocess(model, request, response);
         return "reports/report-unprocess";
     }
+
     @RequestMapping(value = "/report-finished", method = RequestMethod.GET)
     public String reportFinished(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reportService.finished(model,request,response);
+        reportService.finished(model, request, response);
         return "reports/report-finished";
     }
+
     @RequestMapping(value = "/report-process", method = RequestMethod.GET)
     public String reportUnfinished(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        reportService.unfinished(model,request,response);
+        reportService.unfinished(model, request, response);
         return "reports/report-process";
     }
 
 
+    /**
+     * Description:下载用户提交的附件以及质检员提交的报告，用于审查
+     *
+     * @param model
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
     public void downloadReport(ModelMap model, HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
 //		request.setCharacterEncoding("utf-8");
         // 得到要下载的文件名
-        String fileName = request.getParameter("fileuuid"); // 2323928392489-美人鱼.avi
+        String fileName = request.getParameter("fileuuid");
         // 处理文件名
         String realName = request.getParameter("filename");
 //        fileName = new String(fileName.getBytes("iso8859-1"), "UTF-8");
 //        realName = new String(realName.getBytes("iso8859-1"), "UTF-8");
-        logger.info("下载文件名：" + fileName);
+        logger.info("管理员下载文件名：" + fileName);
         // 上传的文件都是保存在/WEB-INF/upload目录下的子目录当中
 //		String fileSaveRootPath = this.getServletContext().getRealPath("/WEB-INF/upload");
-        File fileFolder = new File("reports");
-        if (!fileFolder.exists()) {
-            fileFolder.mkdirs();
-        }
-        Configuration.FILE_ROOT_DIR = fileFolder.getAbsolutePath();
+
+        String reportDir = SystemProperties.getProperty("reportDir");
+
+        File file = new File(reportDir, fileName);
         // 得到要下载的文件
-        File file = new File(Configuration.FILE_ROOT_DIR + "/" + fileName);
         logger.info("下载文件：" + file);
         // 如果文件不存在
         if (!file.exists()) {
@@ -215,12 +234,14 @@ public class ReportController {
 
     }
 
-    @RequestMapping(value = "/verifyReport", method = RequestMethod.POST)
-    public void conformOrders(ModelMap model, HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "/auditReport", method = RequestMethod.POST)
+    @ResponseBody
+    public HashMap<String, Object> conformOrders(HttpServletRequest request)
             throws IOException {
         // 获取用户是否登录
         AdminUser user = (AdminUser) request.getSession().getAttribute("user");
-
+        HashMap<String, Object> hashMap = new HashMap<>();
+        String msg = null;
         int resultCode = -1;
         if (user != null) {
             String id = request.getParameter("id").trim();// 执行日期
@@ -235,53 +256,40 @@ public class ReportController {
                 logger.info("管理员拒绝了质检员提交的报告");
                 order.setStatus(Configuration.BILL_REPORT_UNPASSED);// 报告不通过接着重新提交报告
                 // 发送邮件通知报告审核不通过
-                InspectorService inspectorService = new InspectorService();
 
                 Inspector inspector = inspectorService.findInspectorById(orders.getQualId());
                 // 发送邮件给质检员
-                MailService mailService = new MailService();
-
                 mailService.sendMailToInspector(inspector);
 
             } else if ("conform".equals(flag)) {
                 logger.info("管理员通过了质检员的报告文件");
-                order.setStatus(Configuration.BILL_REPORT_PASSED);// 报告审核通过
+                order.setStatus(Configuration.BILL_REPORT_VERIFIED);// 报告审核通过
                 // 发送邮件给客户，通知报告审核通过了。
-                CusUserService cusUserService = new CusUserService();
-                CusUser cusUser = cusUserService.findCusUserByTel(orders.getCusId());
+                CusUser cusUser = cusUserService.selectUserById(orders.getCusId());
                 if (cusUser != null) {
                     // 发送邮件给客户
-                    MailService mailService = new MailService();
                     mailService.sendMailToCustomer(cusUser);
                 } else
                     logger.error("数据异常：" + orders.getCusId() + "用户被删除！");
-                ;
-
             }
 
 //			为该用户更新订单，依据订单的id查找订单，修改质检员的电话号码
             if (orderService.updateInspector(order)) {
                 resultCode = 200;
+                msg = "成功";
             } else {
                 resultCode = 500;
+                msg = "数据库操作异常";
             }
             ;
 
         } else {
-            resultCode = 804;// 用户登录失效
+            resultCode = 603;// 用户登录失效
+            msg = "用户登录失效，请重新登录！";
         }
-        logger.info("返回信息");
-        org.json.JSONObject user_data = new org.json.JSONObject();
-        user_data.put("resultCode", resultCode);
-        user_data.put("key2", "today4");
-        user_data.put("key3", "today2");
-        String jsonStr2 = user_data.toString();
-        response.setCharacterEncoding("UTF-8");
-        try {
-            response.getWriter().append(jsonStr2);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        hashMap.put("resultCode", resultCode);
+        hashMap.put("msg", msg);
+        return hashMap;
 
     }
 
